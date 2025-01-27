@@ -34,11 +34,11 @@ header .btn.btn-rounded.btn-large {
 }
 .sticky .header-transparent .header-button .btn:hover {
     border-color: var(--dark-gray);
-    color: var(--white);
+    color: #34658a;
     background:  var(--dark-gray);
 }
-header.sticky.sticky-active [data-header-hover="light"] .widget-text i {
-    color: var(--white);
+header.sticky.sticky-active [data-header-hover="#34658a"] .widget-text i {
+    color: #34658a;
 }
 /* accordion style 02 */
 .navbar .navbar-nav .dropdown.dropdown-with-icon-style02 .dropdown-menu {
@@ -46,7 +46,7 @@ header.sticky.sticky-active [data-header-hover="light"] .widget-text i {
 }
 .navbar .navbar-nav .dropdown.dropdown-with-icon-style02 .dropdown-menu li a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--white);
+    color: #34658a;
 }
 .navbar .navbar-nav .dropdown.dropdown-with-icon-style02 .dropdown-menu li:hover a,
 .navbar .navbar-nav .dropdown.dropdown-with-icon-style02 .dropdown-menu li.active a{

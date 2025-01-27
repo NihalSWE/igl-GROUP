@@ -1,0 +1,88 @@
+/* Align navbar menu items to the right */
+.navbar-nav {
+    margin-left: auto;
+}
+
+/* Space between the logo and the menu */
+.logo {
+    width: 80px;
+    height: auto;
+    margin-right: 50px;
+}
+
+/*  navbar dropdown css*/
+/* Ensure dropdown items are aligned correctly */
+.navbar-nav .nav-item.dropdown {
+    position: relative;
+}
+
+/* Dropdown link styles */
+.navbar-nav .nav-item .nav-link {
+    color: #fff !important;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #0091ff !important;  /* Adjust hover color */
+}
+
+/* Glass effect for dropdown menu container */
+.navbar-nav .nav-item .dropdown-menu {
+    background: rgba(255, 255, 255, 0.1);  /* Semi-transparent white background */
+    border-radius: 0.25rem;
+    backdrop-filter: blur(10px);  /* Apply blur effect to create glass effect */
+    padding: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: none;  /* Keep hidden initially */
+    position: absolute;
+    top: 0;  /* Align dropdown at the top */
+    left: 0;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Dropdown items inside the dropdown */
+.navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    color: #fff !important;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: left;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #34658a;  /* Hover effect */
+    color: #fff !important;
+}
+
+/* Show dropdown on hover with the glass effect */
+.navbar-nav .nav-item:hover .dropdown-menu {
+    display: block;
+    animation: fadeInDown 0.3s ease-out;
+    background: rgba(255, 255, 255, 0.15);  /* Slightly stronger glass effect */
+    backdrop-filter: blur(8px);  /* Keep the blur when open */
+}
+
+/* Optional: Add animation for dropdown */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown on mobile devices */
+@media (max-width: 768px) {
+    .navbar-nav .nav-item .dropdown-menu {
+        position: static;  /* Dropdown will align normally in mobile */
+        box-shadow: none;
+    }
+}
+
+
