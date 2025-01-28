@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata
+from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery,GalleryBanner,Blog
 
 
 @admin.register(NavMenu)
@@ -48,4 +48,17 @@ class ContactFromdataAdmin(admin.ModelAdmin):
     search_fields = ("name", "email", "message")
 
 
+#-----------gallery page----
+@admin.register(GalleryBanner)
+class GalleryBannerAdmin(admin.ModelAdmin):
+    list_display = ('title',)
 
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'uploaded_at')
+    ordering = ('-uploaded_at',)
+    
+#--------------blog--------
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'published_date')

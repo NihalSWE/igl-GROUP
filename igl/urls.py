@@ -18,6 +18,13 @@ urlpatterns = [
     path('gallery/',views.gallery,name="gallery"),
     path('case_studies/',views.case_studies,name="case_studies"),
     
+    path('career/',views.career,name="career"),
+    
+    path('blog/',views.blog,name="blog"),
+    path('blog_single/<int:pk>/',views.blog_single,name="blog_single"),
+    
+    
+    
    
     
 ]

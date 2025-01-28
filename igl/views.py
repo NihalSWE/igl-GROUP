@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata,Gallery,GalleryBanner,Blog
 from django.http import JsonResponse
 
 
@@ -47,7 +47,13 @@ def contact(request):
 
 
 def gallery(request):
-    return render(request, 'frontend/gallery.html')
+    banner = GalleryBanner.objects.first()
+    photos = Gallery.objects.all().order_by('-uploaded_at')  # Order by most recent
+    context = {
+        'banner':banner,
+        'photos': photos,
+    }
+    return render(request, 'frontend/gallery.html', context)
 
 def case_studies(request):
     return render(request, 'frontend/case-studies.html')
@@ -60,3 +66,22 @@ def bod(request):
 
 def bos(request):
     return render(request, 'frontend/BOS.html')
+
+def career(request):
+    return render (request,'frontend/career.html')
+
+def blog(request):
+    blogs = Blog.objects.all().order_by('-published_date')
+    context = {
+        'blogs': blogs,
+    }
+    return render(request, 'frontend/blogs.html', context)
+
+def blog_single(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    context = {
+        'blog': blog,
+    }
+    return render(request, 'frontend/blog-single.html', context)
+
+

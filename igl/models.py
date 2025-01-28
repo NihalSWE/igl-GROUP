@@ -1,6 +1,6 @@
 # models.py
 from django.db import models
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Model for Navigation Menu
 
@@ -118,3 +118,56 @@ class Contact_fromdata(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+    
+#-----------Gallery page model-------
+#banner
+class GalleryBanner(models.Model):
+    title = models.CharField(max_length=255, default="Contact Us")
+    background_image = models.ImageField(upload_to='banners/')
+
+    def __str__(self):
+        return self.title
+
+class Gallery(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)  # Optional title for the image
+    image = models.ImageField(upload_to='gallery/')  # Uploads images to the 'gallery/' directory
+    uploaded_at = models.DateTimeField(auto_now_add=True)  # Tracks upload date
+
+    def __str__(self):
+        return self.title if self.title else f"Image {self.id}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the instance first
+
+        # Desired square size
+        square_size = 500
+
+        # Open the uploaded image
+        img = Image.open(self.image.path)
+
+        # Convert to RGB if the image has an alpha channel
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+
+        # Create a square canvas with a white background
+        img = ImageOps.fit(img, (square_size, square_size), Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+
+        # Save the resized image back to the same path
+        img.save(self.image.path)
+        
+        
+#--------blog model--------
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
+    published_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
+
+    # Optionally, to get the first 200 characters of the content for preview
+    def snippet(self):
+        return self.content[:200] + '...'

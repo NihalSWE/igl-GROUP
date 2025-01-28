@@ -89,3 +89,55 @@
 
 /*---------------contact us location card size---------------------*/
 /* Reduce the height of the image */
+
+
+/*---------------Galarry css---------*/
+/* Photo Gallery Container */
+.photo-gallery {
+    padding: 50px 0; /* Add some spacing around the section */
+  
+}
+
+.photo-gallery h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333; /* Dark gray for better readability */
+    margin-bottom: 30px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px; /* Soft rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
+
+.gallery-item:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.gallery-item img {
+    width: 100%; /* Responsive to container width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the full image fits within the container without cropping */
+    border-radius: 10px;
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in on hover */
+}
+
+.gallery-item:hover .gallery-caption {
+    opacity: 1; /* Show caption on hover */
+}
