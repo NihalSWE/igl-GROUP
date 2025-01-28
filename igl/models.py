@@ -57,24 +57,64 @@ class ContactBanner(models.Model):
 
 
 #shedul
-class Contact_ShedulSection(models.Model):
-    title = models.CharField(max_length=255, default="Call or visit us at one of our different locations.")
-    description = models.TextField(default="Amet minim mollit non deserunt ullamco est aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit amet minim mollit on.")
-    button_text = models.CharField(max_length=100, default="Schedule a call")
-    button_url = models.URLField(default="#",null=True,blank=True)
+from django.db import models
+
+class Contact_Schedule(models.Model):
+    """
+    Manages the main schedule/contact section's heading, description, and call-to-action button.
+    """
+    title = models.CharField(max_length=255, help_text="Main heading text for the contact section.")
+    description = models.TextField(max_length=255,help_text="Short description or introduction.")
+    button_text = models.CharField(max_length=100, help_text="Text for the call-to-action button.")
+    button_link = models.URLField(help_text="URL the button redirects to.", blank=True, null=True)
 
     def __str__(self):
         return self.title
 
-#Location
-class Contact_LocationSection(models.Model):
-    section = models.ForeignKey(Contact_ShedulSection, related_name="locations", on_delete=models.CASCADE)
-    city_name = models.CharField(max_length=100)
-    address = models.TextField(max_length=100)
-    phone_number = models.CharField(max_length=20)
-    map_url = models.URLField(default="#",null=True,blank=True)
-    image = models.ImageField(upload_to="locations/")
+#location
+class Contact_Location(models.Model):
+    """
+    Manages the details of individual locations, including an embedded Google Maps iframe.
+    """
+    city = models.CharField(max_length=100, help_text="City name.")
+    address = models.TextField(max_length=255,help_text="Full address of the location.")
+    map_url = models.URLField(
+        help_text="Google Maps link for the location. Paste the link from Google Maps.",
+        blank=True,
+        null=True
+    )
+    phone_number = models.CharField(max_length=20, help_text="Phone number for the location.")
+    image = models.ImageField(upload_to="locations/", help_text="Image or background for the location.")
+
+    def resize_image(self):
+        """
+        Resize image to a standard size (e.g., 300x200px).
+        """
+        img = Image.open(self.image)
+        img = img.resize((300, 200), Image.Resampling.LANCZOS)  # Using LANCZOS for high-quality resizing
+        
+        # Save the image back to the same path
+        img.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        """
+        Overriding the save method to resize the image before saving it.
+        """
+        if self.image:
+            self.resize_image()
+        super(Contact_Location, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.city_name
+        return f"{self.city} - {self.address}"
+    
+    
+#From Data
 
+class Contact_fromdata(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

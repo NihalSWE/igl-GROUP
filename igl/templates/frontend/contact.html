@@ -30,60 +30,57 @@
         <section class="pt-3 sm-pt-50px">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-xl-5 col-lg-8 col-md-10 lg-mb-50px" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 250, "easing": "easeOutQuad" }'>
+                    <!-- Contact Schedule Section -->
+                    <div class="col-xl-5 col-lg-8 col-md-10 lg-mb-50px">
                         <div class="position-sticky top-120px lg-top-0px lg-position-relative text-center text-xl-start">
-                            <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex justify-content-center justify-content-xl-start"><i class="bi bi-chat-square-dots fs-16 me-5px"></i>Lets's work together</span>
-                            <h3 class="text-dark-gray ls-minus-2px fw-700">Call or visit us at one of our different locations.</h3>
-                            <p class="mb-35px w-90 lg-w-100 sm-mb-25px">Amet minim mollit non deserunt ullamco est aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit amet minim mollit on.</p>
-                            <a href="#" class="btn btn-extra-large btn-switch-text btn-gradient-purple-pink left-icon btn-rounded me-10px ls-0px">
+                            <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex justify-content-center justify-content-xl-start">
+                                <i class="bi bi-chat-square-dots fs-16 me-5px"></i> Let's work together
+                            </span>
+                            <h3 class="text-dark-gray ls-minus-2px fw-700">{{ contact_schedule.title }}</h3>
+                            <p class="mb-35px w-90 lg-w-100 sm-mb-25px">{{ contact_schedule.description }}</p>
+                            <a href="{{ contact_schedule.button_link }}" class="btn btn-extra-large btn-switch-text btn-gradient-purple-pink left-icon btn-rounded me-10px ls-0px">
                                 <span>
                                     <span><i class="bi bi-telephone-outbound"></i></span>
-                                    <span class="btn-double-text" data-text="Schedule a call">Schedule a call</span>
+                                    <span class="btn-double-text" data-text="Schedule a call">{{ contact_schedule.button_text }}</span>
                                 </span>
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-8 col-md-10 offset-xl-1">
-                        <div class="row row-cols-1 justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                            <!-- start services box item -->
-                            <div class="col services-box-style-02 mb-30px">
-                                <div class="row g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <div class="h-100 cover-background xs-h-300px" style="background-image: url('{% static 'images/demo-yoga-and-meditation-contact-01.jpg' %}');"></div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6 bg-white box-shadow-extra-large p-40px xl-p-30px">
-                                        <div class="services-box-content last-paragraph-no-margin">
-                                            <span class="d-block text-dark-gray primary-font fw-700 fs-19 mb-10px">New York</span>
-                                            <p>167 Hawthorne, Business central, New York, 11722</p>
-                                            <a href="#" class="fs-16 lh-20 primary-font fw-500 text-dark-gray text-decoration-line-bottom d-inline-block mb-25px">View on map</a>
-                                            <div class="text-dark-gray fw-600"><i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i><a href="tel:12345678910">+1 234 567 8910</a></div>
-                                        </div> 
-                                    </div> 
-                                </div>
-                            </div>
-                            <!-- end services box item --> 
-                            <!-- start services box item -->
-                            <div class="col services-box-style-02 mb-30px">
-                                <div class="row g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
-                                    <div class="col-lg-6 col-sm-6">
-                                        <div class="h-100 cover-background xs-h-300px" style="background-image: url('{% static 'images/demo-yoga-and-meditation-contact-02.jpg' %}');"></div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6 bg-white box-shadow-extra-large p-40px xl-p-30px">
-                                        <div class="services-box-content last-paragraph-no-margin">
-                                            <span class="d-block text-dark-gray primary-font fw-700 fs-19 mb-10px">San Francisco</span>
-                                            <p>777 Magnolia farme ville, San Francisco, 93223</p>
-                                            <a href="#" class="fs-16 lh-20 primary-font fw-500 text-dark-gray text-decoration-line-bottom d-inline-block mb-25px">View on map</a>
-                                            <div class="text-dark-gray fw-600"><i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i><a href="tel:12345678910">+1 234 567 8910</a></div>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end services box item --> 
+        
+                    <!-- Contact Locations Section -->
+<div class="col-xl-6 col-lg-8 col-md-10 offset-xl-1">
+    <div class="row row-cols-1 justify-content-center">
+        {% for location in contact_locations %}
+        <div class="col services-box-style-02 mb-30px">
+            <div class="row g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden" style="height: 250px;">
+                <div class="col-lg-6 col-sm-6">
+                    <!-- Adjust the image height -->
+                    <div class="h-100 cover-background" style="background-image: url('{{ location.image.url }}'); height: 100%; max-height: 250px;"></div>
+                </div>
+                <div class="col-lg-6 col-sm-6 bg-white box-shadow-extra-large p-20px d-flex align-items-center">
+                    <div class="services-box-content last-paragraph-no-margin">
+                        <span class="d-block text-dark-gray primary-font fw-700 fs-19 mb-10px">{{ location.city }}</span>
+                        <p class="mb-10px">{{ location.address }}</p>
+                        <!-- View Map Link with map_url -->
+                        <a href="{{ location.map_url }}" class="btn btn-link text-dark-gray" target="_blank">View map</a>
+                        <div class="text-dark-gray fw-600">
+                            <i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i>
+                            <a href="tel:{{ location.phone_number }}">{{ location.phone_number }}</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+                    
+                    
+                </div>
+            </div>
         </section>
+        
         <!-- end section -->
         <!-- start section --> 
         <section class="bg-very-light-gray position-relative">     
@@ -114,38 +111,49 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 offset-xl-1 md-mb-50px sm-mb-0" data-anime='{ "el": "childs", "translateX": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                    <div class="col-lg-6 offset-xl-1 md-mb-50px sm-mb-0">
                         <h3 class="text-dark-gray ls-minus-2px fw-700">Looking for any help?</h3>
-                        <form action="email-templates/contact-form.php" method="post" class="contact-form-style-03">
-                            <label for="exampleInputEmail1" class="form-label fs-13 text-uppercase text-dark-gray fw-700 mb-0">Enter your name*</label>
-                            <div class="position-relative form-group mb-20px">
-                                <span class="form-icon"><i class="bi bi-emoji-smile text-dark-gray"></i></span>
-                                <input class="fs-15 ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" id="exampleInputEmail1" type="text" name="name" placeholder="What's your good name">
+                        
+                        <!-- Success message will be shown here after the form is submitted -->
+                        <div id="success-message" class="alert alert-success text-center mb-4" style="display: none;"></div>
+                    
+                        <!-- New form design with simpler structure and better layout -->
+                        <form id="contact-form" class="contact-form-style-03">
+                            {% csrf_token %}
+                            
+                            <!-- Name Input -->
+                            <div class="form-group mb-3">
+                                <label for="name" class="form-label text-dark-gray fw-600">Enter your name*</label>
+                                <input class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="name" type="text" name="name" placeholder="What's your good name" required>
                             </div>
-                            <label for="exampleInputEmail1" class="form-label fs-13 text-uppercase text-dark-gray fw-700 mb-0">Email address*</label>
-                            <div class="position-relative form-group mb-20px">
-                                <span class="form-icon"><i class="bi bi-envelope text-dark-gray"></i></span>
-                                <input class="fs-15 ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control required" id="exampleInputEmail2" type="email" name="email" placeholder="Enter your email address">
+                    
+                            <!-- Email Input -->
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label text-dark-gray fw-600">Email address*</label>
+                                <input class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="email" type="email" name="email" placeholder="Enter your email address" required>
                             </div>
-                            <label for="exampleInputEmail1" class="form-label fs-13 text-uppercase text-dark-gray fw-700 mb-0">Your message</label>
-                            <div class="position-relative form-group form-textarea mb-0"> 
-                                <textarea class="fs-15 ps-0 border-radius-0px border-color-dark-gray bg-transparent form-control" name="comment" placeholder="Describe about your project" rows="3"></textarea>
-                                <span class="form-icon"><i class="bi bi-chat-square-dots text-dark-gray"></i></span>
+                    
+                            <!-- Message Textarea -->
+                            <div class="form-group mb-3">
+                                <label for="message" class="form-label text-dark-gray fw-600">Your message*</label>
+                                <textarea class="form-control border-color-dark-gray rounded-0 px-3 py-2" name="comment" placeholder="Describe your message" rows="4" required></textarea>
                             </div>
-                            <div class="row mt-25px align-items-center">
-                                <div class="col-xl-7 col-lg-12 col-sm-7 lg-mb-30px md-mb-0">
-                                    <p class="mb-0 fs-14 lh-22 text-center text-sm-start">We will never collect information about you without your explicit consent.</p>
-                                </div>
-                                <div class="col-xl-5 col-lg-12 col-sm-5 text-center text-sm-end text-lg-start text-xl-end xs-mt-25px">
-                                    <input id="exampleInputEmail3" type="hidden" name="redirect" value="">
-                                    <button class="btn btn-dark-gray btn-medium btn-round-edge btn-box-shadow submit" type="submit">Send message</button> 
-                                </div>
-                                <div class="col-12 mt-20px mb-0 text-center text-md-start">
-                                    <div class="form-results d-none"></div>
-                                </div>
+                    
+                            <!-- Submit Button -->
+                            <div class="d-flex justify-content-center mt-4">
+                                <button class="btn btn-dark-gray btn-round px-5 py-2" type="submit">Send Message</button>
+                            </div>
+                    
+                            <!-- Privacy note below -->
+                            <div class="mt-3 text-center">
+                                <p class="fs-14 text-dark-gray mb-0">We will never collect information about you without your explicit consent.</p>
                             </div>
                         </form>
                     </div>
+                    
+                  
+                    
+                    
                 </div>
             </div>
             <div class="shape-image-animation p-0 w-100 bottom-minus-40px xl-bottom-0px d-none d-md-block"> 
@@ -159,6 +167,42 @@
             </div>
         </section>
         <!-- end section -->
+
+
+  <!-- jQuery Script to handle the form submission via AJAX -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  $(document).ready(function() {
+      // When the form is submitted
+      $('#contact-form').submit(function(event) {
+          event.preventDefault();  // Prevent the default form submission
+  
+          var formData = $(this).serialize();  // Get form data
+  
+          $.ajax({
+              type: 'POST',
+              url: '{% url "contact" %}',  // The URL for the contact form submission
+              data: formData,
+              success: function(response) {
+                  // On success, display the success message
+                  $('#success-message').text(response.success_message).show();
+                  
+                  // Clear the form fields
+                  $('#contact-form')[0].reset();
+              },
+              error: function(xhr, errmsg, err) {
+                  // Handle error (if needed)
+                  console.log("Error: " + errmsg);
+              }
+          });
+      });
+  });
+  </script>
+  
+  
+  
+  
+
         {% endblock %}
 
 

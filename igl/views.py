@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from .models import CoverSection,ContactBanner, Contact_ShedulSection
+from django.shortcuts import render, redirect
+from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata
+from django.http import JsonResponse
+
 
 
 # Create your views here.
@@ -16,13 +18,33 @@ def about(request):
     return render(request, 'frontend/about.html')
 
 def contact(request):
+    # Fetch the necessary data for rendering the page
     banner = ContactBanner.objects.first()
-    section = Contact_ShedulSection.objects.prefetch_related("locations").first()
-    context={
-        'banner':banner,
-        'section':section,
+    contact_schedule = Contact_Schedule.objects.first()
+    contact_locations = Contact_Location.objects.all()
+
+    if request.method == 'POST':
+        # Get the form data from the POST request
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('comment')
+
+        # Save the data to the database
+        contact_form_data = Contact_fromdata(name=name, email=email, message=message)
+        contact_form_data.save()
+
+        # Return the success message as a JSON response to update the page asynchronously
+        return JsonResponse({"success_message": "Your message has been successfully sent. We will get back to you shortly!"})
+
+    # Render the form with necessary context (for GET request)
+    context = {
+        "banner": banner,
+        "contact_schedule": contact_schedule,
+        "contact_locations": contact_locations,
     }
-    return render(request, 'frontend/contact.html',context)
+
+    return render(request, 'frontend/contact.html', context)
+
 
 def gallery(request):
     return render(request, 'frontend/gallery.html')

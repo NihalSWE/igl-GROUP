@@ -1,6 +1,7 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_ShedulSection, Contact_LocationSection
+from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata
+
 
 @admin.register(NavMenu)
 class NavMenuAdmin(admin.ModelAdmin):
@@ -29,19 +30,22 @@ class ContactBannerAdmin(admin.ModelAdmin):
     list_display = ('title',)
     
 
-class Contact_LocationSectionInline(admin.TabularInline):
-    model = Contact_LocationSection
-    extra = 1
+@admin.register(Contact_Schedule)
+class ContactScheduleAdmin(admin.ModelAdmin):
+    list_display = ("title", "button_text", "button_link")
+    search_fields = ("title", "description")
 
 
-@admin.register(Contact_ShedulSection)
-class Contact_ShedulSectionAdmin(admin.ModelAdmin):
-    inlines = [Contact_LocationSectionInline]
-    list_display = ("title",)
+@admin.register(Contact_Location)
+class ContactLocationAdmin(admin.ModelAdmin):
+    list_display = ("city", "address", "phone_number")
+    search_fields = ("city", "address", "phone_number")
 
 
-
-
+@admin.register(Contact_fromdata)
+class ContactFromdataAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "message", "created_at")
+    search_fields = ("name", "email", "message")
 
 
 
