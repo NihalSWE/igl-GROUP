@@ -26,25 +26,45 @@
     <!-- end page title -->
 
     
-    <!-- Start Blog List Section -->
-    <section class="pt-5 pb-5">
-        <div class="container">
-            <h2 class="text-center text-dark fw-bold mb-5">Latest Blogs</h2>
-            <div class="row g-4">
-                {% for blog in blogs %}
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="blog-item">
-                            {% if blog.image %}
-                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid">
-                            {% endif %}
-                            <h3><a href="{% url 'blog_single' pk=blog.pk %}">{{ blog.title }}</a></h3>
-                            <p>{{ blog.snippet }}</p>
-                            <a href="{% url 'blog_single' pk=blog.pk %}" class="btn btn-primary">Read More</a>
+<!-- Start Blog List Section -->
+<section class="blog-section">
+    <div class="container">
+        <h2 class="section-title">Latest Blogs</h2>
+        <div class="row g-4">
+            {% for blog in blogs %}
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <article class="blog-card">
+                        {% if blog.image %}
+                            <div class="blog-image">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.title|default:'Blog Image' }}" class="img-fluid">
+                            </div>
+                        {% endif %}
+                        <div class="blog-content">
+                            <h5 class="blog-title">
+                                <a href="{% url 'blog_single' pk=blog.pk %}">
+                                    {{ blog.title|truncatechars:50 }}
+                                </a>
+                            </h5>
+                            <div class="blog-excerpt">
+                                <p>{{ blog.snippet|safe }}</p>
+                            </div>
+                            <div class="read-more-wrapper">
+                                <a href="{% url 'blog_single' pk=blog.pk %}" class="read-more">
+                                    Read More
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="arrow-icon">
+                                        <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                    </article>
+                </div>
+            {% empty %}
+                <p class="text-center">No blogs available at the moment.</p>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
+
 
 {% endblock %}

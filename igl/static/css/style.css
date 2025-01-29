@@ -1,3 +1,105 @@
+/*----footer------*/
+
+/* Footer Background */
+.footer-light {
+    background-color: #343a40;
+    color: #fff;
+    padding: 8px 0; /* Further reduced vertical padding */
+}
+
+/* Footer Heading */
+.footer-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+/* Footer Links */
+.footer-nav {
+    display: flex;
+    justify-content: flex-end; /* Align links to the right */
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-nav a,
+.footer-column a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 13px;
+}
+
+.footer-nav a:hover,
+.footer-column a:hover {
+    color: #f39c12;
+}
+
+/* Footer Columns */
+.footer-column {
+    margin-bottom: 0.6rem;
+}
+
+/* Search Box Styling */
+.upper-box {
+    display: flex;
+    justify-content: flex-end; /* Align everything to the right */
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 3px;
+}
+
+/* Reduce Bottom Section Padding & Margin */
+.border-top {
+    margin-top: 0;
+    padding-top: 2px; /* Adjust padding as needed */
+}
+
+/* Ensure the row takes minimal space */
+.py-2 {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+/* Copyright and Social Links - Right Alignment */
+.footer-bottom {
+    display: flex;
+    justify-content: flex-end; /* Align everything to the right */
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 3px 0;
+}
+
+/* Remove extra spacing from paragraph */
+.footer-bottom p {
+    margin: 0;
+    padding: 0;
+    font-size: 13px; /* Adjust font size for compact layout */
+}
+
+/* Social Links */
+.footer-bottom ul {
+    list-style: none;
+    display: flex;
+    gap: 6px; /* Reduced spacing */
+    margin: 0;
+    padding: 0;
+}
+
+/* Social Icons */
+.list-inline-item a {
+    font-size: 15px; /* Adjusted size */
+    margin-right: 6px;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.list-inline-item a:hover {
+    color: #f39c12;
+}
+
 /* Align navbar menu items to the right */
 .navbar-nav {
     margin-left: auto;
@@ -5,10 +107,38 @@
 
 /* Space between the logo and the menu */
 .logo {
-    width: 80px;
-    height: auto;
-    margin-right: 50px;
+    width: 70px;
+    /* height: auto; */
+    /* margin-right: 35px; */
 }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 4px;
+        justify-content: center; /* Center-align on mobile */
+    }
+
+    .upper-box {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .upper-box form {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+}
+
+
 
 /*  navbar dropdown css*/
 /* Ensure dropdown items are aligned correctly */
@@ -140,4 +270,329 @@
 
 .gallery-item:hover .gallery-caption {
     opacity: 1; /* Show caption on hover */
+}
+
+
+
+/*-----------blog page css-----*/
+.blog-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2d3436;
+    position: relative;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #007bff;
+    margin: 15px auto 0;
+}
+
+.blog-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.blog-image {
+    position: relative;
+    padding-top: 60%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.blog-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-image img {
+    transform: scale(1.05);
+}
+
+.blog-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.blog-title a {
+    color: #2d3436;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-title a:hover {
+    color: #007bff;
+}
+
+.blog-excerpt {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.blog-excerpt p {
+    color: #636e72;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.read-more-wrapper {
+    margin-top: auto;
+}
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.read-more:hover {
+    color: #0056b3;
+}
+
+.arrow-icon {
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+}
+
+.read-more:hover .arrow-icon {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .blog-section {
+        padding: 50px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .blog-title {
+        font-size: 1.1rem;
+    }
+}
+
+/*---------single blog page--*/
+.blog-detail-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.blog-post {
+    /* background: #fff; */
+    border-radius: 15px;
+    /* box-shadow: 0 5px 20px rgba(0,0,0,0.05); */
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.blog-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.blog-meta {
+    color: #636e72;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.blog-meta span {
+    margin: 0 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.blog-meta i {
+    margin-right: 8px;
+    color: #007bff;
+}
+
+.featured-image {
+    margin: -2.5rem -2.5rem 2rem -2.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.blog-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2d3436;
+    margin-bottom: 2rem;
+}
+
+.blog-content p {
+    margin-bottom: 1.5rem;
+}
+
+.blog-content h2,
+.blog-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #2d3436;
+    font-weight: 600;
+}
+
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.blog-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.post-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 6px 15px;
+    background-color: #e9ecef;
+    color: #2d3436;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.category-tag:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.social-share {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.share-title {
+    font-size: 0.95rem;
+    color: #636e72;
+}
+
+.share-link {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.share-link:hover {
+    transform: translateY(-3px);
+}
+
+.share-link.facebook {
+    background-color: #3b5998;
+}
+
+.share-link.twitter {
+    background-color: #1da1f2;
+}
+
+.share-link.linkedin {
+    background-color: #0077b5;
+}
+
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 1.5rem;
+    }
+
+    .featured-image {
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    }
+
+    .blog-title {
+        font-size: 2rem;
+    }
+
+    .blog-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
 }

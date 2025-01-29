@@ -159,15 +159,74 @@ class Gallery(models.Model):
         
         
 #--------blog model--------
+from django.utils.text import Truncator
+from ckeditor.fields import RichTextField
+
 class Blog(models.Model):
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = RichTextField()  # ✅ Use CKEditor for content
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     published_date = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.title
 
-    # Optionally, to get the first 200 characters of the content for preview
+    # Limit title to first 10 characters, adding '...' if too long
+    def short_title(self):
+        return Truncator(self.title).chars(10, truncate='...')
+
+    # Get a snippet of the content with full words
     def snippet(self):
-        return self.content[:200] + '...'
+        return Truncator(self.content).words(15, truncate='...')
+
+    # Resize image to a fixed size when saved
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            img_path = self.image.path
+            with Image.open(img_path) as img:
+                img = img.resize((600, 400), Image.Resampling.LANCZOS)
+                img.save(img_path)
+                
+                
+                
+                
+#-----------career model-----
+
+from django.urls import reverse
+
+class JobPosting(models.Model):
+    title = models.CharField(max_length=200)
+    short_description = RichTextField()
+    full_description = RichTextField()
+    location = models.CharField(max_length=100, choices=[  # You can use choices for predefined branches
+        ('dhaka', 'Dhaka'),
+        ('chittagong', 'Chittagong'),
+    ])
+    job_type = models.CharField(max_length=50, choices=[
+        ('full-time', 'Full Time'),
+        ('part-time', 'Part Time'),
+        ('contract', 'Contract'),
+    ])
+    posted_date = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateField()
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('job_detail', args=[str(self.id)])
+
+class JobApplication(models.Model):
+    job = models.ForeignKey(JobPosting, on_delete=models.CASCADE, related_name='applications')
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    cv = models.FileField(upload_to='cvs/')
+    linkedin_url = models.URLField(blank=True)
+    portfolio_url = models.URLField(blank=True)
+    applied_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.name} - {self.job.title}"

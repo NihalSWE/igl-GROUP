@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata,Gallery,GalleryBanner,Blog
+from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata,Gallery,GalleryBanner,Blog,JobPosting, JobApplication
 from django.http import JsonResponse
 
 
@@ -67,8 +67,66 @@ def bod(request):
 def bos(request):
     return render(request, 'frontend/BOS.html')
 
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.http import JsonResponse
+from .models import JobPosting, JobApplication
+
+# Career page
 def career(request):
-    return render (request,'frontend/career.html')
+   # Get all jobs
+    all_jobs = JobPosting.objects.filter(is_active=True).order_by('-posted_date')
+    # Filter Dhaka jobs
+    dhaka_jobs = all_jobs.filter(location='dhaka')
+    # Filter Chittagong jobs
+    chittagong_jobs = all_jobs.filter(location='chittagong')
+
+    return render(request, 'frontend/career.html', {
+        'jobs': all_jobs,
+        'dhaka_jobs': dhaka_jobs,
+        'chittagong_jobs': chittagong_jobs,
+    })
+
+# Job Detail page
+def job_detail(request, pk):
+    job = get_object_or_404(JobPosting, pk=pk)
+    return render(request, 'frontend/job_details.html', {'job': job})
+
+# Submit application view
+def submit_application(request, job_id):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        linkedin_url = request.POST.get('linkedin', '')
+        portfolio_url = request.POST.get('portfolio', '')
+        cv = request.FILES.get('cv')
+        
+        # Validate required fields
+        if not name or not email or not phone or not cv:
+            return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields.'})
+        
+        job = get_object_or_404(JobPosting, id=job_id)
+
+        # Create and save the job application
+        application = JobApplication(
+            job=job,
+            name=name,
+            email=email,
+            phone=phone,
+            cv=cv,
+            linkedin_url=linkedin_url,
+            portfolio_url=portfolio_url
+        )
+        application.save()
+
+        messages.success(request, 'Your application has been submitted successfully!')
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+
+
 
 def blog(request):
     blogs = Blog.objects.all().order_by('-published_date')

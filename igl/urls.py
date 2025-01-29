@@ -18,7 +18,9 @@ urlpatterns = [
     path('gallery/',views.gallery,name="gallery"),
     path('case_studies/',views.case_studies,name="case_studies"),
     
-    path('career/',views.career,name="career"),
+    path('career/', views.career, name='career'),
+    path('job_detail/<int:pk>/', views.job_detail, name='job_detail'),  # Ensure this is present
+    path('submit_application/<int:job_id>/', views.submit_application, name='submit_application'),
     
     path('blog/',views.blog,name="blog"),
     path('blog_single/<int:pk>/',views.blog_single,name="blog_single"),

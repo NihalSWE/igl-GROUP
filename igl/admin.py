@@ -59,6 +59,26 @@ class GalleryAdmin(admin.ModelAdmin):
     ordering = ('-uploaded_at',)
     
 #--------------blog--------
+from django.db import models  # ✅ Import models
+from ckeditor.widgets import CKEditorWidget
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'published_date')
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget()},
+    }
+    
+#-----------career----------
+from .models import JobPosting, JobApplication
+
+@admin.register(JobPosting)
+class JobPostingAdmin(admin.ModelAdmin):
+    list_display = ('title', 'location', 'job_type', 'posted_date', 'deadline', 'is_active')
+    list_filter = ('job_type', 'is_active', 'location')
+    search_fields = ('title', 'description')
+
+@admin.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'job', 'email', 'applied_date')
+    list_filter = ('job', 'applied_date')
+    search_fields = ('name', 'email', 'phone')
