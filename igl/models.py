@@ -196,37 +196,56 @@ class Blog(models.Model):
 from django.urls import reverse
 
 class JobPosting(models.Model):
-    title = models.CharField(max_length=200)
-    short_description = RichTextField()
-    full_description = RichTextField()
-    location = models.CharField(max_length=100, choices=[  # You can use choices for predefined branches
+    LOCATION_CHOICES = [
         ('dhaka', 'Dhaka'),
         ('chittagong', 'Chittagong'),
-    ])
-    job_type = models.CharField(max_length=50, choices=[
-        ('full-time', 'Full Time'),
-        ('part-time', 'Part Time'),
-        ('contract', 'Contract'),
-    ])
+    ]
+
+    title = models.CharField(max_length=200)
+    short_description = RichTextField(max_length=200)
+    full_description = RichTextField(max_length=5000)
+    location = models.CharField(max_length=100, choices=LOCATION_CHOICES)  # Kept as CharField
+    job_type = models.CharField(
+        max_length=50,
+        choices=[
+            ('full-time', 'Full Time'),
+            ('part-time', 'Part Time'),
+            ('contract', 'Contract'),
+        ]
+    )
+    salary = models.CharField(max_length=100, null=True, help_text="Specify salary range (e.g., 30,000 - 50,000 BDT)")
     posted_date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField()
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.get_location_display()}"
 
     def get_absolute_url(self):
         return reverse('job_detail', args=[str(self.id)])
 
+
 class JobApplication(models.Model):
     job = models.ForeignKey(JobPosting, on_delete=models.CASCADE, related_name='applications')
+    location = models.CharField(max_length=100, editable=False, default='dhaka')  # Auto-filled from job
     name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
     cv = models.FileField(upload_to='cvs/')
     linkedin_url = models.URLField(blank=True)
     portfolio_url = models.URLField(blank=True)
     applied_date = models.DateTimeField(auto_now_add=True)
-    
+
+    def save(self, *args, **kwargs):
+        """Automatically set the location from the job posting."""
+        if self.job:
+            self.location = self.job.location  # Auto-assign job's location
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"{self.name} - {self.job.title}"
+        return f"{self.name} - {self.job.title} ({self.get_location_display()})"
+
+    def get_location_display(self):
+        """Convert location code to human-readable form."""
+        location_dict = dict(JobPosting.LOCATION_CHOICES)
+        return location_dict.get(self.location, self.location)

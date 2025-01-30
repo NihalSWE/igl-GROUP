@@ -596,3 +596,344 @@
         gap: 1.5rem;
     }
 }
+
+
+/*------------career page css--------*/
+
+/* Modern Career Page Styling */
+.career-page {
+    background: linear-gradient(to bottom right, #f8f9fa, #ffffff);
+    min-height: 100vh;
+    padding: 4rem 0;
+}
+
+/* Section Title */
+.career-page h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.career-page h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    border-radius: 2px;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    border: none;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    gap: 1rem;
+}
+
+.nav-tabs .nav-item {
+    margin: 0;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    color: #636e72;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: #f5f6fa;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #2d3436;
+    background: #dfe6e9;
+}
+
+.nav-tabs .nav-link.active {
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    color: white;
+    box-shadow: 0 4px 15px rgba(9, 132, 227, 0.2);
+}
+
+/* Job Cards */
+.job-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    overflow: hidden;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.job-card .card-body {
+    padding: 2rem;
+}
+
+.job-card .card-title {
+    color: #2d3436;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.job-card .card-text {
+    color: #636e72;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.job-card .btn-primary {
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.job-card .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+}
+
+/* Tab Content Animation */
+.tab-pane {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .career-page {
+        padding: 2rem 0;
+    }
+
+    .career-page h1 {
+        font-size: 2rem;
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 0.5rem 1.25rem;
+        white-space: nowrap;
+    }
+
+    .job-card .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/*---job details page css----*/
+/* Job Details Section Styling */
+.job-detail {
+    background: linear-gradient(to bottom right, #f8f9fa, #ffffff);
+    padding: 4rem 0;
+    min-height: 80vh;
+}
+
+.job-detail h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.job-detail h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    border-radius: 2px;
+}
+
+.job-detail h3 {
+    color: #2d3436;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.job-detail h5 {
+    color: #636e72;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.job-detail p {
+    color: #2d3436;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.apply-now {
+    background: linear-gradient(to right, #00b894, #00cec9);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+.apply-now:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+    color: white;
+}
+
+/* Modal Styling */
+.modal-dialog {
+    max-width: 600px;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    padding: 1.5rem;
+    border: none;
+}
+
+.modal-title {
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.modal-header .close {
+    color: white;
+    opacity: 1;
+    text-shadow: none;
+    transition: transform 0.3s ease;
+}
+
+.modal-header .close:hover {
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    color: #2d3436;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 2px solid #f0f2f5;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+}
+
+input[type="file"].form-control {
+    padding: 0.5rem;
+}
+
+.modal-body .btn-primary {
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.modal-body .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .job-detail {
+        padding: 2rem 0;
+    }
+    
+    .job-detail h2 {
+        font-size: 2rem;
+    }
+    
+    .job-detail h3 {
+        font-size: 1.75rem;
+    }
+    
+    .modal-dialog {
+        margin: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+}
+
+/* Animation for Modal */
+.modal.fade .modal-dialog {
+    transform: scale(0.8);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+}

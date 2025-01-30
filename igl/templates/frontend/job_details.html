@@ -30,7 +30,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>{{ job.title }}</h3>
-                    <p>{{ job.full_description }}</p>
+                    <p>{{ job.full_description|safe }}</p>
+
                     <h5>Location: {{ job.location }}</h5>
                     <h5>Salary: {{ job.salary }}</h5>
                     <!-- Other job details here -->
@@ -40,87 +41,103 @@
         </div>
     </section>
 
-    <!-- Application Form Modal -->
-    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Apply for Job</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="applicationForm" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="job_id" id="job_id">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" name="phone" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>CV</label>
-                            <input type="file" name="cv" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>LinkedIn</label>
-                            <input type="url" name="linkedin" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Portfolio</label>
-                            <input type="url" name="portfolio" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Application</button>
-                    </form>
-                </div>
+<!-- Application Form Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Apply for Job</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="applicationForm" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="job_id" id="job_id">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CV</label>
+                        <input type="file" name="cv" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn</label>
+                        <input type="url" name="linkedin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Portfolio</label>
+                        <input type="url" name="portfolio" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle "Apply Now" button clicks to open the modal
             document.querySelectorAll(".apply-now").forEach(button => {
-                button.addEventListener("click", function() {
-                    // Set the job ID to the hidden input field in the modal
+                button.addEventListener("click", function () {
                     let jobId = this.dataset.id;
                     document.getElementById("job_id").value = jobId;
-                    // Show the modal
-                    $("#applyModal").modal("show");
+                    $("#applyModal").modal("show"); // Open modal
                 });
             });
-            
+        
             // Handle form submission
             const form = document.getElementById("applicationForm");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+        
                 const formData = new FormData(form);
-                
-                fetch("{% url 'submit_application' job_id=0 %}".replace('0', formData.get('job_id')), {
-                    method: 'POST',
+                const jobId = formData.get("job_id"); // Get job ID from form
+        
+                fetch("{% url 'submit_application' job_id=0 %}".replace("0", jobId), {
+                    method: "POST",
                     body: formData,
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'success') {
-                        alert('Application submitted successfully!');
-                        $('#applyModal').modal('hide');
+                    if (data.status === "success") {
+                        alert("Application submitted successfully!");
+                        $("#applyModal").modal("hide"); // Close modal
+                        form.reset(); // Reset form fields
                     } else {
-                        alert(data.message || 'Error submitting application.');
+                        alert(data.message || "Error submitting application.");
                     }
                 })
                 .catch(error => {
-                    alert('Error submitting application.');
+                    alert("Error submitting application.");
                 });
             });
+        
+            // Ensure modal closes properly and resets form when clicking the X button or outside the modal
+            $("#applyModal").on("hidden.bs.modal", function () {
+                form.reset(); // Reset the form when the modal is closed
+            });
+        
+            // Added handler for modal close (X button)
+            $(".close").on("click", function() {
+                $("#applyModal").modal("hide");  // Manually hide the modal
+                form.reset();  // Reset form fields
+            });
         });
+        
+        
     </script>
     
 

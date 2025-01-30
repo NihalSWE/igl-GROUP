@@ -50,9 +50,15 @@
                             <div class="card job-card">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">{{ job.short_description }}</p>
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">Read More</a>
-                                    <button class="btn btn-success apply-now" data-id="{{ job.id }}">Apply Now</button>
+                                    <p class="card-text short-description">
+                                        {% if job.short_description|length > 150 %}
+                                            {{ job.short_description|slice:":200"|safe  }}...
+                                        {% else %}
+                                            {{ job.short_description | safe }}
+                                        {% endif %}
+                                    </p>
+                                    
+                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -63,14 +69,20 @@
                 <!-- Dhaka Jobs -->
                 <div class="tab-pane fade" id="dhaka-jobs" role="tabpanel" aria-labelledby="dhaka-jobs-tab">
                     <div class="row">
-                        {% for job in jobs_dhaka %}
+                        {% for job in dhaka_jobs %}
                         <div class="col-md-6 mb-4">
                             <div class="card job-card">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">{{ job.short_description }}</p>
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">Read More</a>
-                                    <button class="btn btn-success apply-now" data-id="{{ job.id }}">Apply Now</button>
+                                    <p class="card-text short-description">
+                                        {% if job.short_description|length > 150 %}
+                                            {{ job.short_description|slice:":100"|safe  }}...
+                                        {% else %}
+                                            {{ job.short_description | safe }}
+                                        {% endif %}
+                                    </p>
+                                    
+                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -81,14 +93,20 @@
                 <!-- Chittagong Jobs -->
                 <div class="tab-pane fade" id="chittagong-jobs" role="tabpanel" aria-labelledby="chittagong-jobs-tab">
                     <div class="row">
-                        {% for job in jobs_chittagong %}
+                        {% for job in chittagong_jobs %}
                         <div class="col-md-6 mb-4">
                             <div class="card job-card">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">{{ job.short_description }}</p>
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">Read More</a>
-                                    <button class="btn btn-success apply-now" data-id="{{ job.id }}">Apply Now</button>
+                                    <p class="card-text short-description">
+                                        {% if job.short_description|length > 150 %}
+                                            {{ job.short_description|slice:":100"|safe  }}...
+                                        {% else %}
+                                            {{ job.short_description | safe }}
+                                        {% endif %}
+                                    </p>
+                                    
+                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -99,86 +117,9 @@
         </div>
     </section>
 
-    <!-- Application Form Modal -->
-    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Apply for Job</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="applicationForm" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="job_id" id="job_id">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" name="phone" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>CV</label>
-                            <input type="file" name="cv" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>LinkedIn</label>
-                            <input type="url" name="linkedin" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Portfolio</label>
-                            <input type="url" name="portfolio" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Application</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         $(document).ready(function() {
             $('#careerTabs a').first().tab('show'); // Ensure the first tab is active by default
-
-            // Handle Apply Now button click to open the application modal
-            $(".apply-now").on("click", function() {
-                let jobId = $(this).data('id');
-                $("#job_id").val(jobId);
-                $("#applyModal").modal('show');
-            });
-
-            // Handle form submission for job applications
-            $("#applicationForm").on("submit", function(event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-                const jobId = formData.get("job_id");
-
-                $.ajax({
-                    url: "{% url 'submit_application' job_id=0 %}".replace('0', jobId),
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            alert('Application submitted successfully!');
-                            $('#applyModal').modal('hide');
-                        } else {
-                            alert(response.message || 'Error submitting application.');
-                        }
-                    },
-                    error: function() {
-                        alert('Error submitting application.');
-                    }
-                });
-            });
         });
     </script>
 {% endblock %}
