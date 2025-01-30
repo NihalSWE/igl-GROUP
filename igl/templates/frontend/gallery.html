@@ -23,26 +23,30 @@ style="background-image: url('{{ banner.background_image.url }}');">
     </div>
 </div>
 </section>
-        <section class="photo-gallery">
-            <div class="container">
-                <h2 class="text-center text-dark-gray fw-bold">Our Photo Gallery</h2>
-                <div class="row g-4">
-                    {% for photo in photos %}
-                    <div class="col-lg-3 col-md-4 col-sm-6"> <!-- Adjusted columns for better responsiveness -->
-                        <div class="gallery-item">
-                            <img src="{{ photo.image.url }}" alt="{{ photo.title|default:'Gallery Image' }}">
-                            {% if photo.title %}
-                            <div class="gallery-caption">
-                                <small>{{ photo.title }}</small>
-                            </div>
-                            {% endif %}
-                        </div>
+<!--album sectio-->
+<section class="photo-gallery">
+    <div class="container">
+        <h2 class="text-center text-dark-gray fw-bold">Our Photo Gallery</h2>
+        <div class="row g-4">
+            {% for album in albums %}
+            <div class="col-lg-3 col-md-4 col-sm-6"> <!-- Adjusted columns for better responsiveness -->
+                <div class="gallery-item">
+                    <a href="{% url 'album_images' album.id %}">
+                        <img src="{{ album.thumbnail.url }}" alt="{{ album.title|default:'Gallery Album' }}" class="img-fluid">
+                    </a>
+                    {% if album.title %}
+                    <div class="gallery-caption">
+                        <small>{{ album.title }}</small>
                     </div>
-                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
-        </section>
-        
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
         
 
  

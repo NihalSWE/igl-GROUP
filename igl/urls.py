@@ -15,8 +15,9 @@ urlpatterns = [
     
     path('contact/',views.contact,name="contact"),
     
-    path('gallery/',views.gallery,name="gallery"),
-    path('case_studies/',views.case_studies,name="case_studies"),
+   path('gallery/', views.gallery, name='gallery'),
+    path('gallery/album/<int:album_id>/', views.album_images, name='album_images'),
+    path('Bussiness/',views.Bussiness,name="Bussiness"),
     
     path('career/', views.career, name='career'),
     path('job_detail/<int:pk>/', views.job_detail, name='job_detail'),  # Ensure this is present

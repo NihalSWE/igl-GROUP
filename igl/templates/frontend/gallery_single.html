@@ -1,0 +1,99 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block body %}
+<!-- Banner Section (Unchanged) -->
+<section 
+  class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+  style="background-image: url('{{ banner.background_image.url }}');">
+  <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
+    <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+      <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+        <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+      </path>
+    </svg>
+  </div>
+  <div class="container">
+    <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+      <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center">
+        <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ album.title }}</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Redesigned Album Gallery Section -->
+<section class="modern-album-gallery">
+    <div class="container">
+        <h2 class="gallery-title">{{ album.title }}</h2>
+        <div class="gallery-grid">
+            {% for image in images %}
+            <div class="gallery-item">
+                <img src="{{ image.image.url }}" alt="Image in {{ album.title }}" class="img-fluid open-modal" 
+                     data-bs-toggle="modal" data-bs-target="#imageModal" data-img="{{ image.image.url }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal for Image Preview -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body text-center position-relative">
+          <button class="modal-arrow left-arrow" id="prevImage">&larr;</button>
+          <img id="modalImage" src="" alt="Expanded Image" class="img-fluid">
+          <button class="modal-arrow right-arrow" id="nextImage">&rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- JavaScript to handle modal image navigation -->
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const modal = document.getElementById('imageModal');
+          const modalImage = document.getElementById('modalImage');
+          const images = Array.from(document.querySelectorAll('.open-modal'));
+          let currentIndex = 0;
+  
+          function openModal(index) {
+              currentIndex = index;
+              modalImage.src = images[currentIndex].dataset.img;
+          }
+  
+          images.forEach((img, index) => {
+              img.addEventListener('click', function() {
+                  openModal(index);
+              });
+          });
+  
+          document.getElementById('prevImage').addEventListener('click', function() {
+              if (currentIndex > 0) {
+                  openModal(currentIndex - 1);
+              }
+          });
+  
+          document.getElementById('nextImage').addEventListener('click', function() {
+              if (currentIndex < images.length - 1) {
+                  openModal(currentIndex + 1);
+              }
+          });
+  
+          // Allow keyboard navigation
+          document.addEventListener('keydown', function(event) {
+              if (modal.classList.contains('show')) {
+                  if (event.key === 'ArrowLeft' && currentIndex > 0) {
+                      openModal(currentIndex - 1);
+                  } else if (event.key === 'ArrowRight' && currentIndex < images.length - 1) {
+                      openModal(currentIndex + 1);
+                  }
+              }
+          });
+      });
+  </script>
+  
+{% endblock %}

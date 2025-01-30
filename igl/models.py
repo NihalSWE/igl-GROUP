@@ -130,31 +130,31 @@ class GalleryBanner(models.Model):
     def __str__(self):
         return self.title
 
-class Gallery(models.Model):
-    title = models.CharField(max_length=255, blank=True, null=True)  # Optional title for the image
-    image = models.ImageField(upload_to='gallery/')  # Uploads images to the 'gallery/' directory
+class Gallery_Album(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)  # Album name
+    thumbnail = models.ImageField(upload_to='albums/thumbnails/', blank=True, null=True)  # Thumbnail for the album
+    created_at = models.DateTimeField(auto_now_add=True)  # Tracks album creation date
+
+    def __str__(self):
+        return self.title if self.title else f"Gallery_Album {self.id}"
+
+
+class Gallery_AlbumDetails(models.Model):
+    album = models.ForeignKey(Gallery_Album, related_name='images', on_delete=models.CASCADE)  # Associate each image with an album
+    image = models.ImageField(upload_to='gallery/')  # Image field
     uploaded_at = models.DateTimeField(auto_now_add=True)  # Tracks upload date
 
     def __str__(self):
-        return self.title if self.title else f"Image {self.id}"
+        return self.album.title if self.album and self.album.title else f"Image {self.id}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Save the instance first
 
-        # Desired square size
-        square_size = 500
-
-        # Open the uploaded image
+        # Resize image to fit a square (if needed)
         img = Image.open(self.image.path)
-
-        # Convert to RGB if the image has an alpha channel
         if img.mode != 'RGB':
             img = img.convert('RGB')
-
-        # Create a square canvas with a white background
-        img = ImageOps.fit(img, (square_size, square_size), Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-
-        # Save the resized image back to the same path
+        img = ImageOps.fit(img, (500, 500), Image.Resampling.LANCZOS, centering=(0.5, 0.5))
         img.save(self.image.path)
         
         
@@ -249,3 +249,36 @@ class JobApplication(models.Model):
         """Convert location code to human-readable form."""
         location_dict = dict(JobPosting.LOCATION_CHOICES)
         return location_dict.get(self.location, self.location)
+    
+    
+    
+#-----------Bussiness model------
+
+class BusinessStrength(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(max_length=200)
+    image = models.ImageField(upload_to='business_strength/')
+    icon = models.ImageField(upload_to='business_strength/icons/')
+    link = models.URLField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the original image first
+
+        # Set the standard size for the business/company image
+        standard_size = (800, 600)  # Fixed width x height
+
+        # Resize the main image
+        if self.image:
+            img = Image.open(self.image.path)
+            img = img.resize(standard_size)  # Resize image to fixed size
+            img.save(self.image.path)  # Save the resized image
+
+        # Resize the icon image to a smaller fixed size (optional)
+        if self.icon:
+            icon_size = (100, 100)  # Example: Fixed size for icons
+            icon = Image.open(self.icon.path)
+            icon = icon.resize(icon_size)  # Resize icon to fixed size
+            icon.save(self.icon.path)  # Save the resized icon

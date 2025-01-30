@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata,Gallery,GalleryBanner,Blog,JobPosting, JobApplication
+from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength
 from django.http import JsonResponse
 
 
@@ -46,17 +46,35 @@ def contact(request):
     return render(request, 'frontend/contact.html', context)
 
 
+# In views.py
 def gallery(request):
-    banner = GalleryBanner.objects.first()
-    photos = Gallery.objects.all().order_by('-uploaded_at')  # Order by most recent
+    banner = GalleryBanner.objects.first()  # Fetch the banner
+    albums = Gallery_Album.objects.all().order_by('-created_at')  # Fetch all albums, ordered by creation date
     context = {
-        'banner':banner,
-        'photos': photos,
+        'banner': banner,
+        'albums': albums,  # Pass the albums to the template
     }
     return render(request, 'frontend/gallery.html', context)
 
-def case_studies(request):
-    return render(request, 'frontend/case-studies.html')
+def album_images(request, album_id):
+    banner = GalleryBanner.objects.first()  # Fetch the banner
+    album = get_object_or_404(Gallery_Album, id=album_id)  # Get the album based on the clicked album's ID
+    images = Gallery_AlbumDetails.objects.filter(album=album).order_by('-uploaded_at')  # Fetch all images for this album
+    
+    context = {
+        'banner': banner,
+        'album': album,
+        'images': images,  # Pass the images of the selected album
+    }
+    return render(request, 'frontend/gallery_single.html', context)
+
+
+def Bussiness(request):
+    business_strengths = BusinessStrength.objects.all()
+    context = {
+        'business_strengths': business_strengths,
+    }
+    return render(request, 'frontend/bussiness.html',context)
 
 def igl_web(request):
     return render(request, 'frontend/igl_web.html')

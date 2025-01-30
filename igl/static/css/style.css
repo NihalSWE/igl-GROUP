@@ -272,6 +272,137 @@
     opacity: 1; /* Show caption on hover */
 }
 
+/*---------album details css---*/
+/* Modern Album Gallery */
+.modern-album-gallery {
+    padding: 5rem 0;
+    background: linear-gradient(to right, #f9f9f9, #ffffff);
+    text-align: center;
+}
+
+.gallery-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.gallery-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #0984e3, #00cec9);
+    border-radius: 2px;
+}
+
+/* Masonry-like Grid for Modern Layout */
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.gallery-item {
+    position: relative;
+    width: 280px;
+    height: 350px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+/* Lightbox Modal Styling */
+/* Lightbox Modal Arrows */
+.modal-body {
+    position: relative;
+}
+
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.modal-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.left-arrow {
+    left: 10px;
+}
+
+.right-arrow {
+    right: 10px;
+}
+
+
+.modal-body img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .gallery-item {
+        width: 250px;
+        height: 320px;
+    }
+
+    .gallery-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-item {
+        width: 100%;
+        height: auto;
+    }
+
+    .gallery-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+}
+
+
 
 
 /*-----------blog page css-----*/
@@ -936,4 +1067,238 @@ input[type="file"].form-control {
 
 .modal.show .modal-dialog {
     transform: scale(1);
+}
+
+/*------bussiness css---------*/
+/* Business Strength Section Styling */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #3a5264;
+    --bg-light: #f8f9fa;
+    --text-dark: #2d3436;
+    --text-muted: #636e72;
+    --box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --button-hover-color: #0056b3;
+    --link-hover-color: #0056b3;
+}
+
+.business-strength-section {
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--secondary-color) 100%);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.05);
+}
+
+.section-heading {
+    margin-bottom: 4.5rem;
+    position: relative;
+    text-align: center;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    animation: gradientAnimation 3s linear infinite;
+}
+
+.section-heading .title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: fadeInFromLeft 1s ease-out;
+    will-change: transform, opacity;
+}
+
+.section-heading .subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin: 0 auto;
+    font-style: italic;
+    opacity: 0.8;
+    animation: fadeInUp 1s ease-out;
+}
+
+.business-item {
+    background: #fff;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    cursor: pointer;
+    opacity: 0.9;
+    height: 100%; /* Ensures all cards are same height */
+    display: flex;
+    flex-direction: column; /* Stacks content vertically */
+    justify-content: space-between; /* Evenly spaces the content */
+}
+
+.business-item:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+}
+
+.business-item .img-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-top: 66.67%; /* 3:2 aspect ratio */
+    border-radius: 12px 12px 0 0;
+    height: 200px; /* Fixed height for all images */
+}
+
+.business-item .img-fluid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.business-item:hover .img-fluid {
+    transform: scale(1.1);
+}
+
+.business-item .content {
+    padding: 2rem 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures content is spaced evenly */
+}
+
+.business-item .icon-container {
+    width: 60px; /* Consistent size */
+    height: 60px; /* Consistent size */
+    background: var(--bg-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -35px; /* Adjusted margin to ensure consistent spacing */
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.business-item .icon-container img {
+    width: 35px; /* Consistent logo size */
+    height: 35px; /* Consistent logo size */
+    object-fit: contain;
+}
+
+.business-item .icon-container:hover {
+    transform: scale(1.1);
+}
+
+.business-item .item-title {
+    font-size: 1.3rem; /* Consistent title size */
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+    text-align: center;
+}
+
+.business-item .item-title:hover {
+    color: var(--primary-color);
+}
+
+.business-item .item-description {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.business-item .visit-website {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    justify-content: center; /* Centers the button text */
+    margin-top: auto; /* Positions the button at the bottom */
+}
+
+.business-item .visit-website:hover {
+    color: var(--button-hover-color);
+}
+
+.business-item .visit-website i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.business-item .visit-website:hover i {
+    transform: translateX(5px);
+}
+
+.business-item .visit-website.disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    50% {
+        background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+    }
+    100% {
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+}
+
+.wow {
+    opacity: 0;
+}
+
+.wow.fadeInUp {
+    animation: fadeInUp 0.6s ease forwards;
 }

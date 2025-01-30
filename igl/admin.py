@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery,GalleryBanner,Blog
+from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength
 
 
 @admin.register(NavMenu)
@@ -53,10 +53,23 @@ class ContactFromdataAdmin(admin.ModelAdmin):
 class GalleryBannerAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-@admin.register(Gallery)
-class GalleryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'uploaded_at')
-    ordering = ('-uploaded_at',)
+from .models import Gallery_Album, Gallery_AlbumDetails
+
+class Gallery_AlbumDetailsInline(admin.TabularInline):
+    model = Gallery_AlbumDetails  # Use Gallery_AlbumDetails for inlines
+    extra = 1  # You can adjust the number of empty forms shown
+
+@admin.register(Gallery_Album)
+class Gallery_AlbumAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'thumbnail')  # Fields to display in the list view
+    search_fields = ('title',)  # Enable search for album titles
+    inlines = [Gallery_AlbumDetailsInline]  # Inline Gallery images inside Album admin
+
+@admin.register(Gallery_AlbumDetails)
+class Gallery_AlbumDetailsAdmin(admin.ModelAdmin):
+    list_display = ('album', 'image', 'uploaded_at')  # Display album and image
+    ordering = ('-uploaded_at',)  # Order gallery images by uploaded date, latest first
+    search_fields = ('album__title',)  # Enable search for images by album title
     
 #--------------blog--------
 from django.db import models  # ✅ Import models
@@ -82,3 +95,10 @@ class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'job', 'email', 'location', 'applied_date')
     list_filter = ('job', 'applied_date')
     search_fields = ('name', 'email', 'phone')
+    
+    
+    
+#-----Bussiness--------
+@admin.register(BusinessStrength)
+class BusinessStrengthAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'image', 'icon', 'link']
