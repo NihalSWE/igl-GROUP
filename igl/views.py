@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength
+from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,BOD, Staff
 from django.http import JsonResponse
 
 
@@ -11,11 +11,39 @@ def base(request):
 
 def home(request):
     cover_section = CoverSection.objects.first()  # Fetch the first cover section
-    return render(request, 'frontend/home.html', {'cover_section': cover_section})
+    business_strengths = BusinessStrength.objects.all()
+    blogs = Blog.objects.all().order_by('-published_date')[:3]
+    industries = [
+        {'name': 'Publishing', 'icon': 'line-icon-Microphone-4', 'link': '#'},
+        {'name': 'Finance', 'icon': 'line-icon-Basket-Coins', 'link': '#'},
+        {'name': 'Sciences', 'icon': 'line-icon-Bee', 'link': '#'},
+        {'name': 'Consultant', 'icon': 'line-icon-Management', 'link': '#'},
+        {'name': 'Food', 'icon': 'line-icon-French-Fries', 'link': '#'},
+        {'name': 'Travel', 'icon': 'line-icon-Road-3', 'link': '#'},
+        {'name': 'Dairy', 'icon': 'line-icon-Cow', 'link': '#'},
+        {'name': 'Jewellery', 'icon': 'line-icon-Diamond', 'link': '#'},
+        {'name': 'Energy', 'icon': 'line-icon-Drop', 'link': '#'},
+        {'name': 'Farming', 'icon': 'line-icon-Environmental-3', 'link': '#'},
+        {'name': 'Industries', 'icon': 'line-icon-Gear', 'link': '#'},
+        {'name': 'Events', 'icon': 'line-icon-Environmental-3', 'link': '#'}
+    ]
+    context={
+        'cover_section': cover_section,
+        'business_strengths': business_strengths,
+        'industries': industries,
+        'blogs': blogs,
+    }
+    return render(request, 'frontend/home.html', context)
 
 
 def about(request):
-    return render(request, 'frontend/about.html')
+    # bod_members = BOD.objects.all()
+    staff_members = Staff.objects.all()
+    context = {
+        # 'bod_members': bod_members,
+        'staff_members': staff_members,
+        }
+    return render(request, 'frontend/about.html',context)
 
 def contact(request):
     # Fetch the necessary data for rendering the page
@@ -80,10 +108,18 @@ def igl_web(request):
     return render(request, 'frontend/igl_web.html')
 
 def bod(request):
-    return render(request, 'frontend/BOD.html')
+    bod_members = BOD.objects.all()
+    context = {
+        'bod_members': bod_members,
+        }
+    return render(request, 'frontend/BOD.html',context)
 
 def bos(request):
-    return render(request, 'frontend/BOS.html')
+    staff_members = Staff.objects.all()
+    context = {
+        'staff_members': staff_members,
+        }
+    return render(request, 'frontend/BOS.html',context)
 
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages

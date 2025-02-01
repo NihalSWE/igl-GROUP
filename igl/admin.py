@@ -102,3 +102,17 @@ class JobApplicationAdmin(admin.ModelAdmin):
 @admin.register(BusinessStrength)
 class BusinessStrengthAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'image', 'icon', 'link']
+    
+    
+#----------Our Team---
+from .models import BOD, Staff
+
+@admin.register(BOD)
+class BODAdmin(admin.ModelAdmin):
+    list_display = ('name', 'role')
+    search_fields = ('name', 'role')
+
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position')
+    search_fields = ('name',)

@@ -282,3 +282,53 @@ class BusinessStrength(models.Model):
             icon = Image.open(self.icon.path)
             icon = icon.resize(icon_size)  # Resize icon to fixed size
             icon.save(self.icon.path)  # Save the resized icon
+            
+            
+            
+#----------Our Team model-----
+#-----Director
+
+class BOD(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='team/')
+    bio = models.TextField(blank=True, null=True)
+    role = models.CharField(max_length=100, default='Chairman')
+   
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the image first
+        if self.image and hasattr(self.image, 'path'):
+            self.resize_image(self.image.path)
+
+    def resize_image(self, image_path):
+        with Image.open(image_path) as img:
+            size = (600, 600)  # Standard square size
+            img = img.resize(size, Image.LANCZOS)
+            img.save(image_path)
+    
+    
+#-----Staff
+class Staff(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='team/')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # Call the original save method
+        super().save(*args, **kwargs)
+
+        # Resize the image if it exists
+        if self.image and hasattr(self.image, 'path'):
+            image_path = self.image.path
+            # Open and resize the image
+            with Image.open(image_path) as img:
+                size = (500, 500)  # Square dimensions
+                img = img.resize(size, Image.LANCZOS)
+                
+                # Save the resized image
+                img.save(image_path)
