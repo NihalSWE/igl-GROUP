@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,CoverSection,ContactBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength
+from .models import NavMenu, Logo,HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,AboutSection,ClientReview,Industry,ReasonToChooseUs
 
 
 @admin.register(NavMenu)
@@ -9,18 +9,43 @@ class NavMenuAdmin(admin.ModelAdmin):
     list_filter = ['parent']
     search_fields = ['name']
 
+#----------home page----
 
 @admin.register(Logo)
 class LogoAdmin(admin.ModelAdmin):
-    list_display = ['image', 'is_active']
+    list_display = ['id','image', 'is_active']
     
 
-
-@admin.register(CoverSection)
-class CoverSectionAdmin(admin.ModelAdmin):
+@admin.register(HomeBanner)
+class HomeBannerAdmin(admin.ModelAdmin):
     list_display = ['title', 'description', 'button_text']
-    search_fields = ['title', 'description']
     
+@admin.register(HomeIntro)
+class HomeIntroAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'progress1_title', 'progress2_title']
+
+@admin.register(Industry)   
+class IndustryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'icon', 'link')
+    search_fields = ('name', 'icon')
+
+@admin.register(ReasonToChooseUs)
+class ReasonToChooseUsAdmin(admin.ModelAdmin):
+    list_display = ("title", "icon", "order")
+    list_editable = ("order",)
+
+#------About us--------
+@admin.register(AboutBanner)
+class AboutBannerAdmin(admin.ModelAdmin):
+    list_display = ['title']
+    
+@admin.register(AboutSection)
+class AboutSectionAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    
+@admin.register(ClientReview)
+class ClientReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'company', 'text','created_at')
     
     
 #-----contact page----
@@ -74,6 +99,12 @@ class Gallery_AlbumDetailsAdmin(admin.ModelAdmin):
 #--------------blog--------
 from django.db import models  # ✅ Import models
 from ckeditor.widgets import CKEditorWidget
+
+@admin.register(BlogBanner)
+class BlogBannerAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'published_date')
@@ -83,6 +114,10 @@ class BlogAdmin(admin.ModelAdmin):
     
 #-----------career----------
 from .models import JobPosting, JobApplication
+
+@admin.register(CareerBanner)
+class CareerBannerAdmin(admin.ModelAdmin):
+    list_display = ('title',)
 
 @admin.register(JobPosting)
 class JobPostingAdmin(admin.ModelAdmin):
@@ -99,6 +134,10 @@ class JobApplicationAdmin(admin.ModelAdmin):
     
     
 #-----Bussiness--------
+@admin.register(BussinessBanner)
+class BussinessBannerAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
 @admin.register(BusinessStrength)
 class BusinessStrengthAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'image', 'icon', 'link']

@@ -35,177 +35,112 @@
     
 
     <!-- end hero section -->
-    <!-- start section -->
-    <section class="pt-3 sm-pt-50px">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 justify-content-center mb-7" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <!-- start features box item -->
-                <div class="col icon-with-text-style-01 md-mb-30px">
-                    <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
-                        <div class="feature-box-icon me-20px">
-                            <img src="{% static 'images/demo-it-business-icon-01.gif'%}" alt="">
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-inline-block fs-18 text-dark-gray fw-700 mb-5px">Grow your business</span>
-                            <p class="w-80 xl-w-90 lg-w-100">We believe in challenges and so we have made challenges.</p>
-                        </div>
-                    </div>
+   <!-- start section -->
+<section class="pt-3 sm-pt-50px">
+    <div class="container">
+        <div class="row mb-10 align-items-center">
+            <div class="col-lg-5 position-relative md-mb-20">
+                <div class="w-70 xs-w-80" data-animation-delay="50" data-shadow-animation="true">
+                    <img src="{{ intro.image1.url }}" alt="" class="border-radius-8px w-100">
                 </div>
-                <!-- end features box item -->
-                <!-- start features box item -->
-                <div class="col icon-with-text-style-01 md-mb-30px">
-                    <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
-                        <div class="feature-box-icon me-20px">
-                            <img src="{% static 'images/demo-it-business-icon-02.gif'%}" alt="">
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-inline-block fs-18 text-dark-gray fw-700 mb-5px">Cost savings ideas</span>
-                            <p class="w-80 xl-w-90 lg-w-100">We also help our clients with social media strategy.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end features box item -->
-                <!-- start features box item -->
-                <div class="col icon-with-text-style-01 md-mb-30px">
-                    <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
-                        <div class="feature-box-icon me-20px">
-                            <img src="{% static 'images/demo-it-business-icon-03.gif'%}" alt="">
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-inline-block fs-18 text-dark-gray fw-700 mb-5px">Boost performance</span>
-                            <p class="w-80 xl-w-90 lg-w-100">We deliver email marketing campaigns to your audience.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end features box item --> 
-            </div>
-            <div class="row mb-10 align-items-center">
-                <div class="col-lg-5 position-relative md-mb-20">
-                    <div class="w-70 xs-w-80" data-animation-delay="50" data-shadow-animation="true">
-                        <img src="{% static 'images/demo-it-business-01.jpg'%}" alt="" class="border-radius-8px w-100">
-                    </div>
-                    <div class="w-60 overflow-hidden position-absolute right-minus-15px xs-right-15px xs-w-60 bottom-minus-50px" data-shadow-animation="true" data-animation-delay="250" data-bottom-top="transform: translateY(50px)" data-top-bottom="transform: translateY(-50px)">
-                        <img src="{% static 'images/demo-it-business-02.jpg'%}" alt="" class="border-radius-8px w-100 box-shadow-quadruple-large">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6 offset-lg-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex"><i class="bi bi-award fs-16 me-5px"></i>Creative approach</span>
-                    <h3 class="text-dark-gray fs-50 fw-700 ls-minus-2px">Powerful agency for corporate business.</h3>
-                    <p class="mb-40px sm-mb-25px">We strive to develop real-world web solutions that are ideal for small to large projects with bespoke project requirements. We create compelling web designs, which are the right-fit for your target groups and also deliver optimized.</p>
-                    <div class="progress-bar-style-02">
-                        <!-- start progress bar item -->
-                        <div class="progress mb-15px border-radius-50px fw-700 fs-11 lh-11 text-white bg-white">
-                            <div class="progress-bar bg-gradient-flamingo-red-transparent m-0" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" aria-label="business">
-                                <span class="progress-bar-percent text-flamingo">98%</span>
-                            </div>
-                            <div class="progress-bar-title text-uppercase">business growth</div>
-                        </div>
-                        <!-- end progress bar item -->
-                        <!-- start progress bar item -->
-                        <div class="progress border-radius-50px fw-700 fs-11 lh-11 text-white bg-white">
-                            <div class="progress-bar bg-gradient-base-color-transparent m-0" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="technology">
-                                <span class="progress-bar-percent text-base-color">85%</span>
-                            </div>
-                            <div class="progress-bar-title text-uppercase">new technology</div>
-                        </div>
-                        <!-- end progress bar item -->
-                    </div>
+                <div class="w-60 overflow-hidden position-absolute right-minus-15px xs-right-15px xs-w-60 bottom-minus-50px" data-shadow-animation="true" data-animation-delay="250" data-bottom-top="transform: translateY(50px)" data-top-bottom="transform: translateY(-50px)">
+                    <img src="{{ intro.image2.url }}" alt="" class="border-radius-8px w-100 box-shadow-quadruple-large">
                 </div>
             </div>
-            <div class="row row-cols-1 row-cols-lg-5 row-cols-md-3 row-cols-sm-2 clients-style-06 justify-content-center ps-3 pe-3 xs-mt-40px" data-anime='{ "el": "childs", "scale": [0.8,1], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <!-- start client item -->
-                <div class="col client-box text-center md-mb-40px">
-                    <a href="#"><img src="{% static 'images/logo-walmart-dark-blue.svg'%}" alt=""></a>
+            <div class="col-xl-5 col-lg-6 offset-lg-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h3 class="text-dark-gray fs-50 fw-700 ls-minus-2px">{{ intro.title }}</h3>
+                <p class="mb-40px sm-mb-25px">{{ intro.description | safe }}</p>
+                <div class="progress-bar-style-02">
+                    <!-- start progress bar item -->
+                    <div class="progress mb-15px border-radius-50px fw-700 fs-11 lh-11 text-white bg-white">
+                        <div class="progress-bar bg-gradient-flamingo-red-transparent m-0" role="progressbar" aria-valuenow="{{ intro.progress1_value }}" aria-valuemin="0" aria-valuemax="100" aria-label="business">
+                            <span class="progress-bar-percent text-flamingo">{{ intro.progress1_value }}%</span>
+                        </div>
+                        <div class="progress-bar-title text-uppercase">{{ intro.progress1_title }}</div>
+                    </div>
+                    <!-- end progress bar item -->
+                    <!-- start progress bar item -->
+                    <div class="progress border-radius-50px fw-700 fs-11 lh-11 text-white bg-white">
+                        <div class="progress-bar bg-gradient-base-color-transparent m-0" role="progressbar" aria-valuenow="{{ intro.progress2_value }}" aria-valuemin="0" aria-valuemax="100" aria-label="technology">
+                            <span class="progress-bar-percent text-flamingo">{{ intro.progress2_value }}%</span>
+                        </div>
+                        <div class="progress-bar-title text-uppercase">{{ intro.progress2_title }}</div>
+                    </div>
+                    <!-- end progress bar item -->
                 </div>
-                <!-- end client item -->
-                <!-- start client item -->
-                <div class="col client-box text-center md-mb-40px">
-                    <a href="#"><img src="{% static 'images/logo-netflix-dark-blue.svg'%}" alt=""></a>
-                </div>
-                <!-- end client item -->
-                <!-- start client item -->
-                <div class="col client-box text-center md-mb-40px">
-                    <a href="#"><img src="{% static 'images/logo-invision-dark-blue.svg'%}" alt=""></a>
-                </div>
-                <!-- end client item -->
-                <!-- start client item -->
-                <div class="col client-box text-center sm-mb-40px">
-                    <a href="#"><img src="{% static 'images/logo-yahoo-dark-blue.svg'%}" alt=""></a>
-                </div> 
-                <!-- end client item -->
-                <!-- start client item -->
-                <div class="col client-box text-center">
-                    <a href="#"><img src="{% static 'images/logo-amazon-dark-blue.svg'%}" alt=""></a>
-                </div> 
-                <!-- end client item -->
-            </div> 
+            </div>
         </div>
-    </section>
-    <!-- end section --> 
-    <!-- start section -->
-    <section class="overflow-hidden bg-very-light-gray position-relative">
-        <div class="container">
-            <div class="row align-items-center mb-5 sm-mb-30px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <div class="col-lg-5 md-mb-30px"> 
-                    <h3 class="text-dark-gray fw-700 ls-minus-2px mb-0">Understanding the business services.</h3>
-                </div> 
-                <div class="col-lg-4 offset-xl-1 last-paragraph-no-margin md-mb-30px"> 
-                    <p>We strive to develop real-world web solutions that are ideal for small to large projects with bespoke your custom project requirements.</p>
-                </div> 
-                <div class="col-xl-2 col-lg-3 d-flex justify-content-center">
-                    <!-- start slider navigation -->
-                    <div class="slider-one-slide-prev-1 icon-small text-dark-gray swiper-button-prev slider-navigation-style-04 bg-white box-shadow-large"><i class="fa-solid fa-arrow-left"></i></div>
-                    <div class="slider-one-slide-next-1 icon-small text-dark-gray swiper-button-next slider-navigation-style-04 bg-white box-shadow-large"><i class="fa-solid fa-arrow-right"></i></div>
-                    <!-- end slider navigation -->
-                </div>
+    </div>
+</section>
+<!-- end section -->
+ <!-- start section -->
+ <!-- Business Services Section -->
+<section class="business-services">
+    <div class="services-container">
+        <!-- Header Area -->
+        <div class="services-header">
+            <div class="services-header__content">
+                <h2 class="services-header__title" data-aos="fade-up">Understanding the business services</h2>
+                <p class="services-header__description" data-aos="fade-up" data-aos-delay="100">
+                    We strive to develop real-world web solutions that are ideal for small to large projects with bespoke your custom project requirements.
+                </p>
             </div>
-    
-            <div class="row align-items-center">
-                <div class="col-12">
-                    <div class="outside-box-right-20 sm-outside-box-right-0">
-                        <div class="swiper magic-cursor slider-one-slide" data-slider-options='{ "slidesPerView": 1, "spaceBetween": 30, "loop": true, "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" }, "autoplay": { "delay": 4000, "disableOnInteraction": false }, "keyboard": { "enabled": true, "onlyInViewport": true }, "breakpoints": { "1200": { "slidesPerView": 4 }, "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 2 }, "320": { "slidesPerView": 1 } }, "effect": "slide" }'>
-                            <div class="swiper-wrapper">
-                                {% for business_strength in business_strengths %}
-                                <div class="swiper-slide">
-                                    <div class="services-box-style-03 last-paragraph-no-margin border-radius-6px overflow-hidden">
-                                        <div class="position-relative">
-                                            <a href="{{ business_strength.link }}" target="_blank">
-                                                <img src="{{ business_strength.image.url }}" alt="{{ business_strength.title }}" class="img-fluid">
-                                            </a>
-                                            <a href="{{ business_strength.link }}" target="_blank" class="btn btn-very-small btn-rounded btn-dark-gray text-white btn-box-shadow ps-15px pe-15px pt-5px pb-5px lh-16 position-absolute right-30px top-30px text-uppercase">
-                                                <img src="{{ business_strength.icon.url }}" alt="icon" style="width: 30px; height: 30px;">
-                                            </a>
-                                        </div>
-                                        <div class="bg-white">
-                                            <div class="ps-65px pe-65px pt-30px pb-30px text-center">
-                                                <a href="{{ business_strength.link }}" target="_blank" class="d-inline-block fs-18 fw-700 text-dark-gray mb-5px">{{ business_strength.title }}</a>
-                                                <p>{{ business_strength.description }}</p> 
-                                            </div> 
-                                            <div class="d-flex justify-content-center border-top border-color-extra-medium-gray pt-20px pb-20px ps-50px pe-50px position-relative text-center">
-                                                <a href="{{ business_strength.link }}" target="_blank" class="btn btn-link btn-hover-animation-switch btn-medium fw-700 text-dark-gray text-uppercase">
-                                                    <span>
-                                                        <span class="btn-text">Explore services</span>
-                                                        <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                                                        <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                                                    </span> 
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
+            <div class="services-header__controls" data-aos="fade-up" data-aos-delay="200">
+                <button class="nav-button prev-button" id="prevSlide">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button class="nav-button next-button" id="nextSlide">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slider Area -->
+        <div class="services-slider" data-aos="fade-up" data-aos-delay="300">
+            <div class="services-track">
+                {% for strength in business_strengths %}
+                <div class="service-card">
+                    <div class="service-card__inner">
+                        <div class="service-card__image-container">
+                            <img src="{{ strength.image.url }}" 
+                                 alt="{{ strength.title }}" 
+                                 class="service-card__image">
+                            <div class="service-card__icon">
+                                <img src="{{ strength.icon.url }}" 
+                                     alt="{{ strength.title }} icon">
                             </div>
+                            <div class="service-card__overlay"></div>
                         </div>
+                        <div class="service-card__content">
+                            <h3 class="service-card__title">{{ strength.title }}</h3>
+                            <p class="service-card__description">{{ strength.description }}</p>
+                        </div>
+                        <div class="service-card__footer">
+                            <a href="{{ strength.link }}" class="service-card__link" target="_blank">
+                                <span class="service-card__link-text">Explore services</span>
+                                <span class="service-card__link-icon">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
-            </div> 
-        </div> 
-    </section>
-    
-    
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="slider-progress" data-aos="fade-up" data-aos-delay="400">
+            <div class="slider-progress__bar" id="progressBar"></div>
+        </div>
+    </div>
+</section>
     <!-- end section -->
+
     <!-- start section -->
-    <section class="bg-dark-gray">
+    <section class="bg-dark-gray" style="background-color:#252840;">
+
         <div class="container">
             <div class="row justify-content-center mb-5 sm-mb-30px">
                 <div class="col-xl-6 col-lg-8 col-md-10 text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
@@ -216,27 +151,35 @@
                 <!-- Loop through the industries dynamically -->
                 {% for industry in industries %}
                 <div class="col icon-with-text-style-04 transition-inner-all">
-                    <div class="feature-box hover-box h-100 transition dark-hover pt-25 pb-25 xs-p-12 last-paragraph-no-margin overflow-hidden border-bottom border-end border-1 border-color-transparent-white-light border-color-transparent-on-hover">
-                        <div class="feature-box-icon">
-                            <i class="{{ industry.icon }} icon-extra-large text-white mb-15px"></i>
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-inline-block text-white fw-600 fs-14 text-uppercase">{{ industry.name }}</span> 
-                        </div>
+                    <div class="feature-box hover-box transition dark-hover pt-10 pb-10 xs-p-12 last-paragraph-no-margin overflow-hidden border-bottom border-end border-1 border-color-transparent-white-light border-color-transparent-on-hover" style="height: 180px;">
+                        <!-- Make the icon clickable by wrapping it with a link -->
+                        <a href="{{ industry.link }}" target="_blank" class="d-block text-center">
+                            <div class="feature-box-icon">
+                                {% if industry.icon %}
+                                    <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" style="width: 80px; height: 80px;" />
+                                {% else %}
+                                    <i class="line-icon-Gear icon-extra-large text-white mb-15px"></i> <!-- Fallback icon if no image -->
+                                {% endif %}
+                            </div>
+                        </a>
                         <div class="feature-box-overlay bg-base-color"></div>
-                    </div>  
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
     
+    
+    
+    
+    
     <!-- end section -->
    
  
 
     <!-- start section -->
-    <section class="cover-background one-third-screen sm-h-500px pb-0 position-relative" style="background-image: url('{% static 'images/demo-it-business-08.jpg' %}')">
+    <section class="cover-background one-third-screen sm-h-500px pb-0 position-relative" style="background-image: url('{{ conatctimage.background_image.url }}');">
         <div class="opacity-extra-medium bg-dark-gray"></div> 
         <div class="container h-100"> 
             <div class="row align-items-center justify-content-center h-100">
@@ -266,81 +209,34 @@
 
     <!--WHy choosee us-->
     <!--extra code-->
-<section class="reason-section py-5 bg-light">
-    <div class="container">
-        <!-- Section Title -->
-        <div class="text-center mb-5">
-            <h2 class="fw-bold display-5 text-dark">Reason For Choosing Us</h2>
-        </div>
-
-        <!-- Reason Blocks -->
-        <div class="row gy-5">
-
-            <!-- Our Mission -->
-            <div class="col-12">
-                <div class="row align-items-center">
-                    <div class="col-md-4 text-center">
-                        <div class="icon-box mb-3">
-                            <span class="icon fs-1 text-primary">&#x1F3AF;</span>
-                        </div>
-                        <h3 class="fw-bold fs-4 text-dark">Our Mission</h3>
-                    </div>
-                    <div class="col-md-8">
-                        <p class="text-muted fs-5">
-                            We craft business solutions using cutting-edge software and web applications, ensuring high standards, user-friendliness, and seamless accessibility for every user.
-                        </p>
-                    </div>
-                </div>
+    <section class="reason-section py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-5 text-dark">Reason For Choosing Us</h2>
             </div>
-
-            <!-- Our Vision -->
-            <div class="col-12">
-                <div class="row align-items-center">
-                    <div class="col-md-4 text-center">
-                        <div class="icon-box mb-3">
-                            <span class="icon fs-1 text-primary">&#x2709;</span>
-                        </div>
-                        <h3 class="fw-bold fs-4 text-dark">Our Vision</h3>
-                    </div>
-                    <div class="col-md-8">
-                        <p class="text-muted fs-5">
-                            Our goal is to empower businesses across Bangladesh—big or small—with innovative IT solutions, including software, websites, ERP systems, and CCTV solutions, all at cost-effective rates.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Core Values -->
-            <div class="col-12">
-                <div class="row align-items-center">
-                    <div class="col-md-4 text-center">
-                        <div class="icon-box mb-3">
-                            <span class="icon fs-1 text-primary">&#x1F680;</span>
-                        </div>
-                        <h3 class="fw-bold fs-4 text-dark">Core Values</h3>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="list-unstyled fs-5">
-                                    <li>✅ Commitment & Accountability</li>
-                                    <li>✅ Excellence in All We Do</li>
-                                </ul>
+    
+            <div class="row gy-5">
+                {% for reason in reasons %}
+                <div class="col-12">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <div class="icon-box mb-3">
+                                <span class="icon fs-1 text-primary">{{ reason.icon  }}</span>
                             </div>
-                            <div class="col-md-6">
-                                <ul class="list-unstyled fs-5">
-                                    <li>✅ Mutually-Beneficial Relationships</li>
-                                    <li>✅ Continuous Learning & Growth</li>
-                                </ul>
-                            </div>
+                            <h3 class="fw-bold fs-4 text-dark">{{ reason.title }}</h3>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="text-muted fs-5" style="font-size: 1.5rem; line-height: 1.8;">
+                                {{ reason.description | safe}}
+                            </p>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-
         </div>
-    </div>
-</section>
+    </section>
+    
 
 
 <!---->

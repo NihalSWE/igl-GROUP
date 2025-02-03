@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CoverSection,ContactBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,BOD, Staff
+from .models import HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,BOD, Staff,AboutSection,ClientReview,Industry,ReasonToChooseUs
 from django.http import JsonResponse
 
 
@@ -10,38 +10,36 @@ def base(request):
     return render(request, 'frontend/base.html')
 
 def home(request):
-    cover_section = CoverSection.objects.first()  # Fetch the first cover section
+    intro = HomeIntro.objects.first()
+    cover_section = HomeBanner.objects.first()  # Fetch the first cover section
     business_strengths = BusinessStrength.objects.all()
+    industries = Industry.objects.all()
+    reasons = ReasonToChooseUs.objects.all()
     blogs = Blog.objects.all().order_by('-published_date')[:3]
-    industries = [
-        {'name': 'Publishing', 'icon': 'line-icon-Microphone-4', 'link': '#'},
-        {'name': 'Finance', 'icon': 'line-icon-Basket-Coins', 'link': '#'},
-        {'name': 'Sciences', 'icon': 'line-icon-Bee', 'link': '#'},
-        {'name': 'Consultant', 'icon': 'line-icon-Management', 'link': '#'},
-        {'name': 'Food', 'icon': 'line-icon-French-Fries', 'link': '#'},
-        {'name': 'Travel', 'icon': 'line-icon-Road-3', 'link': '#'},
-        {'name': 'Dairy', 'icon': 'line-icon-Cow', 'link': '#'},
-        {'name': 'Jewellery', 'icon': 'line-icon-Diamond', 'link': '#'},
-        {'name': 'Energy', 'icon': 'line-icon-Drop', 'link': '#'},
-        {'name': 'Farming', 'icon': 'line-icon-Environmental-3', 'link': '#'},
-        {'name': 'Industries', 'icon': 'line-icon-Gear', 'link': '#'},
-        {'name': 'Events', 'icon': 'line-icon-Environmental-3', 'link': '#'}
-    ]
+    conatctimage=ContactBanner.objects.first()
     context={
+        'intro':intro,
         'cover_section': cover_section,
         'business_strengths': business_strengths,
-        'industries': industries,
         'blogs': blogs,
+        'conatctimage':conatctimage,
+        'industries': industries,
+        "reasons": reasons,
+        
     }
     return render(request, 'frontend/home.html', context)
 
 
 def about(request):
-    # bod_members = BOD.objects.all()
+    banner = AboutBanner.objects.first()
+    about_section=AboutSection.objects.first()
     staff_members = Staff.objects.all()
+    client_reviews = ClientReview.objects.all()
     context = {
-        # 'bod_members': bod_members,
+        "banner": banner,
+        "about_section":about_section,
         'staff_members': staff_members,
+        'client_reviews': client_reviews
         }
     return render(request, 'frontend/about.html',context)
 
@@ -98,8 +96,10 @@ def album_images(request, album_id):
 
 
 def Bussiness(request):
+    banner = BussinessBanner.objects.first()  # Fetch the banner
     business_strengths = BusinessStrength.objects.all()
     context = {
+        'banner': banner,
         'business_strengths': business_strengths,
     }
     return render(request, 'frontend/bussiness.html',context)
@@ -128,6 +128,7 @@ from .models import JobPosting, JobApplication
 
 # Career page
 def career(request):
+    banner=CareerBanner.objects.first()
    # Get all jobs
     all_jobs = JobPosting.objects.filter(is_active=True).order_by('-posted_date')
     # Filter Dhaka jobs
@@ -136,6 +137,7 @@ def career(request):
     chittagong_jobs = all_jobs.filter(location='chittagong')
 
     return render(request, 'frontend/career.html', {
+        'banner': banner,
         'jobs': all_jobs,
         'dhaka_jobs': dhaka_jobs,
         'chittagong_jobs': chittagong_jobs,
@@ -183,8 +185,10 @@ def submit_application(request, job_id):
 
 
 def blog(request):
+    banner=BlogBanner.objects.first()
     blogs = Blog.objects.all().order_by('-published_date')
     context = {
+        'banner': banner,
         'blogs': blogs,
     }
     return render(request, 'frontend/blogs.html', context)

@@ -3,42 +3,102 @@
 
 
 {% block body %}
-        <!-- start page title -->
-        <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" style="background-image:url('{% static 'images/demo-it-business-about-title-bg.jpg' %}');">
+<style>
+    header {
+        margin-top:-29px;
 
-            <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
-                <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
-                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                            M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                            M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
-                </path>
-                </svg>
-            </div>
-            <div class="container">
-                <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-                    <div class="col-12 col-lg-6 col-md-10 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                        <h1 class="mb-20px text-white fw-600 ls-minus-1px">About Us</h1>
-                    </div> 
-                </div>
-            </div>
-        </section>
-        <!-- end page title --> 
 
+
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 20px;
+            }
         
-<!--extra code-->
-<section style="display: flex; justify-content: space-between; align-items: center; padding: 60px 40px; width: 1280px; margin: 0 auto; background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}'); background-size: cover; background-position: center; border-radius: 8px;">
-    <div style="flex: 1; padding-right: 30px; border-right: 2px solid rgba(221, 221, 221, 0.5);">
-        <h2 style="font-family: 'Poppins', sans-serif; font-size: 3rem; color:rgb(13, 12, 12); font-weight: 600; margin-bottom: 20px;">Who We Are</h2>
+            .about-text, .about-desc {
+                display: flex; 
+                justify-content: center; /* Center horizontally */
+                align-items: center;     /* Center vertically */
+                padding: 20px 0;
+                border: none;
+            }
+        
+            .about-text h2, .about-desc h1 {
+                text-align: center;
+                margin: 0; /* Reset any default margins */
+                font-family: 'Poppins', sans-serif;
+            }
+        
+            .about-text h2 {
+                font-size: 2rem; /* Adjust the size as needed */
+            }
+        
+            .about-desc h1 {
+                font-size: 1.2rem;
+                color: rgb(84, 79, 79);
+                line-height: 1.8;
+            }
+        }
+        
+        
+    }
+</style>
+<!-- start page title -->
+<section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+         style="background-image:url('{{ banner.background_image.url }}');">
+
+    <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
+            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+                <animate attributeName="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                            M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                            M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatCount="indefinite">
+                </animate>
+            </path>
+        </svg>
     </div>
-    <div style="flex: 1; padding-left: 30px;">
-        <h1 style="font-family: 'Poppins', sans-serif; font-size: 1.4rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
-            IGL Group is a diversified conglomerate with a strong presence in technology, education, and services. It operates several sister concerns, including IGL Web (web development), Felna Tech (technology services), and Student Visa (education and visa assistance). Committed to innovation and quality, IGL Group offers global solutions tailored to meet customer needs across various industries.
-        </h1>
+
+    <div class="container">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+            <div class="col-12 col-lg-6 col-md-10 position-relative text-center page-title-extra-large 
+                        d-flex flex-wrap flex-column align-items-center justify-content-center" 
+                 data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ banner.title }}</h1>
+
+            </div> 
+        </div>
     </div>
 </section>
+<!-- end page title -->
 
-<!---->
+
+        
+<!-- About Section -->
+<section class="about-section"
+         style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+                padding: 60px 20px; max-width: 1280px; margin: 0 auto; 
+                background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');
+                background-size: cover; background-position: center; border-radius: 8px;">
+
+    <!-- Title Column -->
+    <div class="about-text" style="flex: 1; padding-right: 30px; border-right: 2px solid rgba(221, 221, 221, 0.5); min-width: 300px;">
+        <h2 style="font-family: 'Poppins', sans-serif; font-size: 2.5rem; color:rgb(13, 12, 12); font-weight: 600; margin-bottom: 20px;">
+            {{ about_section.title }}
+        </h2>
+    </div>
+
+    <!-- Description Column -->
+    <div class="about-desc" style="flex: 1; padding-left: 30px; min-width: 300px;">
+        <h1 style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
+            {{ about_section.description }}
+        </h1>
+    </div>
+
+</section>
+
+
 
 <!--Extra code-->
 <section style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 60vh; padding: 0; margin: 0; background-image: url('{% static 'images/demo-it-business-about-bg2.jpg' %}')">
@@ -52,7 +112,7 @@
 <!-- Redesigned Staff Section -->
 <section class="staff-section" style="padding-top: 40px; background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');">
     <div class="container">
-        <!-- Header Section with reduced spacing -->
+        <!-- Header Section with reduced spacing -->                          
         <div class="text-center header-section">
             <h2 class="fw-bold mb-3">Our Leadership Team</h2>
         </div>
@@ -81,6 +141,54 @@
 </section>
 <!-- End Staff Section -->
 
+   <!-- start section -->
+<!-- Start section -->
+<section class="pt-0">
+    <div class="container background-no-repeat background-position-top" 
+        style="background-image: url('{% static "images/demo-it-business-testimonial-bg.png" %}');">
 
+        <div class="row justify-content-center mb-2">
+            <div class="col-xxl-6 col-lg-8 col-md-9 text-center" data-anime='{ "el": "childs", "translateY": [0, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
+                <h3 class="text-dark-gray fw-700 ls-minus-2px">Trusted by the world's fastest growing companies.</h3>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center mb-6 sm-mb-8">  
+            <div class="col-xl-10 position-relative">
+                <div class="swiper magic-cursor testimonials-style-06" data-slider-options='{ "loop": true, "autoplay": { "delay": 4000, "disableOnInteraction": false }, "keyboard": { "enabled": true, "onlyInViewport": true }, "navigation": { "nextEl": ".swiper-button-next-nav", "prevEl": ".swiper-button-previous-nav", "effect": "fade" } }'>
+                    <div class="swiper-wrapper">
+                        {% for client_review in client_reviews %}
+                        <!-- start client review item -->
+                        <div class="swiper-slide">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-8 col-md-4 col-sm-6 text-center md-mb-30px rounded-circle">
+                                    <img alt="{{ client_review.name }}" src="{{ client_review.image.url }}" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                
+                                <div class="col-lg-5 col-md-7 last-paragraph-no-margin text-center text-md-start">
+                                    <span class="mb-5px d-table fs-18 lh-30 fw-500 text-dark-gray">
+                                        {{ client_review.text }}
+                                    </span>
+                                    <span class="fs-15 text-uppercase fw-800 text-dark-gray ls-05px">
+                                        {{ client_review.name }}, {{ client_review.company }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end client review item -->
+                        {% endfor %}
+                    </div>
+                    <!-- start slider navigation -->
+                    <div class="swiper-button-previous-nav swiper-button-prev md-left-0px"><i class="feather icon-feather-arrow-left icon-extra-medium text-dark-gray"></i></div>
+                    <div class="swiper-button-next-nav swiper-button-next md-right-0px"><i class="feather icon-feather-arrow-right icon-extra-medium text-dark-gray"></i></div>
+                    <!-- end slider pagination -->
+                </div>
+            </div> 
+        </div>
+    </div>
+</section>
+<!-- end section -->
+
+<!-- end section -->
 
 {% endblock %}

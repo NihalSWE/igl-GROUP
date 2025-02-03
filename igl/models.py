@@ -1,7 +1,7 @@
 # models.py
 from django.db import models
 from PIL import Image, ImageOps
-
+from ckeditor.fields import RichTextField
 # Model for Navigation Menu
 
 class NavMenu(models.Model):
@@ -32,7 +32,7 @@ class Logo(models.Model):
 
 #------------Home Page Model--------------
 #CoverSecton (Banner,Title,Description,Button link)
-class CoverSection(models.Model):
+class HomeBanner(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     button_text = models.CharField(max_length=100)
@@ -42,7 +42,92 @@ class CoverSection(models.Model):
     def __str__(self):
         return self.title
     
+
+#home intro
+class HomeIntro(models.Model):
+    title = models.CharField(max_length=255)
+    description = RichTextField() 
+    image1 = models.ImageField(upload_to="home_intro/")
+    image2 = models.ImageField(upload_to="home_intro/")
+    progress1_title = models.CharField(max_length=255)
+    progress1_value = models.IntegerField()
+    progress2_title = models.CharField(max_length=255)
+    progress2_value = models.IntegerField()
+
+    def __str__(self):
+        return self.title
     
+    
+#INdustry links
+class Industry(models.Model):
+    name = models.CharField(max_length=100)
+    icon = models.ImageField(upload_to='uploads/industry_icons/', blank=True, null=True)
+    link = models.URLField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+#reson to choose
+from django.db import models
+from ckeditor.fields import RichTextField
+class ReasonToChooseUs(models.Model):
+    ICON_CHOICES = [
+        ("🎯", "Target (🎯)"),
+        ("✉️", "Envelope (✉️)"),
+        ("🚀", "Rocket (🚀)"),
+        ("💡", "Lightbulb (💡)"),
+        ("📈", "Chart Growth (📈)"),
+        ("⚙️", "Gear (⚙️)"),
+        ("🔗", "Link (🔗)"),
+        ("🎨", "Palette (🎨)"),
+        ("🔍", "Magnifying Glass (🔍)"),
+        ("🛡️", "Shield (🛡️)"),
+        ("🏆", "Trophy (🏆)"),
+        ("🤝", "Handshake (🤝)"),
+        ("💎", "Diamond (💎)"),
+        ("📌", "Push Pin (📌)"),
+        ("🔬", "Microscope (🔬)"),
+    ]
+
+    title = models.CharField(max_length=255)
+    description =RichTextField(max_length=500)
+    icon = models.CharField(max_length=10, choices=ICON_CHOICES, default="🎯")
+    order = models.PositiveIntegerField(default=0, help_text="Determines the order of display")
+
+    class Meta:
+        ordering = ["order"]  # Ensures the correct order is maintained
+
+    def __str__(self):
+        return self.title
+
+
+#------------About Page Model--------------
+#banner
+class AboutBanner(models.Model):
+    title = models.CharField(max_length=255, default="About Us")
+    background_image = models.ImageField(upload_to='banners/')
+
+    def __str__(self):
+        return self.title
+    
+#AboutSection
+class AboutSection(models.Model):
+    title = models.CharField(max_length=255, default="Who We Are")
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+    
+#Client review
+class ClientReview(models.Model):
+    name = models.CharField(max_length=255)
+    company = models.CharField(max_length=255)
+    text = models.TextField(max_length=255)
+    image = models.ImageField(upload_to='client_reviews/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.company}"
     
 #------------Contact Page Model--------------
 
@@ -162,6 +247,15 @@ class Gallery_AlbumDetails(models.Model):
 from django.utils.text import Truncator
 from ckeditor.fields import RichTextField
 
+#banner
+class BlogBanner(models.Model):
+    title = models.CharField(max_length=255, default="Blog")
+    background_image = models.ImageField(upload_to='banners/')
+    
+    def __str__(self):
+        return self.title
+
+#blog
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     content = RichTextField()  # ✅ Use CKEditor for content
@@ -192,9 +286,17 @@ class Blog(models.Model):
                 
                 
 #-----------career model-----
+#banner
+class CareerBanner(models.Model):
+    title = models.CharField(max_length=255, default="Career")
+    background_image = models.ImageField(upload_to='banners/')
 
+    def __str__(self):
+        return self.title
+
+
+#job posting
 from django.urls import reverse
-
 class JobPosting(models.Model):
     LOCATION_CHOICES = [
         ('dhaka', 'Dhaka'),
@@ -253,7 +355,15 @@ class JobApplication(models.Model):
     
     
 #-----------Bussiness model------
+#banner
+class BussinessBanner(models.Model):
+    title = models.CharField(max_length=255, default="Bussiness")
+    background_image = models.ImageField(upload_to='banners/')
 
+    def __str__(self):
+        return self.title
+
+#websites
 class BusinessStrength(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=200)
