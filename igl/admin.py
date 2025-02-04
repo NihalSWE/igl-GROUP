@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,AboutSection,ClientReview,Industry,ReasonToChooseUs
+from .models import NavMenu, Logo,HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
 
 
 @admin.register(NavMenu)
@@ -114,10 +114,31 @@ class BlogAdmin(admin.ModelAdmin):
     
 #-----------career----------
 from .models import JobPosting, JobApplication
+from django.utils.html import format_html
 
 @admin.register(CareerBanner)
 class CareerBannerAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    
+    
+@admin.register(CareerImages)
+class CareerImagesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'preview_main_image', 'preview_group_image', 'is_active', 'created_at')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('created_at',)
+
+    def preview_main_image(self, obj):
+        if obj.main_image:
+            return format_html('<img src="{}" width="100" height="75" style="border-radius:5px;"/>', obj.main_image.url)
+        return "No Image"
+    
+    def preview_group_image(self, obj):
+        if obj.group_image:
+            return format_html('<img src="{}" width="100" height="75" style="border-radius:5px;"/>', obj.group_image.url)
+        return "No Image"
+    
+    preview_main_image.short_description = "Main Image"
+    preview_group_image.short_description = "Group Image"
 
 @admin.register(JobPosting)
 class JobPostingAdmin(admin.ModelAdmin):

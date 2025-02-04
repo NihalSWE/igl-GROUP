@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,BOD, Staff,AboutSection,ClientReview,Industry,ReasonToChooseUs
+from .models import HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,BOD, Staff,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
 from django.http import JsonResponse
 
 
@@ -129,6 +129,7 @@ from .models import JobPosting, JobApplication
 # Career page
 def career(request):
     banner=CareerBanner.objects.first()
+    images = CareerImages.objects.filter(is_active=True).first()
    # Get all jobs
     all_jobs = JobPosting.objects.filter(is_active=True).order_by('-posted_date')
     # Filter Dhaka jobs
@@ -138,6 +139,7 @@ def career(request):
 
     return render(request, 'frontend/career.html', {
         'banner': banner,
+        'images': images,
         'jobs': all_jobs,
         'dhaka_jobs': dhaka_jobs,
         'chittagong_jobs': chittagong_jobs,

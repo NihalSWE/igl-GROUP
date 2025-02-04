@@ -295,6 +295,23 @@ class CareerBanner(models.Model):
         return self.title
 
 
+#career page images 
+class CareerImages(models.Model):
+    main_image = models.ImageField(upload_to='career_images/', help_text="Large main image (800x600)")
+    group_image = models.ImageField(upload_to='career_images/', help_text="Group image (400x300)")
+    activity_image1 = models.ImageField(upload_to='career_images/', help_text="First activity image (300x200)")
+    activity_image2 = models.ImageField(upload_to='career_images/', help_text="Second activity image (300x200)")
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Career Page Images"
+        verbose_name_plural = "Career Page Images"
+
+    def __str__(self):
+        return f"Career Images Set - {self.created_at.strftime('%Y-%m-%d')}"
+
+
 #job posting
 from django.urls import reverse
 class JobPosting(models.Model):

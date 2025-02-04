@@ -26,6 +26,89 @@
 
         <!-- end page title -->
 
+<!--extra code-->
+<section>
+    <div class="tagline-section">
+        <div class="section-heading">
+            <h2>Life at Our Company</h2>
+            <p>Join our dynamic team and be part of something extraordinary. We create an environment where talent thrives and innovation knows no bounds.</p>
+        </div>
+        
+        {% if images %}
+        <div class="image-grid">
+            <div class="main-image">
+                <img src="{{ images.main_image.url }}" alt="Large group photo of team members at recreation tour">
+            </div>
+            <div class="small-images">
+                <div class="small-image">
+                    <img src="{{ images.group_image.url }}" alt="Group photo of team members">
+                </div>
+                <div class="small-images-row">
+                    <div class="small-image">
+                        <img src="{{ images.activity_image1.url }}" alt="Team members playing table games">
+                    </div>
+                    <div class="small-image">
+                        <img src="{{ images.activity_image2.url }}" alt="Team members in activities">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+   
+    <div class="benefits-section">
+        <div class="section-heading">
+            <h2>You bring the talent, we have the perks.</h2>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke-width="2"/>
+                        <path d="M16 8h-8v8h8V8z" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="benefit-title">Inclusive Environment</h3>
+                <p class="benefit-description">Our harmonious team consists of great people with broad interests from all around the world. We deeply respect everyone's individuality & beliefs.</p>
+            </div>
+    
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="benefit-title">People-First Development</h3>
+                <p class="benefit-description">We offer an excellent learning environment for you to gain experience on the latest technologies from industry-leading mentors, skill development training & real-life client projects.</p>
+            </div>
+    
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="benefit-title">Flexible Work</h3>
+                <p class="benefit-description">We understand that people have both personal and professional goals, that's why we have built a hybrid work policy for permanent employees for better work-life balance.</p>
+            </div>
+    
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" stroke-width="2"/>
+                        <path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="benefit-title">Fair Benefits</h3>
+                <p class="benefit-description">Not only do we host a variety of events to celebrate our achievements, but we also offer competitive salaries, fully subsidized meals & snacks, family medical insurance coverage & life insurance coverage for our employees.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--end-->
+
+
     <!-- Career Opportunities -->
     <section class="career-page pt-5">
         <div class="container">
