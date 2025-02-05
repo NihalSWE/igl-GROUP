@@ -1667,7 +1667,7 @@ input[type="file"].form-control {
 .staff-info h3 {
     color: #ffffff;
     font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: -1rem;
     font-weight: 600;
 }
 
@@ -2086,7 +2086,7 @@ input[type="file"].form-control {
 
 
 
-/*---------extra code career css*/
+/*---------extra code career page images  css*/
 
 .tagline-section {
     padding: 60px 20px;
