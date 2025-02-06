@@ -134,14 +134,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-JAZZMIN_SETTINGS = {
-    "site_title": "IGL Admin",
-    "site_header": "IGL Web Admin",
-    "site_brand": "IGL Admin",
-    "site_icon": None,
-    "welcome_sign": "Welcome to IGL Web Admin",
-    "copyright": "IGL Group",
-    "user_avatar": None,
-    
-}
+from .jazzmin import JAZZMIN_SETTINGS
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
