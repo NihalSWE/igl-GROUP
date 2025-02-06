@@ -139,20 +139,9 @@ JAZZMIN_SETTINGS = {
     "site_title": "IGL Admin",
     "site_header": "IGL Web Admin",
     "site_brand": "IGL Admin",
+    "site_icon": None,
     "welcome_sign": "Welcome to IGL Web Admin",
     "copyright": "IGL Group",
-    "search_model": ["auth.User"],
-    "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"model": "auth.User"},
-        {"app": "your_app_name"},
-    ],
-    "show_sidebar": True,
-    "navigation_expanded": True,
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
-    "order_with_respect_to": ["auth", "your_app_name"],
+    "user_avatar": None,
+    
 }

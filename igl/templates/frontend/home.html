@@ -139,36 +139,23 @@
     <!-- end section -->
 
     <!-- start section -->
-    <section class="bg-dark-gray" style="background-color:#252840;">
-
-        <div class="container">
-            <div class="row justify-content-center mb-5 sm-mb-30px">
-                <div class="col-xl-6 col-lg-8 col-md-10 text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <h3 class="text-white mb-0 fw-600">Serving our clients across the diverse industries.</h3>
+    <section class="customers-section">
+        <h2>Our customers</h2>
+        <p class="subtitle">In good company with...</p>
+        
+        <div class="client-grid">
+            {% for industry in industries %}
+                <div class="client-item">
+                    <a href="{{ industry.link }}" class="client-circle" {% if not industry.link %}onclick="return false;"{% endif %}>
+                        {% if industry.icon %}
+                            <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" loading="lazy">
+                        {% endif %}
+                    </a>
                 </div>
-            </div>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-0" data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 300, "delay":0, "staggervalue": 100, "easing": "easeOutQuad" }'>
-                <!-- Loop through the industries dynamically -->
-                {% for industry in industries %}
-                <div class="col icon-with-text-style-04 transition-inner-all">
-                    <div class="feature-box hover-box transition dark-hover pt-10 pb-10 xs-p-12 last-paragraph-no-margin overflow-hidden border-bottom border-end border-1 border-color-transparent-white-light border-color-transparent-on-hover" style="height: 180px;">
-                        <!-- Make the icon clickable by wrapping it with a link -->
-                        <a href="{{ industry.link }}" target="_blank" class="d-block text-center">
-                            <div class="feature-box-icon">
-                                {% if industry.icon %}
-                                    <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" style="width: 80px; height: 80px;" />
-                                {% else %}
-                                    <i class="line-icon-Gear icon-extra-large text-white mb-15px"></i> <!-- Fallback icon if no image -->
-                                {% endif %}
-                            </div>
-                        </a>
-                        <div class="feature-box-overlay bg-base-color"></div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </section>
+    
     
     
     
