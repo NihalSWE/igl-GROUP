@@ -1,0 +1,184 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Lost in the Cyberverse</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Dark Cyberpunk Background */
+        body {
+            background: radial-gradient(circle at 50% 50%, #0a0f24, #020617);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #00eaff;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 234, 255, 0.4);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            font-size: 4.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            color: #00eaff;
+            text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 30px #00eaff;
+            animation: glitch 1.5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 3px 3px 10px rgba(0, 234, 255, 0.7); }
+            50% { text-shadow: -3px -3px 10px rgba(0, 234, 255, 0.7); }
+            100% { text-shadow: 3px 3px 10px rgba(0, 234, 255, 0.7); }
+        }
+
+        /* 3D Error Container */
+        .error-container {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0px 0px 30px rgba(0, 234, 255, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+        }
+
+        /* Description */
+        .error-description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        .error-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #00eaff, #007bff);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 234, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 234, 255, 0.5);
+        }
+
+        .button.secondary {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .button.secondary:hover {
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5);
+        }
+
+        /* Neon Grid Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background -->
+    <div class="particles">
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const particleContainer = document.querySelector(".particles");
+
+                for (let i = 0; i < 50; i++) {
+                    let particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    particle.style.width = `${Math.random() * 6 + 2}px`;
+                    particle.style.height = particle.style.width;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                    particleContainer.appendChild(particle);
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Error Container -->
+    <div class="error-container">
+        <h1 class="glitch">404 - Page Not Found</h1>
+        <p class="error-description">Oops! The page you are looking for has disappeared into the digital abyss.</p>
+        <div class="error-actions">
+            <a href="{% url 'home' %}" class="button">
+                <i class="fas fa-home"></i> Return Home
+            </a>
+            <button onclick="history.back()" class="button secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

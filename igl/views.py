@@ -203,3 +203,5 @@ def blog_single(request, pk):
     return render(request, 'frontend/blog-single.html', context)
 
 
+def error_page(request, exception):
+    return render(request, 'frontend/404.html')
