@@ -6,6 +6,18 @@
     margin: 0 auto; /* Centers the navbar horizontally */
 }
 
+/*---navbar menuitem buttons cs--*/
+.navbar-nav .btn {
+    white-space: nowrap; /* Prevent text from wrapping */
+    padding: 10px 20px; /* Adjust padding for better spacing */
+    font-size: 16px; /* Maintain consistent font size */
+    display: inline-flex; /* Keeps content aligned properly */
+    align-items: center; /* Centers text vertically */
+    justify-content: center; /* Centers text inside button */
+    min-width: 140px; /* Ensures buttons don’t shrink too much */
+}
+
+
 
 /*-----------mobile view nav----*/
     /* Sidebar Styling */

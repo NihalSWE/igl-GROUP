@@ -118,20 +118,19 @@
         </div>
 
         <!-- Staff Members Grid -->
+        <!-- Staff Members Grid -->
         <div class="row g-4">
             {% for staff in staff_members %}
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="staff-card">
                     <div class="staff-image-wrapper">
                         <img src="{{ staff.image.url }}" 
                              alt="{{ staff.name }}" 
                              class="staff-image">
-                        <div class="staff-overlay">
-                            <div class="staff-info">
-                                <h3>{{ staff.name }}</h3>
-                                <p>{{ staff.position }}</p>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="staff-info text-center">
+                        <h3 class="staff-name">{{ staff.name }}</h3>
+                        <p class="staff-position">{{ staff.position }}</p>
                     </div>
                 </div>
             </div>
@@ -190,5 +189,46 @@
 <!-- end section -->
 
 <!-- end section -->
+<style>
+    .staff-card {
+        text-align: center;
+        overflow: hidden;
+        border: 1px solid #ddd; /* Optional: adds a border to the card */
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: adds some shadow to the card */
+        background-color: #fff; /* Optional: ensures the card has a white background */
+    }
 
+    .staff-image-wrapper {
+        position: relative;
+    }
+
+    .staff-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px 8px 0 0; /* Rounds the top corners of the image */
+    }
+
+    .staff-info {
+        padding: 15px;
+        background-color: #0d6efd; /* Optional: gives the info section a background */
+        border-radius: 0 0 8px 8px; /* Rounded corners on the bottom */
+    }
+
+    .staff-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333; /* Dark color for the name */
+        margin-bottom: 5px;
+    }
+
+    .staff-position {
+        font-size: 1rem;
+        color: #555; /* Lighter color for position */
+    }
+
+    .staff-info h3, .staff-info p {
+        margin: 0;
+    }
+</style>
 {% endblock %}

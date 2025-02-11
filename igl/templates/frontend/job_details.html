@@ -32,7 +32,11 @@
                     <h3>{{ job.title }}</h3>
                     <p>{{ job.full_description|safe }}</p>
 
+
+
                     <h5>Location: {{ job.location }}</h5>
+                    <h5>Job Type: {{ job.job_type }}</h5>
+                    <h5>Department: {{ job.department }}</h5>
                     <h5>Salary: {{ job.salary }}</h5>
                     <!-- Other job details here -->
                     <button class="btn btn-success apply-now" data-id="{{ job.id }}">Apply Now</button>
@@ -55,6 +59,8 @@
                 <form id="applicationForm" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="job_id" id="job_id">
+                    <input type="hidden" name="location" id="location">
+                    <input type="hidden" name="department" id="department">
                     
                     <!-- Name -->
                     <div class="form-group">
@@ -74,10 +80,25 @@
                         <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
                     </div>
 
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" class="form-control" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
                     <!-- CV Upload -->
                     <div class="form-group">
                         <label for="cv">Upload CV</label>
                         <input type="file" id="cv" name="cv" class="form-control" required>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="form-group">
+                        <label for="image">Upload Image</label>
+                        <input type="file" id="image" name="image" class="form-control">
                     </div>
 
                     <!-- LinkedIn -->
@@ -100,60 +121,62 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle "Apply Now" button clicks to open the modal
+        document.querySelectorAll(".apply-now").forEach(button => {
+            button.addEventListener("click", function () {
+                let jobId = this.dataset.id;
+                let location = this.dataset.location;
+                let department = this.dataset.department;
 
+                document.getElementById("job_id").value = jobId;
+                document.getElementById("location").value = location;
+                document.getElementById("department").value = department;
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Handle "Apply Now" button clicks to open the modal
-            document.querySelectorAll(".apply-now").forEach(button => {
-                button.addEventListener("click", function () {
-                    let jobId = this.dataset.id;
-                    document.getElementById("job_id").value = jobId;
-                    $("#applyModal").modal("show"); // Open modal
-                });
-            });
-        
-            // Handle form submission
-            const form = document.getElementById("applicationForm");
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent default form submission
-        
-                const formData = new FormData(form);
-                const jobId = formData.get("job_id"); // Get job ID from form
-        
-                fetch("{% url 'submit_application' job_id=0 %}".replace("0", jobId), {
-                    method: "POST",
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        alert("Application submitted successfully!");
-                        $("#applyModal").modal("hide"); // Close modal
-                        form.reset(); // Reset form fields
-                    } else {
-                        alert(data.message || "Error submitting application.");
-                    }
-                })
-                .catch(error => {
-                    alert("Error submitting application.");
-                });
-            });
-        
-            // Ensure modal closes properly and resets form when clicking the X button or outside the modal
-            $("#applyModal").on("hidden.bs.modal", function () {
-                form.reset(); // Reset the form when the modal is closed
-            });
-        
-            // Added handler for modal close (X button)
-            $(".close").on("click", function() {
-                $("#applyModal").modal("hide");  // Manually hide the modal
-                form.reset();  // Reset form fields
+                $("#applyModal").modal("show"); // Open modal
             });
         });
-        
-        
-    </script>
-    
+
+        // Handle form submission
+        const form = document.getElementById("applicationForm");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form);
+            const jobId = formData.get("job_id"); // Get job ID from form
+
+            fetch("{% url 'submit_application' job_id=0 %}".replace("0", jobId), {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Application submitted successfully!");
+                    $("#applyModal").modal("hide"); // Close modal
+                    form.reset(); // Reset form fields
+                } else {
+                    alert(data.message || "Error submitting application.");
+                }
+            })
+            .catch(error => {
+                alert("Error submitting application.");
+            });
+        });
+
+        // Ensure modal closes properly and resets form when clicking the X button or outside the modal
+        $("#applyModal").on("hidden.bs.modal", function () {
+            form.reset(); // Reset the form when the modal is closed
+        });
+
+        // Added handler for modal close (X button)
+        $(".close").on("click", function() {
+            $("#applyModal").modal("hide");  // Manually hide the modal
+            form.reset();  // Reset form fields
+        });
+    });
+</script>
+
 
 {% endblock %}

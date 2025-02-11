@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
+from .models import NavMenu, Logo,HomeIntro,HomeBanner,HomeBannerImage,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
 
 
 @admin.register(NavMenu)
@@ -16,9 +16,19 @@ class LogoAdmin(admin.ModelAdmin):
     list_display = ['id','image', 'is_active']
     
 
+class HomeBannerImageInline(admin.TabularInline):  # Allows inline editing
+    model = HomeBannerImage
+    extra = 1  # Allows adding extra images in admin
+
 @admin.register(HomeBanner)
 class HomeBannerAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description', 'button_text']
+    list_display = ('title', 'button_text', 'url')  # Fields to show in the list
+    search_fields = ('title', 'description')  # Searchable fields
+    inlines = [HomeBannerImageInline]  # Attach images as inline
+
+@admin.register(HomeBannerImage)
+class HomeBannerImageAdmin(admin.ModelAdmin):
+    list_display = ('banner', 'image')  # Display image and its banner
     
 @admin.register(HomeIntro)
 class HomeIntroAdmin(admin.ModelAdmin):
@@ -69,8 +79,8 @@ class ContactLocationAdmin(admin.ModelAdmin):
 
 @admin.register(Contact_fromdata)
 class ContactFromdataAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "message", "created_at")
-    search_fields = ("name", "email", "message")
+     list_display = ("name", "email", "phone_number", "address", "message", "created_at")
+     search_fields = ("name", "email", "phone_number", "address", "message")
 
 
 #-----------gallery page----
@@ -96,6 +106,16 @@ class Gallery_AlbumDetailsAdmin(admin.ModelAdmin):
     ordering = ('-uploaded_at',)  # Order gallery images by uploaded date, latest first
     search_fields = ('album__title',)  # Enable search for images by album title
     
+    
+#-------------video galley page ---
+
+from .models import Video
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'url', 'created_at')
+    search_fields = ('title',)    
+
 #--------------blog--------
 from django.db import models  # ✅ Import models
 from ckeditor.widgets import CKEditorWidget
@@ -142,15 +162,15 @@ class CareerImagesAdmin(admin.ModelAdmin):
 
 @admin.register(JobPosting)
 class JobPostingAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'job_type', 'posted_date', 'deadline', 'is_active','salary')
-    list_filter = ('job_type', 'is_active', 'location')
-    search_fields = ('title', 'description')
+    list_display = ('title', 'location', 'department', 'job_type', 'salary', 'deadline', 'is_active')
+    list_filter = ('location', 'department', 'job_type', 'is_active')
+    search_fields = ('title', 'department', 'location')
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'job', 'email', 'location', 'applied_date')
-    list_filter = ('job', 'applied_date')
-    search_fields = ('name', 'email', 'phone')
+    list_display = ('name', 'job', 'department', 'location', 'gender', 'image','applied_date','cv')
+    list_filter = ('department', 'location', 'gender')
+    search_fields = ('name', 'email', 'phone', 'job__title')
     
     
     
@@ -163,7 +183,25 @@ class BussinessBannerAdmin(admin.ModelAdmin):
 class BusinessStrengthAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'image', 'icon', 'link']
     
+@admin.register(IGL_WEB)
+class IGLWEBAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+   
+
+@admin.register(IGL_HOST)
+class IGLHOSTAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
     
+
+@admin.register(STUDENT_VISA)
+class STUDENTVISAAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+    
+
+@admin.register(FELNA_TECH)
+class FELNATECHAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+   
 #----------Our Team---
 from .models import BOD, Staff
 

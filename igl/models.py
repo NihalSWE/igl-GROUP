@@ -36,11 +36,20 @@ class HomeBanner(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
     button_text = models.CharField(max_length=100)
-    url = models.CharField(max_length=255)  # Use CharField instead of URLField
-    background_image = models.ImageField(upload_to='cover_section_images/')
-    
+    url = models.CharField(max_length=255)  # Keep as CharField
+    background_image = models.ImageField(upload_to='cover_section_images/')  # Keep for fallback
+
     def __str__(self):
         return self.title
+
+
+class HomeBannerImage(models.Model):
+    banner = models.ForeignKey(HomeBanner, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='cover_section_images/')
+
+    def __str__(self):
+        return f"Image for {self.banner.title}"
+
     
 
 #home intro
@@ -197,12 +206,15 @@ class Contact_Location(models.Model):
 
 class Contact_fromdata(models.Model):
     name = models.CharField(max_length=255)
-    email = models.EmailField()
-    message = models.TextField()
+    email = models.EmailField(max_length=255)
+    message = models.TextField(max_length=255,blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)  # New phone number field
+    address = models.TextField(blank=True, null=True)  # New address field
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
     
     
     
@@ -241,7 +253,37 @@ class Gallery_AlbumDetails(models.Model):
             img = img.convert('RGB')
         img = ImageOps.fit(img, (500, 500), Image.Resampling.LANCZOS, centering=(0.5, 0.5))
         img.save(self.image.path)
-        
+  
+
+
+#--------------video gallery model-------------------
+import re
+
+class Video(models.Model):
+    title = models.CharField(max_length=255)
+    url = models.URLField(help_text="Enter the YouTube or Vimeo URL")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    def embed_url(self):
+        """
+        Converts a YouTube or Vimeo URL into an embeddable format.
+        """
+        youtube_pattern = r"(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]+)"
+        vimeo_pattern = r"(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)"
+
+        youtube_match = re.search(youtube_pattern, self.url)
+        vimeo_match = re.search(vimeo_pattern, self.url)
+
+        if youtube_match:
+            return f"https://www.youtube.com/embed/{youtube_match.group(1)}"
+        elif vimeo_match:
+            return f"https://player.vimeo.com/video/{vimeo_match.group(1)}"
+        else:
+            return self.url  # Return as is if no match
+      
         
 #--------blog model--------
 from django.utils.text import Truncator
@@ -320,10 +362,20 @@ class JobPosting(models.Model):
         ('chittagong', 'Chittagong'),
     ]
 
+    DEPARTMENT_CHOICES = [
+        ('IT', 'IT'),
+        ('SEO', 'SEO'),
+        ('SOFTWARE', 'Software'),
+        ('TELESALES', 'Telesales'),
+        ('HR', 'HR'),
+        ('ACCOUNTS', 'Accounts'),
+    ]
+
     title = models.CharField(max_length=200)
     short_description = RichTextField(max_length=200)
     full_description = RichTextField(max_length=5000)
-    location = models.CharField(max_length=100, choices=LOCATION_CHOICES)  # Kept as CharField
+    location = models.CharField(max_length=100, choices=LOCATION_CHOICES, default="dhaka")  
+    department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, default="IT")  # Department field
     job_type = models.CharField(
         max_length=50,
         choices=[
@@ -344,9 +396,12 @@ class JobPosting(models.Model):
         return reverse('job_detail', args=[str(self.id)])
 
 
+
 class JobApplication(models.Model):
     job = models.ForeignKey(JobPosting, on_delete=models.CASCADE, related_name='applications')
-    location = models.CharField(max_length=100, editable=False, default='dhaka')  # Auto-filled from job
+    location = models.CharField(max_length=100, editable=False, default='dhaka')  
+    department = models.CharField(max_length=50, editable=False, default='IT')  # Auto-filled from job posting
+    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='Male')
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
@@ -354,11 +409,13 @@ class JobApplication(models.Model):
     linkedin_url = models.URLField(blank=True)
     portfolio_url = models.URLField(blank=True)
     applied_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        """Automatically set the location from the job posting."""
+        """Auto-fill location and department from the job posting."""
         if self.job:
             self.location = self.job.location  # Auto-assign job's location
+            self.department = self.job.department  # Auto-assign job's department
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -368,6 +425,8 @@ class JobApplication(models.Model):
         """Convert location code to human-readable form."""
         location_dict = dict(JobPosting.LOCATION_CHOICES)
         return location_dict.get(self.location, self.location)
+
+
     
     
     
@@ -410,7 +469,35 @@ class BusinessStrength(models.Model):
             icon = icon.resize(icon_size)  # Resize icon to fixed size
             icon.save(self.icon.path)  # Save the resized icon
             
-            
+# New models that only use title, description, and image
+class IGL_WEB(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextField(max_length=5000)
+    image = models.ImageField(upload_to='igl_web/')
+    def __str__(self):
+        return self.title
+
+class IGL_HOST(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextField(max_length=5000)
+    image = models.ImageField(upload_to='igl_host/')
+    def __str__(self):
+        return self.title
+
+class STUDENT_VISA(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextField(max_length=5000)
+    image = models.ImageField(upload_to='student_visa/')
+    def __str__(self):
+        return self.title
+
+class FELNA_TECH(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextField(max_length=5000)
+    image = models.ImageField(upload_to='felna_tech/')
+    def __str__(self):
+        return self.title
+    
             
 #----------Our Team model-----
 #-----Director

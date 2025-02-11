@@ -4,22 +4,47 @@
 
 {% block body %}
 
+
   
     <!-- start hero section -->
-    <section class="cover-background full-screen ipad-top-space-margin py-0 md-h-750px sm-h-650px" style="background-image: url('{{ cover_section.background_image.url }}');">
-        <div class="opacity-very-light bg-black"></div>
-        <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block">
-            <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff">
-                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                    <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
-                </path>
-            </svg>
+    <section class="cover-background full-screen ipad-top-space-margin py-0 md-h-750px sm-h-650px position-relative">
+        <!-- Removed separate overlay div -->
+        
+        <!-- Bootstrap Slider -->
+        <div id="bannerSlider" class="carousel slide position-absolute w-100 h-100" data-bs-ride="carousel">
+            <div class="carousel-inner h-100">  <!-- Added h-100 -->
+                {% for image in banner_images %}
+                <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">  <!-- Added h-100 -->
+                    <img src="{{ image.image.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Banner Image">
+                    <!-- Added overlay directly to slide -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-25"></div>
+                </div>
+                {% empty %}
+                <div class="carousel-item active h-100">  <!-- Added h-100 -->
+                    <img src="{{ cover_section.background_image.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Default Banner">
+                    <!-- Added overlay directly to slide -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-25"></div>
+                </div>
+                {% endfor %}
+            </div>
+    
+            <!-- Slider Controls - unchanged -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#bannerSlider" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bannerSlider" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="container h-100">
+    
+        <!-- Banner Content - unchanged -->
+        <div class="container h-100 position-relative z-index-1">
             <div class="row align-items-center h-100">
-                <div class="col-xl-6 col-lg-8 col-md-10 position-relative z-index-1" data-anime='{ "el": "childs", "translateY": [0, 0], "perspective": [1200,1200], "scale": [1.05, 1], "rotateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <div class="col-xl-6 col-lg-8 col-md-10 position-relative z-index-2" 
+                     data-anime='{ "el": "childs", "translateY": [0, 0], "perspective": [1200,1200], "scale": [1.05, 1], "rotateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    
                     <h1 class="text-white fw-600 ls-minus-2px mb-25px">{{ cover_section.title }}</h1>
                     <div><p class="fw-300 fs-18 w-85 sm-w-95 text-white opacity-6">{{ cover_section.description }}</p></div>
                     <a href="{{ cover_section.url }}" class="btn btn-extra-large btn-switch-text btn-transparent-white-light btn-rounded border-1 ls-0px mt-15px">
@@ -30,6 +55,20 @@
                     </a>
                 </div>
             </div>
+        </div>
+    
+        <!-- Wave Animation - unchanged -->
+        <div class="shape-image-animation bottom-0 p-0 w-100 position-absolute z-index-1 d-none d-md-block">
+            <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff">
+                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+                    <animate attributeName="d" dur="5s" values="
+                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" 
+                        repeatCount="indefinite">
+                    </animate>
+                </path>
+            </svg>
         </div>
     </section>
     
@@ -363,9 +402,7 @@
      <section class="google-map-section" style="padding: 40px 0; width: 100%; margin: 0;">
         <div class="map-wrapper" style="position: relative; overflow: hidden; width: 100%; height: 500px; border-radius: 10px;">
             <!-- Replace with your Google Maps iframe code -->
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.1894866805083!2d90.37591467605102!3d23.74062138915042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b5c0611207%3A0xed7ed8cceed1d7ad!2sIGL%20Web%20Ltd!5e0!3m2!1sen!2sbd!4v1738408979119!5m2!1sen!2sbd" 
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d271.45083847840436!2d90.3784160535961!3d23.7405106265399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b5c1cbd409%3A0x33ef8cc2e2b3fc6e!2sIGL%20Group!5e0!3m2!1sen!2sbd!4v1739072375635!5m2!1sen!2sbd" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
     

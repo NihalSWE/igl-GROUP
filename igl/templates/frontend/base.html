@@ -44,8 +44,9 @@
       <!-- start header -->
       <header> 
 <!-- Start navigation -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-transparent header-reverse glass-effect">
-    <div class="container navbar-container">  <!-- Use a custom container class -->
+    <div class="container navbar-container">  
         <!-- Logo -->
         <a class="navbar-brand" href="{% url 'home' %}">
             {% if logo %}
@@ -55,7 +56,7 @@
             {% endif %}
         </a>
 
-        <!-- Mobile Toggle Button (Opens Sidebar) -->
+        <!-- Mobile Toggle Button -->
         <button class="navbar-toggler ms-auto custom-toggler" type="button" id="sidebarToggle">
             <div class="toggle-icon">
                 <span></span>
@@ -64,43 +65,50 @@
             </div>
         </button>
 
-        <!-- Navbar Items (Web View) -->
-        <div class="collapse navbar-collapse justify-content-center text-center d-none d-lg-block" id="navbarNav">
-            <ul class="navbar-nav">
-                {% for menu in menus %}
-                    {% if menu.sub_menus.exists %}
-                        <li class="nav-item dropdown">
-                            <a href="{{ menu.url }}" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ menu.name }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                {% for sub_menu in menu.sub_menus.all %}
-                                    <li><a href="{{ sub_menu.url }}" class="dropdown-item">{{ sub_menu.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a href="{{ menu.url }}" class="nav-link">{{ menu.name }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+       <!-- Navbar Items (Styled as Buttons) -->
+<div class="collapse navbar-collapse justify-content-center text-center d-none d-lg-block" id="navbarNav">
+    <ul class="navbar-nav">
+        {% for menu in menus %}
+            {% if menu.sub_menus.exists %}
+                <li class="nav-item dropdown">
+                    <a href="{{ menu.url }}" class="btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1 dropdown-toggle" 
+                       id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" 
+                       style="padding: 8px 18px;">
+                        {{ menu.name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for sub_menu in menu.sub_menus.all %}
+                            <li>
+                                <a href="{{ sub_menu.url }}" class="dropdown-item btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
+                                   style="padding: 6px 18px;">
+                                    {{ sub_menu.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{{ menu.url }}" class="btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
+                       style="padding: 8px 18px;">
+                        {{ menu.name }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
 
-        <!-- CTA Button (Visible on Larger Screens) -->
-        <div class="d-none d-lg-flex">
+        <!-- CTA Button -->
+         {% comment %} <div class="d-none d-lg-flex">
             <a href="{% url 'contact' %}" class="btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1">
                 Start a project <i class="fa-solid fa-arrow-right"></i>
             </a>
-        </div>
-
+        </div>  {% endcomment %}
     </div>
 </nav>
-<!-- End navigation -->
 
-<!-- Sidebar for Mobile Navigation -->
+<!-- Mobile Sidebar -->
 <div id="mobileSidebar" class="mobile-sidebar">
     <div class="sidebar-content">
         <button class="close-btn" id="closeSidebar">&times;</button>
@@ -109,18 +117,18 @@
             {% for menu in menus %}
                 {% if menu.sub_menus.exists %}
                     <li class="mobile-menu-item has-submenu">
-                        <a href="javascript:void(0);" class="submenu-toggle">
+                        <a href="javascript:void(0);" class="submenu-toggle btn btn-large btn-dark btn-rounded">
                             {{ menu.name }} <i class="fa-solid fa-chevron-down"></i>
                         </a>
                         <ul class="mobile-submenu">
                             {% for sub_menu in menu.sub_menus.all %}
-                                <li><a href="{{ sub_menu.url }}">{{ sub_menu.name }}</a></li>
+                                <li><a href="{{ sub_menu.url }}" class="btn btn-large btn-dark btn-rounded">{{ sub_menu.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
                 {% else %}
                     <li class="mobile-menu-item">
-                        <a href="{{ menu.url }}">{{ menu.name }}</a>
+                        <a href="{{ menu.url }}" class="btn btn-large btn-dark btn-rounded">{{ menu.name }}</a>
                     </li>
                 {% endif %}
             {% endfor %}
@@ -135,10 +143,10 @@
     </div>
 </div>
 
-<!-- Overlay for Sidebar -->
+<!-- Sidebar Overlay -->
 <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
-<!-- JavaScript for Sidebar & Dropdowns -->
+<!-- JavaScript for Sidebar -->
 <script>
     document.getElementById('sidebarToggle').addEventListener('click', function () {
         document.getElementById('mobileSidebar').classList.add('active');
@@ -163,6 +171,7 @@
         });
     });
 </script>
+
 
 <!-- CSS for Sidebar & Dropdown -->
 <style>

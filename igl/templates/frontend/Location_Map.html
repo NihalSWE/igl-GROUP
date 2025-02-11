@@ -1,0 +1,84 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block body %} 
+
+<style>
+    header {
+        margin-top:-29px;
+    }
+    
+    /* Container for the maps */
+    .maps-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        width: 1280px; /* Fixed width for the page */
+        margin: 0 auto; /* Center align the container */
+    }
+
+    /* Optional: Styling for the map's container */
+    .map-container {
+        position: relative;
+        width: 48%; /* Make maps occupy 48% of the available space */
+        height: 450px; /* Set the height for the maps */
+    }
+
+    /* Make the map responsive for smaller screens */
+    @media (max-width: 768px) {
+        .maps-container {
+            flex-direction: column;
+            align-items: center;
+            width: 100%; /* Make the container full width on smaller screens */
+        }
+        
+        .map-container {
+            width: 90%; /* Make each map occupy 90% of the available width */
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+        <!-- start page title -->
+        <section 
+    class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+    style="background-image: url('{{ banner.background_image.url }}');">
+    <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
+        <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+            <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+            </path>
+            </svg>
+    </div>
+    <div class="container">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+            <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">Locations | Map View</h1>
+            </div> 
+        </div>
+    </div>
+</section>
+        <!-- end page title -->
+
+        <!-- Maps Section -->
+        <section>
+            <div class="maps-container">
+                <!-- Left Map -->
+                <div class="map-container">
+                    <h3 class="text-center">Dhaka Location</h3>
+                    <!-- Embed Google Map iframe for Left Map -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.188678008914!2d90.3735998866002!3d23.740650234185345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b5c1cbd409%3A0x33ef8cc2e2b3fc6e!2sIGL%20Group!5e0!3m2!1sen!2sbd!4v1739168340873!5m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <!-- Right Map -->
+                <div class="map-container">
+                    <h3 class="text-center">Chittagong Location</h3>
+                    <!-- Embed Google Map iframe for Right Map -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.6254560669595!2d91.79898567602278!3d22.330000541816823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30acd90052289d63%3A0x9e4882401982e92f!2sIGL%20Web%20Ltd.%20(Chattogram)!5e0!3m2!1sen!2sbd!4v1739168702758!5m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
