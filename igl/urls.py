@@ -11,7 +11,9 @@ urlpatterns = [
     path('igl_web/',views.igl_web,name="igl_web"),
     
     path('bod/',views.bod,name="bod"),
+    path('bod/member/<slug:slug>/', views.bod_single, name='bod_single'),  # Display single member
     path('bos/',views.bos,name="bos"),
+    path('bos/member/<slug:slug>/', views.bos_single, name='bos_single'),  # Display single member
     
     path('contact/',views.contact,name="contact"),
     path('address/', views.address, name='address'),

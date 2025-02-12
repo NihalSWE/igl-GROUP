@@ -57,7 +57,7 @@ class HomeIntro(models.Model):
     title = models.CharField(max_length=255)
     description = RichTextField() 
     image1 = models.ImageField(upload_to="home_intro/")
-    image2 = models.ImageField(upload_to="home_intro/")
+   
     progress1_title = models.CharField(max_length=255)
     progress1_value = models.IntegerField()
     progress2_title = models.CharField(max_length=255)
@@ -118,14 +118,35 @@ class AboutBanner(models.Model):
 
     def __str__(self):
         return self.title
-    
-#AboutSection
+
+from io import BytesIO
+from django.core.files.base import ContentFile
 class AboutSection(models.Model):
-    title = models.CharField(max_length=255, default="Who We Are")
+    image = models.ImageField(upload_to="about_section/",default="No Image Uploaded")
     description = models.TextField()
 
+    def save(self, *args, **kwargs):
+        """Resize image to 640px width while maintaining aspect ratio before saving."""
+        if self.image:
+            img = Image.open(self.image)
+            output = BytesIO()
+
+            # Define the target width
+            target_width = 600
+            aspect_ratio = img.height / img.width
+            target_height = int(target_width * aspect_ratio)  # Maintain aspect ratio
+
+            img = img.resize((target_width, target_height), Image.Resampling.LANCZOS)  # ✅ Fixed this line
+            img.save(output, format='JPEG', quality=90)  # Save resized image with good quality
+            output.seek(0)
+
+            # Save resized image back to the model
+            self.image = ContentFile(output.read(), self.image.name)
+
+        super().save(*args, **kwargs)  # Call the original save method
+
     def __str__(self):
-        return self.title
+        return f"About Section - {self.id}"  # Unique identifier
     
 #Client review
 class ClientReview(models.Model):
@@ -500,23 +521,38 @@ class FELNA_TECH(models.Model):
     
             
 #----------Our Team model-----
-#-----Director
+class OurTeamBanner(models.Model):
+    title = models.CharField(max_length=255, default="Our Team")
+    background_image = models.ImageField(upload_to='banners/')
 
+    def __str__(self):
+        return self.title
+#-----Director
+from django.utils.text import slugify
 class BOD(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='team/')
-    bio = models.TextField(blank=True, null=True)
-    role = models.CharField(max_length=100, default='Chairman')
-   
+    name = models.CharField(max_length=255, unique=True)
+    role = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='bod_images/')
+    bio = models.TextField(max_length=1000, blank=True, null=True)
+    portfolio_link = models.URLField(max_length=500, blank=True, null=True)  # Portfolio link field
+    pdf = models.FileField(upload_to='bod_pdfs/', blank=True, null=True)  # PDF field for file uploads
+    slug = models.SlugField(unique=True, blank=True, null=True)  # Slug field for URL-friendly representation
+
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the image first
+        if not self.slug:  # Only generate slug if it doesn't already exist
+            # Generate a slug from the name and replace hyphens with underscores
+            self.slug = slugify(self.name).replace('-', '_')
+        super().save(*args, **kwargs)  # Save the BOD instance
+
+        # Resize image if it exists
         if self.image and hasattr(self.image, 'path'):
             self.resize_image(self.image.path)
 
     def resize_image(self, image_path):
+        """Resize the image to a standard size of 600x600."""
         with Image.open(image_path) as img:
             size = (600, 600)  # Standard square size
             img = img.resize(size, Image.LANCZOS)
@@ -528,13 +564,19 @@ class Staff(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     image = models.ImageField(upload_to='team/')
+    bio = models.TextField(max_length=1000, blank=True, null=True)
+    portfolio_link = models.URLField(max_length=500, blank=True, null=True,default="Not Uploaded")  # Portfolio link field
+    pdf = models.FileField(upload_to='bod_pdfs/', blank=True, null=True,default="Not Uploaded")  # PDF field for file uploads
+    slug = models.SlugField(unique=True, blank=True, null=True)  # Slug field for URL-friendly representation
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        # Call the original save method
-        super().save(*args, **kwargs)
+        if not self.slug:  # Only generate slug if it doesn't already exist
+            # Generate a slug from the name and replace hyphens with underscores
+            self.slug = slugify(self.name).replace('-', '_')
+        super().save(*args, **kwargs)  # Save the BOD instance
 
         # Resize the image if it exists
         if self.image and hasattr(self.image, 'path'):

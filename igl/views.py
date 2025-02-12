@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Video,Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,BOD, Staff,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
+from .models import HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule,Contact_Location, Contact_fromdata, Video,Gallery_Album, Gallery_AlbumDetails,GalleryBanner,Blog,JobPosting, JobApplication,BusinessStrength,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,BOD, Staff,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages,OurTeamBanner
 from django.http import JsonResponse
 
 
@@ -14,6 +14,7 @@ def home(request):
     cover_section = HomeBanner.objects.first()
     business_strengths = BusinessStrength.objects.all()
     industries = Industry.objects.all()
+    banner = ContactBanner.objects.first()
     reasons = ReasonToChooseUs.objects.all()
     blogs = Blog.objects.all().order_by('-published_date')[:3]
     contact_image = ContactBanner.objects.first()
@@ -25,6 +26,7 @@ def home(request):
         'blogs': blogs,
         'contact_image': contact_image,
         'industries': industries,
+        "banner": banner,
         "reasons": reasons,
         "banner_images": cover_section.images.all() if cover_section else [],
     }
@@ -139,18 +141,43 @@ def Bussiness(request):
 
 
 def bod(request):
+    banner = OurTeamBanner.objects.first()  # Fetch the banner
     bod_members = BOD.objects.all()
     context = {
+        'banner': banner,
         'bod_members': bod_members,
-        }
-    return render(request, 'frontend/BOD.html',context)
+    }
+    return render(request, 'frontend/BOD.html', context)
+
+
+def bod_single(request, slug):
+    banner = OurTeamBanner.objects.first()  # Fetch the banner
+    member = get_object_or_404(BOD, slug=slug)  # Using name to get the member
+    context = {
+        'banner': banner,
+        'member': member,
+    }
+    return render(request, 'frontend/BOD_Single.html', context)
+
+
 
 def bos(request):
+    banner = OurTeamBanner.objects.first()  # Fetch the banner
     staff_members = Staff.objects.all()
     context = {
+        'banner': banner,
         'staff_members': staff_members,
         }
     return render(request, 'frontend/BOS.html',context)
+
+def bos_single(request, slug):
+    banner = OurTeamBanner.objects.first()  # Fetch the banner
+    member = get_object_or_404(Staff, slug=slug)  # Using name to get the member
+    context = {
+        'banner': banner,
+        'member': member,
+    }
+    return render(request, 'frontend/BOS_Single.html', context)
 
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages

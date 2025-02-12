@@ -4,12 +4,9 @@
 {% block body %}
 <style>
     :root {
-        --primary-color: #FF6B3D;
-        --secondary-color: #2A2A72;
         --container-width: 1280px;
         --gradient-1: linear-gradient(135deg, #2A2A72 0%, #009FFF 74%);
         --gradient-2: linear-gradient(45deg, #FF6B3D 0%, #FF8E53 100%);
-        --card-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     }
 
     body {
@@ -20,82 +17,20 @@
     }
 
     .container {
-        max-width: var(--container-width);
-        width: 100%;
+        width: var(--container-width);
         margin: 0 auto;
-        padding: 0 20px;
+        padding: 0;
         box-sizing: border-box;
     }
 
-    .success-story {
-        display: flex;
-        align-items: center;
-        gap: 60px;
-        margin-bottom: 120px;
-        padding: 60px 40px;
-        background: white;
-        border-radius: 30px;
-        box-shadow: var(--card-shadow);
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-    }
-
-    .success-story:hover {
-        transform: translateY(-10px);
-    }
-
-    .success-story::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
+    .content-card {
         width: 100%;
-        height: 5px;
-        background: var(--gradient-1);
+        margin-bottom: 80px;
+        padding: 40px 0;
     }
 
-    .story-content {
-        flex: 1;
-        max-width: 600px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .story-image {
-        flex: 1;
-        max-width: 600px;
-        position: relative;
-    }
-
-    .story-image img {
+    .card-content {
         width: 100%;
-        height: auto;
-        border-radius: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-        transition: transform 0.5s ease;
-    }
-
-    .story-image::before {
-        content: '';
-        position: absolute;
-        top: -20px;
-        right: -20px;
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        background: var(--gradient-2);
-        z-index: -1;
-        opacity: 0.3;
-        transition: transform 0.5s ease;
-    }
-
-    .success-story:hover .story-image img {
-        transform: scale(1.02);
-    }
-
-    .success-story:hover .story-image::before {
-        transform: translate(10px, -10px);
     }
 
     h1 {
@@ -124,7 +59,6 @@
         line-height: 1.8;
         color: #444;
         margin-bottom: 30px;
-        position: relative;
     }
 
     .explore-button {
@@ -136,7 +70,6 @@
         border-radius: 50px;
         text-decoration: none;
         font-weight: 600;
-        margin-top: 24px;
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
@@ -172,37 +105,16 @@
         transform: translateX(5px);
     }
 
-    /* Additional decorative elements */
-    .dot-pattern {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        background-image: radial-gradient(#2A2A72 1px, transparent 1px);
-        background-size: 10px 10px;
-        opacity: 0.1;
-    }
-
-    .success-story:nth-child(odd) .dot-pattern {
-        top: -20px;
-        right: -20px;
-    }
-
-    .success-story:nth-child(even) .dot-pattern {
-        bottom: -20px;
-        left: -20px;
-    }
-
     @media (max-width: 1320px) {
         .container {
+            width: 100%;
             padding: 0 30px;
         }
     }
 
     @media (max-width: 992px) {
-        .success-story {
-            gap: 40px;
-            margin-bottom: 80px;
-            padding: 40px 30px;
+        .content-card {
+            padding: 30px 0;
         }
         
         h1 {
@@ -211,15 +123,8 @@
     }
 
     @media (max-width: 768px) {
-        .success-story {
-            flex-direction: column-reverse;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .story-content,
-        .story-image {
-            max-width: 100%;
+        .content-card {
+            padding: 25px 0;
         }
         
         h1 {
@@ -229,18 +134,12 @@
         p {
             font-size: 16px;
         }
-
-        .dot-pattern {
-            width: 100px;
-            height: 100px;
-        }
     }
 </style>
 
-<!-- Keep the original page title section -->
+<!-- Original title section remains unchanged -->
 <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
 style="background-image: url('{{ banner.background_image.url }}');">
-    <!-- [Previous title section code remains exactly the same] -->
     <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
         <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
             <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
@@ -259,12 +158,11 @@ style="background-image: url('{{ banner.background_image.url }}');">
     </div>
 </section>
 
-<!--Modern info section-->
+<!-- Redesigned content section -->
 <div class="container">
     {% for igl in igl_webs %}
-    <div class="success-story">
-        <div class="dot-pattern"></div>
-        <div class="story-content">
+    <div class="content-card">
+        <div class="card-content">
             <h1>{{ igl.title }}</h1>
             <p>{{ igl.description | safe }}</p>
             <a href="https://iglweb.com/web/" class="explore-button" target="_blank">
@@ -274,9 +172,6 @@ style="background-image: url('{{ banner.background_image.url }}');">
                     <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
             </a>
-        </div>
-        <div class="story-image">
-            <img src="{{ igl.image.url }}" alt="{{ igl.title }}">
         </div>
     </div>
     {% endfor %}

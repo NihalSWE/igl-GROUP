@@ -3,7 +3,15 @@
 
 
 {% block body %}
+<style>
+    .img-square {
+    width: 600px;
+    height: 600px;
+    object-fit: cover; /* Ensures the image fills the square without distortion */
+    border-radius: 8px;
+}
 
+</style>
 
   
     <!-- start hero section -->
@@ -80,12 +88,10 @@
         <div class="row mb-10 align-items-center">
             <div class="col-lg-5 position-relative md-mb-20">
                 <div class="w-70 xs-w-80" data-animation-delay="50" data-shadow-animation="true">
-                    <img src="{{ intro.image1.url }}" alt="" class="border-radius-8px w-100">
+                    <img src="{{ intro.image1.url }}" alt="" class="border-radius-8px img-square">
+
                 </div>
-                <div class="w-60 overflow-hidden position-absolute right-minus-15px xs-right-15px xs-w-60 bottom-minus-50px" data-shadow-animation="true" data-animation-delay="250" data-bottom-top="transform: translateY(50px)" data-top-bottom="transform: translateY(-50px)">
-                    <img src="{{ intro.image2.url }}" alt="" class="border-radius-8px w-100 box-shadow-quadruple-large">
-                </div>
-            </div>
+            </div> 
             <div class="col-xl-5 col-lg-6 offset-lg-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
                 <h3 class="text-dark-gray fs-50 fw-700 ls-minus-2px">{{ intro.title }}</h3>
                 <p class="mb-40px sm-mb-25px">{{ intro.description | safe }}</p>
@@ -185,7 +191,8 @@
         <div class="client-grid">
             {% for industry in industries %}
                 <div class="client-item">
-                    <a href="{{ industry.link }}" class="client-circle" {% if not industry.link %}onclick="return false;"{% endif %}>
+                    <a href="{{ industry.link }}" class="client-circle" 
+                       {% if not industry.link %}onclick="return false;"{% else %}target="_blank" rel="noopener noreferrer"{% endif %}>
                         {% if industry.icon %}
                             <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" loading="lazy">
                         {% endif %}
@@ -200,12 +207,13 @@
     
     
     
+    
     <!-- end section -->
    
  
 
     <!-- start section -->
-    <section class="cover-background one-third-screen sm-h-500px pb-0 position-relative" style="background-image: url('{{ conatctimage.background_image.url }}');">
+    <section class="cover-background one-third-screen sm-h-500px pb-0 position-relative" style="background-image: url('{{ banner.background_image.url }}');">
         <div class="opacity-extra-medium bg-dark-gray"></div> 
         <div class="container h-100"> 
             <div class="row align-items-center justify-content-center h-100">

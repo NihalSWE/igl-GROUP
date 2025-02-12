@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,HomeIntro,HomeBanner,HomeBannerImage,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
+from .models import NavMenu, Logo,HomeIntro,HomeBanner,HomeBannerImage,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages,OurTeamBanner
 
 
 @admin.register(NavMenu)
@@ -51,7 +51,7 @@ class AboutBannerAdmin(admin.ModelAdmin):
     
 @admin.register(AboutSection)
 class AboutSectionAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('id','image')
     
 @admin.register(ClientReview)
 class ClientReviewAdmin(admin.ModelAdmin):
@@ -205,12 +205,16 @@ class FELNATECHAdmin(admin.ModelAdmin):
 #----------Our Team---
 from .models import BOD, Staff
 
+@admin.register(OurTeamBanner)
+class OurTeamBannerAdmin(admin.ModelAdmin):
+    list_display = ('id','title','background_image')
+
 @admin.register(BOD)
 class BODAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role')
+    list_display = ('name', 'role', 'portfolio_link', 'pdf')  # Add the fields to display
     search_fields = ('name', 'role')
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ('name', 'position')
+    list_display = ('name', 'position', 'portfolio_link', 'pdf')
     search_fields = ('name',)
