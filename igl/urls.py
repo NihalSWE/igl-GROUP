@@ -1,5 +1,6 @@
 from . import views
 from django.urls import path
+# from .views import submit_application, fetch_user_details,check_application
 
 
 urlpatterns = [
@@ -21,7 +22,7 @@ urlpatterns = [
     path('location-map/', views.location_map, name='location_map'),
     
     path('gallery/', views.gallery, name='gallery'),
-    path('gallery/album/<int:album_id>/', views.album_images, name='album_images'),
+    path('gallery/album/<slug:album_slug>/', views.album_images, name='album_images'),  # Use slug instead of id
     path('vdo_gly/',views.vdo_gly,name="vdo_gly"),
     
     
@@ -42,6 +43,13 @@ urlpatterns = [
     
     
     
+   path('our_customer/',views.our_customer,name="our_customer"),
+   path('policy/',views.policy,name="policy"),
+   path('terms/',views.terms,name="terms"),
    
-    
+   
+#    path('check_application/', check_application, name='check_application'),
+#    path('submit_application/<int:job_id>/', submit_application, name='submit_application'),
+#    path('fetch_user_details/', fetch_user_details, name='fetch_user_details'),
+    path('check_application/', views.check_application, name='check_application'),
 ]

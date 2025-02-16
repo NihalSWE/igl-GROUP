@@ -184,23 +184,30 @@
     <!-- end section -->
 
     <!-- start section -->
-    <section class="customers-section">
-        <h2>Our customers</h2>
-        <p class="subtitle">In good company with...</p>
-        
-        <div class="client-grid">
-            {% for industry in industries %}
-                <div class="client-item">
-                    <a href="{{ industry.link }}" class="client-circle" 
-                       {% if not industry.link %}onclick="return false;"{% else %}target="_blank" rel="noopener noreferrer"{% endif %}>
-                        {% if industry.icon %}
-                            <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" loading="lazy">
-                        {% endif %}
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+    <!-- Start section -->
+<section class="customers-section">
+    <h2>Our Customers</h2>
+    <p class="subtitle">In good company with...</p>
+
+    <div class="client-grid">
+        {% for industry in industries|slice:":6" %}  {# Show only the first 6 industries #}
+            <div class="client-item">
+                <a href="{{ industry.link }}" class="client-circle" 
+                   {% if not industry.link %}onclick="return false;"{% else %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                    {% if industry.icon %}
+                        <img src="{{ industry.icon.url }}" alt="{{ industry.name }}" loading="lazy">
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- View All Button -->
+    <div class="view-all-container">
+        <a href="{% url 'our_customer' %}" class="view-all-btn">View All</a>
+    </div>
+</section>
+
     
     
     

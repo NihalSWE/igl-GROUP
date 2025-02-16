@@ -38,6 +38,7 @@
                     <h5>Job Type: {{ job.job_type }}</h5>
                     <h5>Department: {{ job.department }}</h5>
                     <h5>Salary: {{ job.salary }}</h5>
+                    <h5>Last Date For Application: {{ job.deadline }}</h5>
                     <!-- Other job details here -->
                     <button class="btn btn-success apply-now" data-id="{{ job.id }}">Apply Now</button>
                 </div>
@@ -61,66 +62,76 @@
                     <input type="hidden" name="job_id" id="job_id">
                     <input type="hidden" name="location" id="location">
                     <input type="hidden" name="department" id="department">
-                    
-                    <!-- Name -->
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                    </div>
-                    
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-                    </div>
-
+                
                     <!-- Phone -->
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
+                        <label for="phone">Phone Number <span style="color: red;">*</span></label>
                         <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
                     </div>
-
+                
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email Address <span style="color: red;">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">Full Name <span style="color: red;">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                
                     <!-- Gender -->
                     <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender" name="gender" class="form-control" required>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
+                        <label for="gender">Gender <span style="color: red;">*</span></label>
+                        <div style="display: flex; gap: 20px; align-items: center; white-space: nowrap;">
+                            <label for="male" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                                <input type="radio" id="male" name="gender" value="male" required>
+                                <span>Male</span>
+                            </label>
+                            <label for="female" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                                <input type="radio" id="female" name="gender" value="female" required>
+                                <span>Female</span>
+                            </label>
+                            <label for="others" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                                <input type="radio" id="others" name="gender" value="others" required>
+                                <span>Others</span>
+                            </label>
+                        </div>
                     </div>
-
+                
                     <!-- CV Upload -->
                     <div class="form-group">
-                        <label for="cv">Upload CV</label>
+                        <label for="cv">Upload CV <span style="color: red;">*</span></label>
                         <input type="file" id="cv" name="cv" class="form-control" required>
                     </div>
-
+                
                     <!-- Image Upload -->
                     <div class="form-group">
                         <label for="image">Upload Image</label>
                         <input type="file" id="image" name="image" class="form-control">
                     </div>
-
+                
                     <!-- LinkedIn -->
                     <div class="form-group">
                         <label for="linkedin">LinkedIn Profile</label>
                         <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="Enter your LinkedIn URL">
                     </div>
-
+                
                     <!-- Portfolio -->
                     <div class="form-group">
                         <label for="portfolio">Portfolio URL</label>
                         <input type="url" id="portfolio" name="portfolio" class="form-control" placeholder="Enter your portfolio URL">
                     </div>
-
+                
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary">Submit Application</button>
                 </form>
+                
             </div>
         </div>
     </div>
 </div>
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Handle "Apply Now" button clicks to open the modal
@@ -129,47 +140,80 @@
                 let jobId = this.dataset.id;
                 let location = this.dataset.location;
                 let department = this.dataset.department;
-
+    
                 document.getElementById("job_id").value = jobId;
                 document.getElementById("location").value = location;
                 document.getElementById("department").value = department;
-
+    
                 $("#applyModal").modal("show"); // Open modal
             });
         });
-
+    
+        // Auto-fill form when user enters phone number
+        document.getElementById("phone").addEventListener("blur", function () {
+            let phone = this.value.trim();
+            if (phone.length > 0) {
+                // Fetch previous application data based on the entered phone number
+                fetch(`/check_application/?phone=${phone}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            // Auto-fill the form with previous application data
+                            document.getElementById("name").value = data.name;
+                            document.getElementById("email").value = data.email;
+                            document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
+                            
+                            // Ensure correct mapping to form fields (linkedin_url and portfolio_url)
+                            document.getElementById("linkedin").value = data.linkedin_url || '';  // Use linkedin_url
+                            document.getElementById("portfolio").value = data.portfolio_url || '';  // Use portfolio_url
+                        }
+                    })
+                    .catch(error => console.error("Error fetching application data:", error));
+            }
+        });
+    
         // Handle form submission
         const form = document.getElementById("applicationForm");
         form.addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent default form submission
-
+    
+            // Phone number validation for Bangladesh format
+            const phoneInput = document.getElementById("phone").value;
+            const bdPhoneRegex = /^(013|014|015|016|017|018|019)\d{8}$/; // BD Number format
+    
+            if (!bdPhoneRegex.test(phoneInput)) {
+                alert("Please enter a valid Bangladeshi phone number (e.g., 017XXXXXXXX).");
+                return; // Stop submission
+            }
+    
             const formData = new FormData(form);
             const jobId = formData.get("job_id"); // Get job ID from form
-
+    
+            // Submit the form data
             fetch("{% url 'submit_application' job_id=0 %}".replace("0", jobId), {
                 method: "POST",
                 body: formData,
             })
             .then(response => response.json())
             .then(data => {
-                if (data.status === "success") {
+                if (data.status === "error") {
+                    alert(data.message);
+                } else {
                     alert("Application submitted successfully!");
                     $("#applyModal").modal("hide"); // Close modal
                     form.reset(); // Reset form fields
-                } else {
-                    alert(data.message || "Error submitting application.");
                 }
             })
             .catch(error => {
                 alert("Error submitting application.");
             });
         });
-
+    
         // Ensure modal closes properly and resets form when clicking the X button or outside the modal
         $("#applyModal").on("hidden.bs.modal", function () {
             form.reset(); // Reset the form when the modal is closed
         });
-
+    
         // Added handler for modal close (X button)
         $(".close").on("click", function() {
             $("#applyModal").modal("hide");  // Manually hide the modal

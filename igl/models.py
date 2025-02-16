@@ -248,14 +248,34 @@ class GalleryBanner(models.Model):
     def __str__(self):
         return self.title
 
+from PIL import Image, ImageOps
+
+from django.utils.text import slugify
+
 class Gallery_Album(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)  # Album name
     thumbnail = models.ImageField(upload_to='albums/thumbnails/', blank=True, null=True)  # Thumbnail for the album
     created_at = models.DateTimeField(auto_now_add=True)  # Tracks album creation date
+    slug = models.SlugField(unique=True, blank=True, null=True)  # Slug field
 
     def __str__(self):
         return self.title if self.title else f"Gallery_Album {self.id}"
 
+    def save(self, *args, **kwargs):
+        # Automatically generate the slug from the title
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+        if self.thumbnail:
+            # Resize the thumbnail to 300x300
+            img = Image.open(self.thumbnail.path)
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+            img = img.resize((300, 300), Image.Resampling.LANCZOS)
+            img.save(self.thumbnail.path)  # Save the resized thumbnail
+
+        
 
 class Gallery_AlbumDetails(models.Model):
     album = models.ForeignKey(Gallery_Album, related_name='images', on_delete=models.CASCADE)  # Associate each image with an album
@@ -266,14 +286,16 @@ class Gallery_AlbumDetails(models.Model):
         return self.album.title if self.album and self.album.title else f"Image {self.id}"
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the instance first
+        # First save the instance
+        super().save(*args, **kwargs)
 
-        # Resize image to fit a square (if needed)
-        img = Image.open(self.image.path)
-        if img.mode != 'RGB':
-            img = img.convert('RGB')
-        img = ImageOps.fit(img, (500, 500), Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-        img.save(self.image.path)
+        if self.image:
+            # Resize the image to 600x400
+            img = Image.open(self.image.path)
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+            img = img.resize((600, 400), Image.Resampling.LANCZOS)
+            img.save(self.image.path)  # Save the resized image
   
 
 
@@ -422,7 +444,7 @@ class JobApplication(models.Model):
     job = models.ForeignKey(JobPosting, on_delete=models.CASCADE, related_name='applications')
     location = models.CharField(max_length=100, editable=False, default='dhaka')  
     department = models.CharField(max_length=50, editable=False, default='IT')  # Auto-filled from job posting
-    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], default='Male')
+    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female'), ('others', 'Others')], default='Male')
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
@@ -446,6 +468,7 @@ class JobApplication(models.Model):
         """Convert location code to human-readable form."""
         location_dict = dict(JobPosting.LOCATION_CHOICES)
         return location_dict.get(self.location, self.location)
+
 
 
     

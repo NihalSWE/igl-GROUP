@@ -24,6 +24,10 @@
 
         <!-- Swiper CSS -->
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
         <!-- Add Google Fonts link for modern fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
         
@@ -201,84 +205,111 @@
         
 
         <!-- start footer -->
-        <!-- start footer -->
-        <footer class="p-0 footer-light position-relative"> 
-            <div class="container position-relative"> 
-                <div class="row justify-content-center pt-5 sm-pt-40px">
-                    <!-- start footer column -->
-                    <div class="col-6 col-xl-3 col-lg-12 col-sm-6 last-paragraph-no-margin text-xl-start text-lg-center order-sm-1 lg-mb-50px sm-mb-30px">
-                        <span class="fw-600 d-block text-dark-gray mb-5px">About Us</span>
-                        <p class="lh-28 w-90 xl-w-100 mx-lg-auto mx-xl-0 " style="color:#656973; font-size: 1rem;">
-                            IGL is an IT solutions company specializing in web development, domain registration, and hosting services. They offer tailored technology solutions to help businesses grow and succeed in the digital space..</p>
-                        <div class="elements-social social-icon-style-02 mt-15px">
-                            <ul class="medium-icon dark">
-                                <li class="my-0"><a class="facebook" href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                <li class="my-0"><a class="twitter" href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li> 
-                                <li class="my-0"><a class="instagram" href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li> 
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- end footer column -->
-                    <!-- start footer column -->
-                    <div class="col-6 col-xl-2 col-lg-3 col-sm-4 xs-mb-30px order-sm-3 order-lg-2">
-                        <span class="fw-600 d-block text-dark-gray mb-5px">Company</span>
-                        <ul>
-                            <li><a href="{% url 'about' %}" >Who we are</a></li>
-                            <li>
-                                <a href="{% url 'Bussiness' %}">Our services</a>
-                                <div class="bg-dark-gray fw-600 text-white lh-22 text-uppercase border-radius-30px ps-10px pe-10px fs-10 ms-10px d-inline-block align-middle">Hot</div>
-                            </li>
-                            <li><a href="{% url 'contact' %}" >Contact us</a></li>
-                        </ul>
-                        
-                    </div>
-                    <!-- end footer column -->
-                   <!-- start footer column -->
-                    <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-3">
-                        <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
-                        <ul>
-                            <li><a href="https://iglgroup.org/" target="_blank">IGL WEB</a></li>
-                            <li><a href="https://iglweb.com/web/" target="_blank">IGL HOST</a></li>
-                            <li><a href="https://studentvisabd.com/" target="_blank">STUDENT VISA</a></li>
-                            <li><a href="#" target="_blank">IGL NETWORK</a></li>
-                        </ul>
-                    </div>
-                    <!-- end footer column -->
-
-                    <!-- start footer column -->
-                    <div class="col-6 col-xl-2 col-lg-3 col-md-3 col-sm-4 xs-mb-30px order-sm-5 order-lg-4">
-                        <span class="fw-600 d-block text-dark-gray mb-5px">Need help?</span>
-                        <span>Call us directly?</span>
-                        <span class="d-block mb-10px"><a class="text-dark-gray fw-600" href="tel:019578">01958666999</a></span>
-                        <span>Need support?</span>
-                        <a href="mailto:support@iglweb.com" class="text-dark-gray fw-600">support@iglweb.com</a>
-
-                    </div>
-                    <!-- end footer column -->
-                               
+<!-- start footer -->
+<footer class="p-0 footer-light position-relative"> 
+    <div class="container position-relative" style="max-width: 1280px; padding: 0;">
+        <div class="row justify-content-center pt-5 sm-pt-40px">
+            <!-- start footer column -->
+            <div class="col-6 col-xl-3 col-lg-12 col-sm-6 last-paragraph-no-margin text-xl-start text-lg-center order-sm-1 lg-mb-50px sm-mb-30px">
+                <span class="fw-600 d-block text-dark-gray mb-5px">About Us</span>
+                <p class="lh-28 w-90 xl-w-100 mx-lg-auto mx-xl-0" style="color:#656973; font-size: 1rem;">
+                    IGL is an IT solutions company specializing in web development, domain registration, and hosting services. They offer tailored technology solutions to help businesses grow and succeed in the digital space..
+                </p>
+                <div class="elements-social social-icon-style-02 mt-15px">
+                    <ul class="medium-icon dark">
+                        <li class="my-0"><a class="facebook" href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li class="my-0"><a class="twitter" href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li> 
+                        <li class="my-0"><a class="instagram" href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li> 
+                    </ul>
                 </div>
-                <div class="row justify-content-center align-items-center pt-7">
-                    <!-- start divider -->
-                    <div class="col-12">
-                        <div class="divider-style-03 divider-style-03-01 border-color-extra-medium-gray"></div>
-                    </div>
-                    <!-- end divider -->
-                    <!-- start copyright -->
-                    <div class="col-lg-5 pt-20px pb-20px md-pt-0 order-2 order-lg-1 text-center text-lg-start last-paragraph-no-margin fs-14"><p>&copy; Copyright © 2022 <a href="https://iglgroup.org/" target="_blank" class="text-dark-gray fw-600 text-decoration-line-bottom">IGL Group</a></p></div>
-                    <!-- end copyright -->
-                    <!-- start footer menu -->
-                    <div class="col-lg-7 pt-20px pb-20px md-pt-25px md-pb-5px order-1 order-lg-2 text-center text-lg-end fs-14">
-                        <ul class="footer-navbar sm-lh-normal"> 
-                            <li><a href="#" class="nav-link">Privacy policy</a></li>
-                            <li><a href="#" class="nav-link">Terms and conditions</a></li>
-                            <li><a href="#" class="nav-link">Copyright</a></li>
-                        </ul>
-                    </div>
-                    <!-- end footer menu -->
-                </div>
-            </div> 
-        </footer>
-        <!-- end footer -->
+            </div>
+            <!-- end footer column -->
+
+            <!-- start footer column -->
+            <div class="col-6 col-xl-2 col-lg-3 col-sm-4 xs-mb-30px order-sm-3 order-lg-2">
+                <span class="fw-600 d-block text-dark-gray mb-5px">Company</span>
+                <ul>
+                    <li><a href="{% url 'about' %}">Who we are</a></li>
+                    <li>
+                        <a href="{% url 'Bussiness' %}">Our services</a>
+                        <div class="bg-dark-gray fw-600 text-white lh-22 text-uppercase border-radius-30px ps-10px pe-10px fs-10 ms-10px d-inline-block align-middle">Hot</div>
+                    </li>
+                    <li><a href="{% url 'contact' %}">Contact us</a></li>
+                </ul>
+            </div>
+            <!-- end footer column -->
+
+            <!-- start footer column -->
+            <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-3">
+                <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
+                <ul>
+                    <li><a href="https://iglgroup.org/" target="_blank">IGL WEB</a></li>
+                    <li><a href="https://iglweb.com/web/" target="_blank">IGL HOST</a></li>
+                    <li><a href="https://studentvisabd.com/" target="_blank">STUDENT VISA</a></li>
+                    <li><a href="#" target="_blank">IGL NETWORK</a></li>
+                </ul>
+            </div>
+            <!-- end footer column -->
+
+            <!-- start footer column (new Sister Concern) -->
+            <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-4">
+                <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
+                <ul>
+                    <li><a href="https://iglgroup.org/" target="_blank">IGL WEB</a></li>
+                    <li><a href="https://iglweb.com/web/" target="_blank">IGL HOST</a></li>
+                    <li><a href="https://studentvisabd.com/" target="_blank">STUDENT VISA</a></li>
+                    <li><a href="#" target="_blank">IGL NETWORK</a></li>
+                </ul>
+            </div>
+            <!-- end footer column -->
+
+            <!-- start footer column -->
+            <div class="col-6 col-xl-2 col-lg-3 col-md-3 col-sm-4 xs-mb-30px order-sm-5 order-lg-5">
+                <span class="fw-600 d-block text-dark-gray mb-5px">Need help?</span>
+                <span>Call us directly?</span>
+                <span class="d-block mb-10px"><a class="text-dark-gray fw-600" href="tel:019578">01958666999</a></span>
+                <span>Need support?</span>
+                <a href="mailto:support@iglweb.com" class="text-dark-gray fw-600">support@iglweb.com</a>
+            </div>
+            <!-- end footer column -->
+        </div>
+
+        <div class="row justify-content-center align-items-center pt-7">
+            <!-- start divider -->
+            <div class="col-12">
+                <div class="divider-style-03 divider-style-03-01 border-color-extra-medium-gray"></div>
+            </div>
+            <!-- end divider -->
+
+            <!-- start copyright -->
+            <div class="col-lg-5 pt-20px pb-20px md-pt-0 order-2 order-lg-1 text-center text-lg-start last-paragraph-no-margin fs-14">
+                <p>&copy; Copyright © 2007- <span id="current-year"></span> <a href="https://iglgroup.org/" target="_blank" class="text-dark-gray fw-600 text-decoration-line-bottom">IGL Group</a></p>
+            </div>
+            
+            <script>
+                // Get the current year
+                const currentYear = new Date().getFullYear();
+                
+                // Update the year in the span with id "current-year"
+                document.getElementById('current-year').textContent = currentYear;
+            </script>
+            
+            <!-- end copyright -->
+
+            <!-- start footer menu -->
+            <div class="col-lg-7 pt-20px pb-20px md-pt-25px md-pb-5px order-1 order-lg-2 text-center text-lg-end fs-14">
+                <ul class="footer-navbar sm-lh-normal"> 
+                    <li><a href="{% url 'policy' %}" class="nav-link">Privacy policy</a></li>
+                    <li><a href="{% url 'terms' %}" class="nav-link">Terms and conditions</a></li>
+                </ul>
+            </div>
+            <!-- end footer menu -->
+        </div>
+    </div> 
+</footer>
+<!-- end footer -->
+
+
       
       
     <!-- end footer -->
@@ -305,7 +336,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
    
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <!-- Swiper JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

@@ -107,9 +107,9 @@ def gallery(request):
     }
     return render(request, 'frontend/gallery.html', context)
 
-def album_images(request, album_id):
+def album_images(request, album_slug):
     banner = GalleryBanner.objects.first()  # Fetch the banner
-    album = get_object_or_404(Gallery_Album, id=album_id)  # Get the album based on the clicked album's ID
+    album = get_object_or_404(Gallery_Album, slug=album_slug)  # Get the album based on the slug
     images = Gallery_AlbumDetails.objects.filter(album=album).order_by('-uploaded_at')  # Fetch all images for this album
     
     context = {
@@ -119,12 +119,18 @@ def album_images(request, album_id):
     }
     return render(request, 'frontend/gallery_single.html', context)
 
+from django.core.paginator import Paginator
 def vdo_gly(request):
     banner = GalleryBanner.objects.first()  # Fetch the banner
-    videos = Video.objects.all().order_by('-created_at')
+    videos_list = Video.objects.all().order_by('-created_at')  # Fetch all videos
+    paginator = Paginator(videos_list, 15)  # 15 videos per page
+
+    page_number = request.GET.get('page')
+    videos = paginator.get_page(page_number)  # Get videos for the current page
+
     context = {
         'banner': banner,
-       'videos': videos, 
+        'videos': videos,  # This is now a paginated object
     }
     return render(request, 'frontend/video_gallery.html', context)
 
@@ -209,6 +215,8 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import JobPosting, JobApplication
+from django.utils.timezone import now
+
 
 def submit_application(request, job_id):
     if request.method == 'POST':
@@ -248,8 +256,30 @@ def submit_application(request, job_id):
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
 
+def check_application(request):
+    phone = request.GET.get('phone')
 
+    if phone:
+        # Check if the phone number exists in the database
+        application = JobApplication.objects.filter(phone=phone).first()
 
+        if application:
+            # Return the existing application data
+            data = {
+                'exists': True,
+                'name': application.name,
+                'email': application.email,
+                'gender': application.gender,
+                'linkedin_url': application.linkedin_url,
+                'portfolio_url': application.portfolio_url
+            }
+        else:
+            # No application found for the phone number
+            data = {'exists': False}
+        
+        return JsonResponse(data)
+
+    return JsonResponse({'status': 'error', 'message': 'Phone number is required.'})
 
 
 
@@ -310,7 +340,30 @@ def felnatech(request):
     return render(request, 'frontend/felnatech.html', context)
 
 
+def our_customer(request):
+    banner = ContactBanner.objects.first()
+    industries = Industry.objects.all()
+    context={
+        'banner': banner,
+        'industries': industries,
+        
+    }
+    return render (request,'frontend/our_customers.html', context)
 
+
+def policy(request):
+    cover_section = HomeBanner.objects.first()
+    context={
+        'cover_section': cover_section,
+    }
+    return render(request,'frontend/policy.html',context)
+
+def terms(request):
+    cover_section = HomeBanner.objects.first()
+    context={
+        'cover_section': cover_section,
+    }
+    return render(request,'frontend/terms.html',context)
 
 
 def error_page(request, exception):

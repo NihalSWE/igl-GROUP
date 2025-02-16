@@ -168,7 +168,7 @@ class JobPostingAdmin(admin.ModelAdmin):
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'job', 'department', 'location', 'gender', 'image','applied_date','cv')
+    list_display = ('name', 'job', 'department', 'location', 'gender','phone','image','applied_date','cv')
     list_filter = ('department', 'location', 'gender')
     search_fields = ('name', 'email', 'phone', 'job__title')
     
@@ -218,3 +218,6 @@ class BODAdmin(admin.ModelAdmin):
 class StaffAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'portfolio_link', 'pdf')
     search_fields = ('name',)
+
+
+
