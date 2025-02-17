@@ -234,6 +234,11 @@ def submit_application(request, job_id):
             return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields.'})
 
         job = get_object_or_404(JobPosting, id=job_id)
+        
+        # Check if user has already applied for this job before the deadline
+        existing_application = JobApplication.objects.filter(job=job, phone=phone).first()
+        if existing_application and job.deadline >= now().date():
+            return JsonResponse({'status': 'error', 'message': 'You have already applied for this job. You can reapply after the deadline.'})
 
         # Create and save the job application
         application = JobApplication(
@@ -255,6 +260,7 @@ def submit_application(request, job_id):
         return JsonResponse({'status': 'success'})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
 
 def check_application(request):
     phone = request.GET.get('phone')
