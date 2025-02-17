@@ -232,7 +232,7 @@
                     <li><a href="{% url 'about' %}">Who we are</a></li>
                     <li>
                         <a href="{% url 'Bussiness' %}">Our services</a>
-                        <div class="bg-dark-gray fw-600 text-white lh-22 text-uppercase border-radius-30px ps-10px pe-10px fs-10 ms-10px d-inline-block align-middle">Hot</div>
+                        {% comment %} <div class="bg-dark-gray fw-600 text-white lh-22 text-uppercase border-radius-30px ps-10px pe-10px fs-10 ms-10px d-inline-block align-middle">Hot</div> {% endcomment %}
                     </li>
                     <li><a href="{% url 'contact' %}">Contact us</a></li>
                 </ul>
@@ -277,14 +277,26 @@
         <div class="row justify-content-center align-items-center pt-7">
             <!-- start divider -->
             <div class="col-12">
-                <div class="divider-style-03 divider-style-03-01 border-color-extra-medium-gray"></div>
+                <div class="divider-style-03 divider-style-03-01 border-color-extra-medium-gray mx-auto" style="max-width: 1200px;"></div>
+
             </div>
             <!-- end divider -->
 
-            <!-- start copyright -->
-            <div class="col-lg-5 pt-20px pb-20px md-pt-0 order-2 order-lg-1 text-center text-lg-start last-paragraph-no-margin fs-14">
-                <p>&copy; Copyright © 2007- <span id="current-year"></span> <a href="https://iglgroup.org/" target="_blank" class="text-dark-gray fw-600 text-decoration-line-bottom">IGL Group</a></p>
+          <!-- start copyright -->
+                <!-- start copyright -->
+            <div class="col-lg-5 pt-20px pb-20px md-pt-0 order-2 order-lg-1 last-paragraph-no-margin fs-14"
+            style="max-width: 1280px; margin: 0 auto; text-align: center;">
+            <p style="display: inline-block; margin: 0; margin-right: 193px;">
+            &copy; Copyright © 2007- <span id="current-year"></span> 
+            <a href="https://iglgroup.org/" target="_blank" class="text-dark-gray fw-600 text-decoration-line-bottom">IGL Group</a>
+            </p>
             </div>
+
+
+
+            
+            
+            
             
             <script>
                 // Get the current year
@@ -298,7 +310,7 @@
 
             <!-- start footer menu -->
             <div class="col-lg-7 pt-20px pb-20px md-pt-25px md-pb-5px order-1 order-lg-2 text-center text-lg-end fs-14">
-                <ul class="footer-navbar sm-lh-normal"> 
+                <ul class="footer-navbar sm-lh-normal"  style="margin-right: 37px;"> 
                     <li><a href="{% url 'policy' %}" class="nav-link">Privacy policy</a></li>
                     <li><a href="{% url 'terms' %}" class="nav-link">Terms and conditions</a></li>
                 </ul>
@@ -307,6 +319,138 @@
         </div>
     </div> 
 </footer>
+<style>
+    /* Responsive styles for footer */
+    @media (max-width: 767px) {
+        /* Base footer adjustments */
+        .footer-light {
+            padding: 30px 15px !important;
+        }
+    
+        /* Create 2-column layout on mobile */
+        .footer-light .col-6 {
+            width: 50% !important;
+            padding: 0 10px !important;
+            margin-bottom: 25px !important;
+        }
+    
+        /* About Us section specific (make it full width) */
+        .footer-light .col-xl-3 {
+            width: 100% !important;
+            margin-bottom: 30px !important;
+        }
+    
+        /* Adjust text alignment */
+        .footer-light .text-xl-start,
+        .footer-light .text-lg-center {
+            text-align: left !important;
+        }
+    
+        /* About us text adjustments */
+        .footer-light .w-90 {
+            width: 100% !important;
+            margin: 0 !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+    
+        /* Social icons alignment */
+        .footer-light .elements-social {
+            margin-top: 15px !important;
+            justify-content: flex-start !important;
+        }
+    
+        /* Adjust headings in footer columns */
+        .footer-light .fw-600 {
+            font-size: 16px !important;
+            margin-bottom: 10px !important;
+            display: block !important;
+        }
+    
+        /* Adjust list items in columns */
+        .footer-light ul li {
+            margin-bottom: 8px !important;
+            font-size: 14px !important;
+        }
+    
+        /* Need help section adjustments */
+        .footer-light .order-sm-5 {
+            font-size: 14px !important;
+        }
+        
+        .footer-light .order-sm-5 .fw-600 {
+            margin-bottom: 5px !important;
+        }
+    
+        /* Bottom section adjustments */
+        .footer-light .pt-7 {
+            padding-top: 20px !important;
+            margin-top: 10px !important;
+        }
+    
+        /* Copyright section */
+        .footer-light .col-lg-5 {
+            width: 100% !important;
+        }
+    
+        .footer-light .col-lg-5 p {
+            margin-right: 0 !important;
+            text-align: center !important;
+            display: block !important;
+            font-size: 13px !important;
+        }
+    
+        /* Footer menu adjustments */
+        .footer-light .col-lg-7 {
+            width: 100% !important;
+        }
+    
+        .footer-light .footer-navbar {
+            margin: 15px 0 0 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            justify-content: center !important;
+            gap: 20px !important;
+        }
+    
+        .footer-light .footer-navbar li {
+            margin: 0 !important;
+        }
+    
+        .footer-light .footer-navbar .nav-link {
+            font-size: 13px !important;
+            padding: 5px 0 !important;
+        }
+    
+        /* Divider adjustments */
+        .footer-light .divider-style-03 {
+            margin: 15px auto !important;
+        }
+    }
+    
+    /* Small mobile specific adjustments */
+    @media (max-width: 375px) {
+        .footer-light .col-6 {
+            padding: 0 8px !important;
+        }
+    
+        .footer-light ul li {
+            font-size: 13px !important;
+        }
+    }
+    
+    /* Tablet adjustments */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .footer-light .col-6 {
+            width: 33.33% !important;
+        }
+    
+        .footer-light .col-xl-3 {
+            width: 100% !important;
+            margin-bottom: 30px !important;
+        }
+    }
+</style>
 <!-- end footer -->
 
 

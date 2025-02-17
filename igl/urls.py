@@ -48,8 +48,6 @@ urlpatterns = [
    path('terms/',views.terms,name="terms"),
    
    
-#    path('check_application/', check_application, name='check_application'),
-#    path('submit_application/<int:job_id>/', submit_application, name='submit_application'),
-#    path('fetch_user_details/', fetch_user_details, name='fetch_user_details'),
+  
     path('check_application/', views.check_application, name='check_application'),
 ]
