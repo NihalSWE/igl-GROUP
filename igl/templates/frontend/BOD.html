@@ -1,10 +1,10 @@
 {% extends "frontend/base.html" %}
 {% load static %}
 
-{% block body %} 
-    <!-- Keep existing title section unchanged -->
+{% block body %}
+    <!-- Keeping existing title section unchanged -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-        style="background-image:url('{% static 'images/demo-it-business-about-title-bg.jpg' %}');">
+    style="background-image:url('{{ banner.background_image.url }}');">
         <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
                 <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
@@ -27,9 +27,9 @@
         </div>
     </section>
 
-    <!-- Redesigned Board of Directors Section -->
-    <section class="board-section position-relative">
-        <div class="container py-6">
+    <!-- Board of Directors List -->
+    <section class="board-section py-6">
+        <div class="container">
             <!-- Section Header -->
             <div class="text-center mb-5">
                 <h2 class="display-4 fw-bold mb-3">Leadership Excellence</h2>
@@ -41,38 +41,28 @@
                 </div>
             </div>
 
-            <!-- Directors List -->
-            {% for member in bod_members %}
-            <div class="director-profile mb-5 {% if not forloop.last %}border-bottom pb-5{% endif %}">
-                <div class="row align-items-center">
-                    <!-- Image Column with Subtle Animation -->
-                    <div class="col-lg-5 mb-4 mb-lg-0">
-                        <div class="position-relative director-image-wrapper" 
-                             style="background: #f8f9fa; padding: 20px;">
-                            <img src="{{ member.image.url }}" 
-                                 alt="{{ member.name }}" 
-                                 class="img-fluid w-100 director-image"
-                                 style="object-fit: cover; height: 500px; transition: transform 0.3s ease;">
-                        </div>
-                    </div>
-
-                    <!-- Content Column -->
-                    <div class="col-lg-7">
-                        <div class="director-info ps-lg-5">
-                            <h3 class="display-6 fw-bold mb-2">{{ member.name }}</h3>
-                            <div class="d-flex align-items-center mb-4">
-                                <span class="h5 text-primary mb-0">{{ member.role }}</span>
+            <!-- Board Members Grid -->
+            <div class="row g-4">
+                {% for member in bod_members %}
+                    <div class="col-lg-4 col-md-6">
+                        <a href="{% url 'bod_single' member.slug %}" class="staff-card-link">
+                            <div class="staff-card shadow-lg rounded-3">
+                                <div class="staff-image-wrapper">
+                                    <img src="{{ member.image.url }}" alt="{{ member.name }}" class="staff-image rounded-top">
+                                </div>
+                                <div class="staff-info text-center">
+                                    <h3 class="staff-name text-dark">{{ member.name }}</h3>
+                                    <p class="staff-position text-muted mb-0">{{ member.role }}</p>
+                                </div>
                             </div>
-                            <div class="director-bio">
-                                <p class="lead mb-4" style="line-height: 1.8;">{{ member.bio }}</p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            
         </div>
     </section>
-<!-- End Board of Directors Section -->
+
+
 
 {% endblock %}

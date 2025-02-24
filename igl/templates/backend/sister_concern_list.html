@@ -1,0 +1,251 @@
+{% extends "backend/base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Sister Concerns</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Icon</th>
+                <th>Link</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for concern in sister_concerns %}
+            <tr id="row-{{ concern.id }}">
+                <td class="title">{{ concern.title }}</td>
+                <td class="description text-truncate" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 10px;">
+                    {{ concern.description|remove_images }}
+                </td>
+                <td><img class="image" src="{{ concern.image.url }}" width="100"></td>
+                <td><img class="icon" src="{{ concern.icon.url }}" width="50"></td>
+                <td class="link"><a href="{{ concern.link }}" target="_blank">{{ concern.link }}</a></td>
+                <td>
+                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ concern.id }}">Edit</button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ concern.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Popup -->
+<div id="editModal" class="modal fade">
+    <div class="modal-dialog" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Sister Concern</h5>
+                <button type="button" class="edit-close-btn" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit_id">
+                    
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" id="edit_title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        {% comment %} <textarea class="form-control" id="edit_description" required></textarea> {% endcomment %}
+                        <textarea class="form-control" placeholder="Write Details..." value=""
+                            rows="10" name="description" id="edit_description" required>
+                        </textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" class="form-control" id="edit_image">
+                        <img id="current_image" src="" width="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Icon</label>
+                        <input type="file" class="form-control" id="edit_icon">
+                        <img id="current_icon" src="" width="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input type="url" class="form-control" id="edit_link">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Popup -->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="delete-close-btn" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this sister concern?</p>
+                <button id="confirmDelete" class="btn btn-danger">Yes, Delete</button>
+                <button class="btn btn-secondary delete-cancel-btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
+<script>
+    let editorInstance;
+
+    {% comment %} ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            editorInstance = editor; // Store the editor instance
+        })
+        .catch(error => {
+            console.error('CKEditor initialization error:', error);
+        }); {% endcomment %}
+
+        ClassicEditor
+        .create(document.querySelector('#edit_description'), {
+            toolbar: [
+                'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload' // Enable image upload
+            ],
+            ckfinder: {
+                uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+            }
+        })
+        .then(editor => {
+            editorInstance = editor;
+        })
+        .catch(error => {
+            console.error('CKEditor initialization error:', error);
+        });
+</script>
+<script>
+    $(document).ready(function() {
+        let concernId = null;
+    
+        // Show Edit Popup with Pre-filled Data
+        $(".edit-btn").on("click", function() {
+            let row = $(this).closest("tr");
+            concernId = $(this).data("id");
+    
+            $("#edit_id").val(concernId);
+            $("#edit_title").val(row.find(".title").text());
+            //$("#edit_description").val(row.find(".description").text());
+            $("#edit_link").val(row.find(".link a").attr("href"));
+            $("#current_image").attr("src", row.find(".image").attr("src"));
+            $("#current_icon").attr("src", row.find(".icon").attr("src"));
+
+
+            let descriptionContent = row.find(".description").html(); // Get HTML contentType
+
+            if (editorInstance) {
+                editorInstance.setData(descriptionContent); // Set CKEditor content
+            } else {
+                ClassicEditor
+                    .create(document.querySelector('#edit_description'), {
+                        toolbar: [
+                            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                            '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload' // Enable image upload
+                        ],
+                        ckfinder: {
+                            uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+                        }
+                    })
+                    .then(editor => {
+                        editorInstance = editor;
+                    })
+                    .catch(error => {
+                        console.error('CKEditor initialization error:', error);
+                    });
+            }
+
+    
+            $("#editModal").modal("show");
+        });
+    
+        // Handle Edit Form Submission
+        $("#editForm").on("submit", function(e) {
+            e.preventDefault();
+    
+            let formData = new FormData();
+            formData.append("title", $("#edit_title").val());
+            formData.append("description", $("#edit_description").val());
+            formData.append("link", $("#edit_link").val());
+            formData.append("csrfmiddlewaretoken", $("input[name=csrfmiddlewaretoken]").val());
+    
+            if ($("#edit_image")[0].files.length > 0) {
+                formData.append("image", $("#edit_image")[0].files[0]);
+            }
+            if ($("#edit_icon")[0].files.length > 0) {
+                formData.append("icon", $("#edit_icon")[0].files[0]);
+            }
+    
+            $.ajax({
+                url: `/sister-concern/edit/${concernId}/`,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    
+        // Handle Delete Button Click
+        $(".delete-btn").on("click", function() {
+            concernId = $(this).data("id");
+            $("#deleteModal").modal("show");
+        });
+    
+        // Confirm Delete
+        $("#confirmDelete").on("click", function() {
+            $.ajax({
+                url: `/sister-concern/delete/${concernId}/`,
+                type: "POST",
+                data: { csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val() },
+                success: function(response) {
+                    if (response.success) {
+                        $("#row-" + concernId).remove();
+                        $("#deleteModal").modal("hide");
+                    }
+                }
+            });
+        });
+
+        $(".edit-close-btn").on("click", function() {
+            $("#editModal").modal("hide");
+        });
+
+        $(".delete-cancel-btn").on("click", function() {
+            $("#deleteModal").modal("hide");
+        });
+
+        $(".delete-close-btn").on("click", function() {
+            $("#deleteModal").modal("hide");
+        });
+    });
+</script>
+    
+
+{% endblock custom_js %}

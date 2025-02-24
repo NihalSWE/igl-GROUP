@@ -1,0 +1,30 @@
+{% extends "backend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="mt-5 mb-4">
+        <h2>Edit Reason To Choose Us</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="title" value="{{ reason.title }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="description" required>{{ reason.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="icon" class="form-label">Icon</label>
+                <input type="text" class="form-control" name="icon" id="icon" value="{{ reason.icon }}">
+            </div>
+            <div class="mb-3">
+                <label for="order" class="form-label">Order</label>
+                <input type="number" class="form-control" name="order" id="order" value="{{ reason.order }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

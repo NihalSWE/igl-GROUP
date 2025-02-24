@@ -1,0 +1,142 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block body %}
+<style>
+    header {
+        margin-top:-29px;
+    }
+    
+    @media (max-width: 768px) {
+        /* Stack Contact Schedule and Contact Locations in column layout */
+        .row.justify-content-center {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+    
+        .col-xl-5, .col-xl-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .offset-xl-1 {
+            margin-left: 0 !important;
+        }
+
+        .services-box-style-02 {
+            width: 100%;
+        }
+
+        .services-box-style-02 .row {
+            flex-direction: column;
+            height: auto !important;
+            gap: 10px;
+        }
+
+        .services-box-style-02 .col-lg-6 {
+            width: 100%;
+            height: auto !important;
+        }
+
+        .services-box-style-02 .cover-background {
+            background-size: cover !important;
+            background-position: center !important;
+            width: 100%;
+            height: 250px !important;
+            display: block !important;
+        }
+
+        .services-box-style-02 .col-sm-6 {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .services-box-content {
+            width: 100%;
+        }
+
+        .services-box-style-02 {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+        <!-- start page title -->
+        <section 
+    class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+    style="background-image: url('{{ banner.background_image.url }}');">
+    <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
+        <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+            <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+            </path>
+            </svg>
+    </div>
+    <div class="container">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+            <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ banner.title }}</h1>
+            </div> 
+        </div>
+    </div>
+</section>
+
+        <!-- end page title -->
+
+<!-- Start Contact Schedule and Locations Section -->
+<section class="pt-3 sm-pt-50px">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Contact Schedule Section -->
+            <div class="col-xl-5 col-lg-8 col-md-10 lg-mb-50px">
+                <div class="position-sticky top-120px lg-top-0px lg-position-relative text-center text-xl-start">
+                    <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex justify-content-center justify-content-xl-start">
+                        <i class="bi bi-chat-square-dots fs-16 me-5px"></i> Let's work together
+                    </span>
+                    <h3 class="text-dark-gray ls-minus-2px fw-700">{{ contact_schedule.title }}</h3>
+                    <p class="mb-35px w-90 lg-w-100 sm-mb-25px">{{ contact_schedule.description }}</p>
+                    <a href="#" class="btn btn-extra-large btn-switch-text btn-gradient-purple-pink left-icon btn-rounded me-10px ls-0px">
+                        <span>
+                            <span><i class="bi bi-telephone-outbound"></i></span>
+                            <span class="btn-double-text" data-text="Schedule a call">{{ contact_schedule.button_text }}</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Locations Section -->
+            <div class="col-xl-6 col-lg-8 col-md-10 offset-xl-1">
+                <div class="row row-cols-1 justify-content-center">
+                    {% for location in contact_locations %}
+                    <div class="col services-box-style-02 mb-30px">
+                        <div class="row g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden" style="height: 250px;">
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="h-100 cover-background" style="background-image: url('{{ location.image.url }}'); height: 100%; max-height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 bg-white box-shadow-extra-large p-20px d-flex align-items-center">
+                                <div class="services-box-content last-paragraph-no-margin">
+                                    <span class="d-block text-dark-gray primary-font fw-700 fs-19 mb-10px">{{ location.city }}</span>
+                                    <p class="mb-10px">{{ location.address }}</p>
+                                    <a href="{{ location.map_url }}" class="btn btn-link text-dark-gray" target="_blank">View map</a>
+                                    <div class="text-dark-gray fw-600">
+                                        <i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i>
+                                        <a href="tel:{{ location.phone_number }}">{{ location.phone_number }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

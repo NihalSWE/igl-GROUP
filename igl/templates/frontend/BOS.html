@@ -4,7 +4,7 @@
 {% block body %} 
     <!-- Keeping existing title section -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-        style="background-image:url('{% static 'images/demo-it-business-about-title-bg.jpg' %}');">
+        style="background-image:url('{{ banner.background_image.url }}');">
         <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
                 <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
@@ -27,41 +27,88 @@
         </div>
     </section>
 
-    <!-- Redesigned Staff Section -->
-    <section class="staff-section">
-        <div class="container">
-            <!-- Header Section with reduced spacing -->
-            <div class="text-center header-section">
-                <h2 class="fw-bold mb-3">Leadership Team</h2>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <p class="text-muted mb-4">Our commitment is to build a diverse team in every aspect. 
-                        With radical candor, we admit we're not there yet. To achieve this, we need talented people like you.</p>
-                    </div>
+ <!-- Staff Section -->
+ <section class="staff-section">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="text-center header-section">
+            <h2 class="fw-bold mb-3 text-dark">Meet Our Team Leads</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p class="text-muted mb-4">Our team leads are the driving force behind our success. With expertise, dedication, 
+                    and a passion for innovation, they guide their teams toward excellence, ensuring we stay ahead in a competitive 
+                    landscape.</p>
                 </div>
             </div>
+        </div>
+        
 
-            <!-- Staff Members Grid -->
-            <div class="row g-4">
-                {% for staff in staff_members %}
-                <div class="col-lg-4 col-md-6">
-                    <div class="staff-card">
-                        <div class="staff-image-wrapper">
+        <!-- Staff Members Grid -->
+        <div class="row g-4">
+            {% for staff in staff_members %}
+            <div class="col-lg-3 col-md-6">
+                <div class="staff-card">
+                    <div class="staff-image-wrapper">
+                        <a href="{% url 'bos_single' staff.slug %}"> 
                             <img src="{{ staff.image.url }}" 
                                  alt="{{ staff.name }}" 
                                  class="staff-image">
-                            <div class="staff-overlay">
-                                <div class="staff-info">
-                                    <h3>{{ staff.name }}</h3>
-                                    <p>{{ staff.position }}</p>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
+                    </div>
+                    <div class="staff-info text-center">
+                        <h3 class="staff-name">{{ staff.name }}</h3>
+                        <p class="staff-position">{{ staff.position }}</p>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
     <!-- End Staff Section -->
+
+    <!-- Adding the CSS Styling -->
+    <style>
+        .staff-card {
+            text-align: center;
+            overflow: hidden;
+            border: 1px solid #ddd; /* Optional: adds a border to the card */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: adds some shadow to the card */
+            background-color: #fff; /* Optional: ensures the card has a white background */
+        }
+
+        .staff-image-wrapper {
+            position: relative;
+        }
+
+        .staff-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0; /* Rounds the top corners of the image */
+        }
+
+        .staff-info {
+            padding: 15px;
+            background-color:rgb(252, 252, 252); /* Optional: gives the info section a background */
+            border-radius: 0 0 8px 8px; /* Rounded corners on the bottom */
+        }
+
+        .staff-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333; /* Dark color for the name */
+            margin-bottom: 5px;
+        }
+
+        .staff-position {
+            font-size: 1rem;
+            color: #555; /* Lighter color for position */
+        }
+
+        .staff-info h3, .staff-info p {
+            color: #333;
+        }
+    </style>
+
 {% endblock %}

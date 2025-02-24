@@ -1,0 +1,162 @@
+{% extends "backend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="mt-5 mb-4">
+        <h2>Career Images Management</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCareerImageModal">Add Career Image</button>
+    </div>
+
+    <!-- Career Images Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Main Image</th>
+                <th>Group Image</th>
+                <th>Activity Image 1</th>
+                <th>Activity Image 2</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image in career_images %}
+            <tr>
+                <td><img src="{{ image.main_image.url }}" width="100"></td>
+                <td><img src="{{ image.group_image.url }}" width="100"></td>
+                <td><img src="{{ image.activity_image1.url }}" width="100"></td>
+                <td><img src="{{ image.activity_image2.url }}" width="100"></td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="editCareerImage({{ image.id }})">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteCareerImage({{ image.id }})">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Career Image Modal -->
+<div class="modal fade" id="addCareerImageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Career Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCareerImageForm">
+                    <input type="file" name="main_image" required class="form-control mb-2">
+                    <input type="file" name="group_image" required class="form-control mb-2">
+                    <input type="file" name="activity_image1" required class="form-control mb-2">
+                    <input type="file" name="activity_image2" required class="form-control mb-2">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Career Image Modal -->
+<!-- Edit Career Image Modal -->
+<div class="modal fade" id="editCareerImageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Career Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCareerImageForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_id" id="editImageId">
+                    
+                    <label>Main Image</label>
+                    <img id="editMainImagePreview" width="100" class="mb-2">
+                    <input type="file" name="main_image" class="form-control mb-2">
+                    
+                    <label>Group Image</label>
+                    <img id="editGroupImagePreview" width="100" class="mb-2">
+                    <input type="file" name="group_image" class="form-control mb-2">
+
+                    <label>Activity Image 1</label>
+                    <img id="editActivityImage1Preview" width="100" class="mb-2">
+                    <input type="file" name="activity_image1" class="form-control mb-2">
+                    
+                    <label>Activity Image 2</label>
+                    <img id="editActivityImage2Preview" width="100" class="mb-2">
+                    <input type="file" name="activity_image2" class="form-control mb-2">
+                    
+                    <button type="submit" class="btn btn-success">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteCareerImageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this image?</p>
+                <input type="hidden" id="deleteImageId">
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for AJAX -->
+<script>
+document.getElementById('addCareerImageForm').onsubmit = function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    fetch('/career-images/add/', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json()).then(data => {
+        alert(data.message);
+        location.reload();
+    }).catch(error => console.error('Error:', error));
+};
+
+function editCareerImage(imageId) {
+    document.getElementById('editImageId').value = imageId;
+    var editModal = new bootstrap.Modal(document.getElementById('editCareerImageModal'));
+    editModal.show();
+}
+
+document.getElementById('editCareerImageForm').onsubmit = function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    var imageId = document.getElementById('editImageId').value;
+    fetch(`/career-images/edit/${imageId}/`, {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json()).then(data => {
+        alert(data.message);
+        location.reload();
+    }).catch(error => console.error('Error:', error));
+};
+
+function deleteCareerImage(imageId) {
+    document.getElementById('deleteImageId').value = imageId;
+    var deleteModal = new bootstrap.Modal(document.getElementById('deleteCareerImageModal'));
+    deleteModal.show();
+}
+
+document.getElementById('confirmDeleteBtn').onclick = function() {
+    var imageId = document.getElementById('deleteImageId').value;
+    fetch(`/career-images/delete/${imageId}/`, {
+        method: 'POST'
+    }).then(response => response.json()).then(data => {
+        alert(data.message);
+        location.reload();
+    }).catch(error => console.error('Error:', error));
+};
+</script>
+{% endblock %}

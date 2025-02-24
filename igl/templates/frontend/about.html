@@ -82,18 +82,16 @@
                 background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');
                 background-size: cover; background-position: center; border-radius: 8px;">
 
-    <!-- Title Column -->
-    <div class="about-text" style="flex: 1; padding-right: 30px; border-right: 2px solid rgba(221, 221, 221, 0.5); min-width: 300px;">
-        <h2 style="font-family: 'Poppins', sans-serif; font-size: 2.5rem; color:rgb(13, 12, 12); font-weight: 600; margin-bottom: 20px;">
-            {{ about_section.title }}
-        </h2>
+    <!-- Image Column (50%) -->
+    <div class="about-image" style="flex: 1; max-width: 640px; min-width: 300px;">
+        <img src="{{ about_section.image.url }}" alt="About Image" style="width: 100%; height: auto; border-radius: 8px;">
     </div>
 
-    <!-- Description Column -->
+    <!-- Description Column (50%) -->
     <div class="about-desc" style="flex: 1; padding-left: 30px; min-width: 300px;">
-        <h1 style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
+        <p style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
             {{ about_section.description }}
-        </h1>
+        </p>
     </div>
 
 </section>
@@ -109,86 +107,5 @@
 
 <!---->
 
-<!-- Redesigned Staff Section -->
-<section class="staff-section" style="padding-top: 40px; background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');">
-    <div class="container">
-        <!-- Header Section with reduced spacing -->                          
-        <div class="text-center header-section">
-            <h2 class="fw-bold mb-3">Our Leadership Team</h2>
-        </div>
-
-        <!-- Staff Members Grid -->
-        <div class="row g-4">
-            {% for staff in staff_members %}
-            <div class="col-lg-4 col-md-6">
-                <div class="staff-card">
-                    <div class="staff-image-wrapper">
-                        <img src="{{ staff.image.url }}" 
-                             alt="{{ staff.name }}" 
-                             class="staff-image">
-                        <div class="staff-overlay">
-                            <div class="staff-info">
-                                <h3>{{ staff.name }}</h3>
-                                <p>{{ staff.position }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-<!-- End Staff Section -->
-
-   <!-- start section -->
-<!-- Start section -->
-<section class="pt-0">
-    <div class="container background-no-repeat background-position-top" 
-        style="background-image: url('{% static "images/demo-it-business-testimonial-bg.png" %}');">
-
-        <div class="row justify-content-center mb-2">
-            <div class="col-xxl-6 col-lg-8 col-md-9 text-center" data-anime='{ "el": "childs", "translateY": [0, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
-                <h3 class="text-dark-gray fw-700 ls-minus-2px">Trusted by the world's fastest growing companies.</h3>
-            </div>
-        </div>
-
-        <div class="row justify-content-center align-items-center mb-6 sm-mb-8">  
-            <div class="col-xl-10 position-relative">
-                <div class="swiper magic-cursor testimonials-style-06" data-slider-options='{ "loop": true, "autoplay": { "delay": 4000, "disableOnInteraction": false }, "keyboard": { "enabled": true, "onlyInViewport": true }, "navigation": { "nextEl": ".swiper-button-next-nav", "prevEl": ".swiper-button-previous-nav", "effect": "fade" } }'>
-                    <div class="swiper-wrapper">
-                        {% for client_review in client_reviews %}
-                        <!-- start client review item -->
-                        <div class="swiper-slide">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-8 col-md-4 col-sm-6 text-center md-mb-30px rounded-circle">
-                                    <img alt="{{ client_review.name }}" src="{{ client_review.image.url }}" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
-                                </div>
-                                
-                                <div class="col-lg-5 col-md-7 last-paragraph-no-margin text-center text-md-start">
-                                    <span class="mb-5px d-table fs-18 lh-30 fw-500 text-dark-gray">
-                                        {{ client_review.text }}
-                                    </span>
-                                    <span class="fs-15 text-uppercase fw-800 text-dark-gray ls-05px">
-                                        {{ client_review.name }}, {{ client_review.company }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end client review item -->
-                        {% endfor %}
-                    </div>
-                    <!-- start slider navigation -->
-                    <div class="swiper-button-previous-nav swiper-button-prev md-left-0px"><i class="feather icon-feather-arrow-left icon-extra-medium text-dark-gray"></i></div>
-                    <div class="swiper-button-next-nav swiper-button-next md-right-0px"><i class="feather icon-feather-arrow-right icon-extra-medium text-dark-gray"></i></div>
-                    <!-- end slider pagination -->
-                </div>
-            </div> 
-        </div>
-    </div>
-</section>
-<!-- end section -->
-
-<!-- end section -->
 
 {% endblock %}

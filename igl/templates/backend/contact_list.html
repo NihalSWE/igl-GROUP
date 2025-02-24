@@ -1,0 +1,229 @@
+{% extends "backend/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Include SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
+
+<!-- Include SweetAlert2 JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
+<!-- Include DataTables CSS -->
+<link href="https://cdn.jsdelivr.net/npm/datatables@1.11.5/media/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- Include jQuery (required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/datatables@1.11.5/media/js/jquery.dataTables.min.js"></script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-dialog {
+        background: white;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+    .modal-header {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .btn-info, .btn-danger {
+        padding: 6px 12px;
+    }
+
+    .btn-info {
+        margin-right: 10px;
+    }
+
+    .btn-sm {
+        font-size: 12px;
+    }
+</style>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Contact List</h4>
+          
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="contactTable" class="table table-striped table-hover">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Message</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contact in contacts %}
+                        <tr id="contact-{{ contact.id }}">
+                            <td>{{ contact.name }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.phone_number }}</td>
+                            <td>{{ contact.message|truncatewords:5 }}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" onclick="viewContact({{ contact.id }})" class="btn btn-sm btn-outline-info" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button onclick="confirmDelete({{ contact.id }})" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+<style>
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-sm {
+        font-size: 12px;
+    }
+
+    .text-truncate {
+        display: inline-block;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+{% endblock %}
+
+{% block custom_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#contactTable').DataTable({
+            "paging": true,
+            "language": {
+              "paginate": {
+                "previous": '<i class="fas fa-chevron-left"></i>',
+                "next": '<i class="fas fa-chevron-right"></i>'
+              }
+            }
+        });
+    });
+
+    // Store the contact ID to be deleted
+    let contactIdToDelete = null;
+
+    function confirmDelete(contactId) {
+        contactIdToDelete = contactId;
+
+        // Show SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteContact();
+            }
+        });
+    }
+
+    function deleteContact() {
+        if (contactIdToDelete !== null) {
+            const csrfToken = document.getElementById('csrf_token').value; // Get CSRF token from the hidden input field
+            
+            fetch(`/contacts/delete/${contactIdToDelete}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status === "success" ? 'success' : 'error',
+                    title: data.status === "success" ? 'Deleted!' : 'Error!',
+                    text: data.message,
+                }).then(() => {
+                    if (data.status === "success") {
+                        // Remove the deleted contact row
+                        document.getElementById(`contact-${contactIdToDelete}`).remove();
+                    }
+                });
+            })
+            .catch(error => {
+                Swal.fire('Error!', 'Something went wrong!', 'error');
+                console.error('Error:', error);
+            });
+        }
+    }
+
+    function viewContact(contactId) {
+        fetch(`/contacts/view/${contactId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        title: data.contact.name,
+                        text: `Email: ${data.contact.email}\nMessage: ${data.contact.message}`,
+                        icon: 'info',
+                        confirmButtonText: 'Close'
+                    });
+                } else {
+                    Swal.fire('Error', 'Unable to fetch contact details!', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Error', 'Something went wrong!', 'error');
+                console.error('Error:', error);
+            });
+    }
+</script>
+{% endblock %}

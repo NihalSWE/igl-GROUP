@@ -1,59 +1,235 @@
-﻿{% extends "frontend/base.html" %}
+{% extends "frontend/base.html" %}
 {% load static %}
-
 
 {% block body %} 
 <style>
+    /* Keeping the original header margin */
     header {
-        margin-top:-29px;
+        margin-top: -29px;
     }
+    
+    /* Modern Gallery Section Styling */
+    .photo-gallery {
+        background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+        padding: 60px 0;
+    }
+    
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        transition: all 0.3s ease-in-out;
+        width: 312px;
+        height: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer; /* Ensures it looks clickable */
+    }
+    
+    .gallery-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .gallery-item a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .gallery-item img {
+        width: 312px;
+        height: 190px;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+        transition: transform 0.4s ease;
+    }
+    
+    .gallery-item:hover img {
+        transform: scale(1.08);
+    }
+    
+    .gallery-title {
+        width: 100%;
+        height: 40px;
+        padding: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        background-color: #fff;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Section Title Styling */
+    .photo-gallery h2 {
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        text-align: center;
+        color: #2d3436;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    
+    .photo-gallery h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #6c5ce7, #a363d9);
+        border-radius: 2px;
+    }
+    
+    /* Ensure Overlay Doesn't Block Clicks */
+    .gallery-item::before {
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1));
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    
+    .gallery-item:hover::before {
+        opacity: 1;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1280px) {
+        .gallery-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .gallery-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .photo-gallery h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .gallery-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .gallery-item {
+            height: 300px;
+        }
+        
+        .gallery-item img {
+            height: 230px;
+        }
+        
+        .photo-gallery h2 {
+            font-size: 1.75rem;
+            margin-bottom: 30px;
+        }
+        
+        .photo-gallery {
+            padding: 40px 0;
+        }
+    }
+    
+    /* Animation for gallery items */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .gallery-item {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+    }
+    
+    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
 </style>
 
 <section 
 class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
 style="background-image: url('{{ banner.background_image.url }}');">
 <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
-    <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+    <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
         <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-        <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+        <animate attributeName="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
                     M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                    M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+                    M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatCount="indefinite"></animate>
         </path>
         </svg>
 </div>
 <div class="container">
     <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-        <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+        <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center">
             <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ banner.title }}</h1>
         </div> 
     </div>
 </div>
 </section>
-<!--album sectio-->
-<section class="photo-gallery">
+
+<!-- Photo Gallery Section -->
+<section class="photo-gallery py-5">
     <div class="container">
-        <h2 class="text-center text-dark-gray fw-bold">Our Photo Gallery</h2>
-        <div class="row g-4">
+        <h2 class="text-center text-dark-gray fw-bold mb-4">Our Photo Gallery</h2>
+        
+        <div class="gallery-container">
             {% for album in albums %}
-            <div class="col-lg-3 col-md-4 col-sm-6"> <!-- Adjusted columns for better responsiveness -->
-                <div class="gallery-item">
-                    <a href="{% url 'album_images' album.id %}">
-                        <img src="{{ album.thumbnail.url }}" alt="{{ album.title|default:'Gallery Album' }}" class="img-fluid">
-                    </a>
+            <div class="gallery-item">
+                <a href="{% url 'album_images' album.slug %}">  <!-- Use slug here instead of album.id -->
+                    <img src="{{ album.thumbnail.url }}" alt="{{ album.title|default:'Gallery Album' }}">
                     {% if album.title %}
-                    <div class="gallery-caption">
-                        <small>{{ album.title }}</small>
-                    </div>
+                    <div class="gallery-title">{{ album.title|slice:":20" }}{% if album.title|length > 20 %}...{% endif %}</div>
                     {% endif %}
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>
+        
     </div>
 </section>
 
-
-        
-
- 
-        {% endblock %}
+{% endblock %}

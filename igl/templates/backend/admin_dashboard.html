@@ -1,0 +1,224 @@
+{% extends "backend/base.html" %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #4f46e5;
+        --secondary-color: #818cf8;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --gradient-start: #4f46e5;
+        --gradient-end: #818cf8;
+    }
+
+    .dashboard-container {
+        padding: 2rem;
+        background: #f8fafc;
+        min-height: calc(100vh - 60px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-section {
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px -5px rgba(79, 70, 229, 0.2);
+    }
+
+    .welcome-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        transform: translate(30%, -30%);
+    }
+
+    .welcome-text {
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .welcome-description {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        max-width: 600px;
+        line-height: 1.6;
+        position: relative;
+        z-index: 1;
+    }
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    }
+
+    .stat-title {
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.875rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .trend-up {
+        color: var(--success-color);
+    }
+
+    .trend-down {
+        color: var(--danger-color);
+    }
+
+    .quick-actions {
+        margin-top: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.25rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .action-card:hover {
+        background: #f8fafc;
+        transform: translateY(-2px);
+    }
+
+    .action-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(79, 70, 229, 0.1);
+        color: var(--primary-color);
+    }
+
+    .action-text {
+        font-weight: 500;
+        color: #1e293b;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .floating-decoration {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .decoration-1 {
+        top: -150px;
+        right: -150px;
+    }
+
+    .decoration-2 {
+        bottom: -150px;
+        left: -150px;
+        animation-delay: -3s;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem;
+        }
+
+        .welcome-section {
+            padding: 1.5rem;
+        }
+
+        .welcome-text {
+            font-size: 1.5rem;
+        }
+
+        .stats-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="welcome-section">
+        <div class="floating-decoration decoration-1"></div>
+        <div class="floating-decoration decoration-2"></div>
+        <h2 class="welcome-text">Welcome back, {{ request.user.username }}! 👋</h2>
+        <p class="welcome-description">
+            Manage and monitor your website's performance from this central dashboard. Access quick actions below or navigate through the sidebar for detailed management options.
+        </p>
+    </div>
+
+    
+
+    
+</div>
+{% endblock %}

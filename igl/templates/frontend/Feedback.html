@@ -1,0 +1,162 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block body %} 
+
+<style>
+    header {
+        margin-top:-29px;
+    }
+</style>
+
+<!-- start page title -->
+<section 
+    class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+    style="background-image: url('{{ banner.background_image.url }}');">
+    <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
+        <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+                <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+            </path>
+        </svg>
+    </div>
+    <div class="container">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+            <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">Address</h1>
+            </div> 
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+
+<!-- start section --> 
+<section class="bg-very-light-gray position-relative">     
+    <div class="container">
+        <div class="row mb-8">
+            <div class="col-xl-5 col-lg-6 md-mb-50px">
+                <div class="bg-white border-radius-6px box-shadow-quadruple-large p-10 ps-12 pe-12 lg-ps-8 lg-pe-8 h-100 d-flex flex-wrap flex-column justify-content-center">
+                    <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex align-self-start">
+                        <i class="bi bi-chat-square-dots fs-16 me-5px"></i>Let's work together
+                    </span>
+                    <h4 class="text-dark-gray ls-minus-1px fw-700 mb-15px">Ready to help you!</h4>
+                    <p class="w-85 sm-w-100">We're here to help and answer any question you might have.</p>
+                    <div class="row row-cols-1 row-cols-sm-2">
+                        <div class="col last-paragraph-no-margin mb-25px">
+                            <p>Call us directly?</p>
+                            <a href="tel:12345678910" class="text-dark-gray fw-600">+1 234 567 8910</a>
+                        </div>
+                        <div class="col last-paragraph-no-margin mb-25px">
+                            <p>Need live support?</p>
+                            <a href="mailto:support@example.com" class="text-dark-gray fw-600">support@example.com</a>
+                        </div>
+                        <div class="col last-paragraph-no-margin sm-mb-25px">
+                            <p>Join growing team?</p>
+                            <a href="mailto:careers@example.com" class="text-dark-gray fw-600">careers@example.com</a>    
+                        </div>
+                        <div class="col last-paragraph-no-margin">
+                            <p>Visit headquarters?</p>
+                            <a href="https://maps.app.goo.gl/2K87ybdoqVdQSB6a7" target="_blank" class="text-dark-gray fw-600">View on google map</a>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 offset-xl-1 md-mb-50px sm-mb-0">
+                <h3 class="text-dark-gray ls-minus-2px fw-700">Looking for any help?</h3>
+
+                <!-- Success message will be shown here after the form is submitted -->
+                <div id="success-message" class="alert alert-success text-center mb-4" style="display: none;"></div>
+
+                <!-- New form design with simpler structure and better layout -->
+                <form id="contact-form" class="contact-form-style-03">
+                    {% csrf_token %}
+
+                    <!-- Name Input -->
+                    <div class="form-group mb-3">
+                        <label for="name" class="form-label text-dark-gray fw-600">Enter your name*</label>
+                        <input class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="name" type="text" name="name" placeholder="What's your good name" required>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label text-dark-gray fw-600">Email address*</label>
+                        <input class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="email" type="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+
+                    <!-- Phone Number Input -->
+                    <div class="form-group mb-3">
+                        <label for="phone_number" class="form-label text-dark-gray fw-600">Phone number</label>
+                        <input class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="phone_number" type="text" name="phone_number" 
+                        placeholder="Enter your phone number" pattern="^(?:\+8801|01)[3-9]\d{8}$" title="Phone number should start with 01 or +880 followed by 9 digits">
+                    </div>
+
+                    <!-- Address Input -->
+                    <div class="form-group mb-3">
+                        <label for="address" class="form-label text-dark-gray fw-600">Address</label>
+                        <textarea class="form-control border-color-dark-gray rounded-0 px-3 py-2" id="address" name="address" placeholder="Enter your address" rows="4"></textarea>
+                    </div>
+
+                    <!-- Message Textarea -->
+                    <div class="form-group mb-3">
+                        <label for="message" class="form-label text-dark-gray fw-600">Your message*</label>
+                        <textarea class="form-control border-color-dark-gray rounded-0 px-3 py-2" name="message" placeholder="Describe your message" rows="4" required></textarea>
+                    </div>
+
+                    <!-- Google reCAPTCHA v3 -->
+                    <div class="form-group mb-3">
+                        <div class="g-recaptcha" data-sitekey="6LdIwtkqAAAAAL3GPva2AIXyPjsIDHP1E-1OUjwJ"></div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-dark-gray btn-round px-5 py-2" type="submit">Send Message</button>
+                    </div>
+
+                    <!-- Privacy note below -->
+                    <div class="mt-3 text-center">
+                        <p class="fs-14 text-dark-gray mb-0">We will never collect information about you without your explicit consent.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end section -->
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#contact-form').submit(function(event) {
+        event.preventDefault();  
+
+        var recaptchaResponse = grecaptcha.getResponse(); 
+        if (!recaptchaResponse) {
+            alert("Please complete the reCAPTCHA verification.");
+            return false;
+        }
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "feedback" %}',
+            data: formData,
+            success: function(response) {
+                $('#success-message').text(response.success_message).show();
+                $('#contact-form')[0].reset();
+                grecaptcha.reset();
+            },
+            error: function(xhr, errmsg, err) {
+                console.log("Error: " + errmsg);
+            }
+        });
+    });
+});
+</script>
+
+
+{% endblock %}

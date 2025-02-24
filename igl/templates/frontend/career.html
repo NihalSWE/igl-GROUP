@@ -7,7 +7,7 @@
     class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
     style="background-image: url('{{ banner.background_image.url }}');">
     <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
-        <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
             <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
             <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
                         M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
@@ -108,104 +108,38 @@
 
 <!--end-->
 
+<!-- Career Opportunities -->
+<section class="career-page pt-5">
+    <div class="container">
+        <h1 class="text-center mb-4">Career Opportunities</h1>
 
-    <!-- Career Opportunities -->
-    <section class="career-page pt-5">
-        <div class="container">
-            <h1 class="text-center mb-4">Career Opportunities</h1>
-            
-            <!-- Tabs for filtering by location -->
-            <ul class="nav nav-tabs" id="careerTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="all-jobs-tab" data-toggle="tab" href="#all-jobs" role="tab" aria-controls="all-jobs" aria-selected="true">All</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="dhaka-jobs-tab" data-toggle="tab" href="#dhaka-jobs" role="tab" aria-controls="dhaka-jobs" aria-selected="false">Dhaka</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="chittagong-jobs-tab" data-toggle="tab" href="#chittagong-jobs" role="tab" aria-controls="chittagong-jobs" aria-selected="false">Chittagong</a>
-                </li>
-            </ul>
+        <div class="row">
+            {% for job in jobs %}
+            <div class="col-md-4 mb-4">
+                <div class="card job-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ job.title }}</h5>
+                        <p class="card-text short-description">
+                            {% if job.short_description|length > 150 %}
+                                {{ job.short_description|slice:":200"|safe  }}...
+                            {% else %}
+                                {{ job.short_description | safe }}
+                            {% endif %}
+                        </p>
 
-            <div class="tab-content" id="careerTabsContent">
-                <!-- All Jobs -->
-                <div class="tab-pane fade show active" id="all-jobs" role="tabpanel" aria-labelledby="all-jobs-tab">
-                    <div class="row">
-                        {% for job in jobs %}
-                        <div class="col-md-6 mb-4">
-                            <div class="card job-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">
-                                        {% if job.short_description|length > 150 %}
-                                            {{ job.short_description|slice:":200"|safe  }}...
-                                        {% else %}
-                                            {{ job.short_description | safe }}
-                                        {% endif %}
-                                    </p>
-                                    
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Dhaka Jobs -->
-                <div class="tab-pane fade" id="dhaka-jobs" role="tabpanel" aria-labelledby="dhaka-jobs-tab">
-                    <div class="row">
-                        {% for job in dhaka_jobs %}
-                        <div class="col-md-6 mb-4">
-                            <div class="card job-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">
-                                        {% if job.short_description|length > 150 %}
-                                            {{ job.short_description|slice:":100"|safe  }}...
-                                        {% else %}
-                                            {{ job.short_description | safe }}
-                                        {% endif %}
-                                    </p>
-                                    
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Chittagong Jobs -->
-                <div class="tab-pane fade" id="chittagong-jobs" role="tabpanel" aria-labelledby="chittagong-jobs-tab">
-                    <div class="row">
-                        {% for job in chittagong_jobs %}
-                        <div class="col-md-6 mb-4">
-                            <div class="card job-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ job.title }}</h5>
-                                    <p class="card-text short-description">
-                                        {% if job.short_description|length > 150 %}
-                                            {{ job.short_description|slice:":100"|safe  }}...
-                                        {% else %}
-                                            {{ job.short_description | safe }}
-                                        {% endif %}
-                                    </p>
-                                    
-                                    <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
+                        <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
 
-    <script>
-        $(document).ready(function() {
-            $('#careerTabs a').first().tab('show'); // Ensure the first tab is active by default
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        // Optional: if you want to ensure a specific behavior after load
+    });
+</script>
+
 {% endblock %}

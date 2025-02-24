@@ -1,0 +1,238 @@
+{% extends "backend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="mt-5 mb-4">
+        <h2 class="text-primary">Job Postings Management</h2>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addJobModal">Add Job Posting</button>
+    </div>
+
+    <!-- Job Postings Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Department</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.get_location_display }}</td>
+                    <td>{{ job.get_department_display }}</td>
+                    <td>{{ job.deadline }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editJob({{ job.id }})" title="Edit Job">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteJob({{ job.id }})" title="Delete Job">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Job Posting Modal -->
+<div class="modal fade" id="addJobModal" tabindex="-1" aria-labelledby="addJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addJobModalLabel">Add Job Posting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addJobForm">
+                    <div class="mb-2">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="location">Location</label>
+                        <select name="location" id="location" class="form-control" required>
+                            <option value="dhaka">Dhaka</option>
+                            <option value="chittagong">Chittagong</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="job_type">Job Type</label>
+                        <select name="job_type" id="job_type" class="form-control" required>
+                            <option value="full-time">Full Time</option>
+                            <option value="part-time">Part Time</option>
+                            <option value="contract">Contract</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="department">Department</label>
+                        <select name="department" id="department" class="form-control" required>
+                            <option value="IT">IT</option>
+                            <option value="SEO">SEO</option>
+                            <option value="Software">Software</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="deadline">Deadline</label>
+                        <input type="date" name="deadline" id="deadline" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="short_description">Short Description</label>
+                        <textarea name="short_description" id="short_description" class="ckeditor form-control" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="full_description">Full Description</label>
+                        <textarea name="full_description" id="full_description" class="ckeditor form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Job Posting Modal -->
+<div class="modal fade" id="editJobModal" tabindex="-1" aria-labelledby="editJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editJobModalLabel">Edit Job Posting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editJobForm" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="job_id" id="editJobId">
+                    <div class="mb-2">
+                        <label for="editTitle">Title</label>
+                        <input type="text" name="title" id="editTitle" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editShortDescription">Short Description</label>
+                        <textarea name="short_description" id="editShortDescription" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editFullDescription">Full Description</label>
+                        <textarea name="full_description" id="editFullDescription" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editLocation">Location</label>
+                        <select name="location" id="editLocation" class="form-control" required>
+                            <option value="dhaka">Dhaka</option>
+                            <option value="chittagong">Chittagong</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editDepartment">Department</label>
+                        <select name="department" id="editDepartment" class="form-control" required>
+                            <option value="IT">IT</option>
+                            <option value="SEO">SEO</option>
+                            <option value="Software">Software</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editJobType">Job Type</label>
+                        <select name="job_type" id="editJobType" class="form-control" required>
+                            <option value="full-time">Full Time</option>
+                            <option value="part-time">Part Time</option>
+                            <option value="contract">Contract</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editSalary">Salary</label>
+                        <input type="text" name="salary" id="editSalary" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editDeadline">Deadline</label>
+                        <input type="date" name="deadline" id="editDeadline" class="form-control" required>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="is_active" id="editIsActive">
+                        <label class="form-check-label" for="editIsActive">Active</label>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Update Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteJobModal" tabindex="-1" aria-labelledby="deleteJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteJobModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this job posting?</p>
+                <input type="hidden" id="deleteJobId">
+                <button type="button" class="btn btn-danger" id="confirmDeleteJobBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for AJAX -->
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+<script>
+    document.getElementById('addJobForm').onsubmit = function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        fetch('/job-postings/add/', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()).then(data => {
+            alert(data.message);
+            location.reload();
+        }).catch(error => console.error('Error:', error));
+    };
+
+    function editJob(jobId) {
+        fetch(`/job-postings/edit/${jobId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const job = data.job;
+                    document.getElementById('editJobId').value = job.id;
+                    document.getElementById('editTitle').value = job.title;
+                    document.getElementById('editShortDescription').value = job.short_description;
+                    document.getElementById('editFullDescription').value = job.full_description;
+                    document.getElementById('editLocation').value = job.location;
+                    document.getElementById('editDepartment').value = job.department;
+                    document.getElementById('editJobType').value = job.job_type;
+                    document.getElementById('editSalary').value = job.salary;
+                    document.getElementById('editDeadline').value = job.deadline;
+                    document.getElementById('editIsActive').checked = job.is_active;
+                    new bootstrap.Modal(document.getElementById('editJobModal')).show();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function deleteJob(jobId) {
+        document.getElementById('deleteJobId').value = jobId;
+        new bootstrap.Modal(document.getElementById('deleteJobModal')).show();
+    }
+
+    document.getElementById('confirmDeleteJobBtn').onclick = function() {
+        var jobId = document.getElementById('deleteJobId').value;
+        fetch(`/job-posting/delete/${jobId}/`, {
+            method: 'POST',
+        }).then(response => response.json()).then(data => {
+            alert(data.message);
+            location.reload();
+        }).catch(error => console.error('Error:', error));
+    };
+</script>
+{% endblock %}

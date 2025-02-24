@@ -1,0 +1,93 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block body %} 
+        <!-- start page title -->
+        <section 
+        class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+        style="background-image: url('{{ banner.background_image.url }}');">
+        <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
+            <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
+                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
+                <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
+                            M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
+                            M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
+                </path>
+                </svg>
+        </div>
+        <div class="container">
+            <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+                <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <h1 class="mb-20px text-white fw-600 ls-minus-1px">Video Gallery</h1>
+                </div> 
+            </div>
+        </div>
+        </section>
+        <!-- end page title --> 
+
+
+ <!-- Video Gallery Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold">Video Gallery</h2>
+                <p class="text-muted">Watch our latest videos</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for video in videos %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="{{ video.embed_url }}" allowfullscreen></iframe>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                <a href="{{ video.url }}" target="_blank" class="text-decoration-none text-dark">
+                                    {{ video.title }}
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p>No videos available yet.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if videos.has_other_pages %}
+            <nav aria-label="Video Gallery Pagination">
+                <ul class="pagination justify-content-center mt-4">
+                    {% if videos.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">&laquo; First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.previous_page_number }}">Previous</a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">Page {{ videos.number }} of {{ videos.paginator.num_pages }}</span>
+                    </li>
+
+                    {% if videos.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.next_page_number }}">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.paginator.num_pages }}">Last &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+</section>
+
+
+{% endblock %}

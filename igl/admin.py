@@ -1,6 +1,11 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,HomeIntro,HomeBanner,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,BlogBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,Blog,BusinessStrength,AboutSection,ClientReview,Industry,ReasonToChooseUs,CareerImages
+from .models import NavMenu, Logo,HomeIntro,HomeBanner,HomeBannerImage,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,AboutSection,Industry,ReasonToChooseUs,CareerImages
+# from jazmin.sites import AdminSite
+# from django.urls import reverse
+# from . models import get_admin_url
+# from django.utils.translation import gettext_lazy as _
+
 
 
 @admin.register(NavMenu)
@@ -16,9 +21,19 @@ class LogoAdmin(admin.ModelAdmin):
     list_display = ['id','image', 'is_active']
     
 
+class HomeBannerImageInline(admin.TabularInline):  # Allows inline editing
+    model = HomeBannerImage
+    extra = 1  # Allows adding extra images in admin
+
 @admin.register(HomeBanner)
 class HomeBannerAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description', 'button_text']
+    list_display = ('title', 'button_text', 'url')  # Fields to show in the list
+    search_fields = ('title', 'description')  # Searchable fields
+    inlines = [HomeBannerImageInline]  # Attach images as inline
+
+@admin.register(HomeBannerImage)
+class HomeBannerImageAdmin(admin.ModelAdmin):
+    list_display = ('banner', 'image')  # Display image and its banner
     
 @admin.register(HomeIntro)
 class HomeIntroAdmin(admin.ModelAdmin):
@@ -41,11 +56,11 @@ class AboutBannerAdmin(admin.ModelAdmin):
     
 @admin.register(AboutSection)
 class AboutSectionAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('id','image')
     
-@admin.register(ClientReview)
-class ClientReviewAdmin(admin.ModelAdmin):
-    list_display = ('name', 'company', 'text','created_at')
+# @admin.register(ClientReview)
+# class ClientReviewAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'company', 'text','created_at')
     
     
 #-----contact page----
@@ -69,8 +84,8 @@ class ContactLocationAdmin(admin.ModelAdmin):
 
 @admin.register(Contact_fromdata)
 class ContactFromdataAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "message", "created_at")
-    search_fields = ("name", "email", "message")
+     list_display = ("name", "email", "phone_number", "address", "message", "created_at")
+     search_fields = ("name", "email", "phone_number", "address", "message")
 
 
 #-----------gallery page----
@@ -96,21 +111,31 @@ class Gallery_AlbumDetailsAdmin(admin.ModelAdmin):
     ordering = ('-uploaded_at',)  # Order gallery images by uploaded date, latest first
     search_fields = ('album__title',)  # Enable search for images by album title
     
+    
+#-------------video galley page ---
+
+from .models import Video
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'url', 'created_at')
+    search_fields = ('title',)    
+
 #--------------blog--------
-from django.db import models  # ✅ Import models
-from ckeditor.widgets import CKEditorWidget
+# from django.db import models  # ✅ Import models
+# from ckeditor.widgets import CKEditorWidget
 
-@admin.register(BlogBanner)
-class BlogBannerAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+# @admin.register(BlogBanner)
+# class BlogBannerAdmin(admin.ModelAdmin):
+#     list_display = ('title',)
 
 
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'published_date')
-    formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
-    }
+# @admin.register(Blog)
+# class BlogAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'published_date')
+#     formfield_overrides = {
+#         models.TextField: {'widget': CKEditorWidget()},
+#     }
     
 #-----------career----------
 from .models import JobPosting, JobApplication
@@ -142,15 +167,15 @@ class CareerImagesAdmin(admin.ModelAdmin):
 
 @admin.register(JobPosting)
 class JobPostingAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'job_type', 'posted_date', 'deadline', 'is_active','salary')
-    list_filter = ('job_type', 'is_active', 'location')
-    search_fields = ('title', 'description')
+    list_display = ('title', 'location', 'department', 'job_type', 'salary', 'deadline', 'is_active')
+    list_filter = ('location', 'department', 'job_type', 'is_active')
+    search_fields = ('title', 'department', 'location')
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'job', 'email', 'location', 'applied_date')
-    list_filter = ('job', 'applied_date')
-    search_fields = ('name', 'email', 'phone')
+    list_display = ('name', 'job', 'department', 'location', 'gender', 'image','applied_date','cv')
+    list_filter = ('department', 'location', 'gender')
+    search_fields = ('name', 'email', 'phone', 'job__title')
     
     
     
@@ -159,20 +184,83 @@ class JobApplicationAdmin(admin.ModelAdmin):
 class BussinessBannerAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-@admin.register(BusinessStrength)
-class BusinessStrengthAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'image', 'icon', 'link']
+# @admin.register(BusinessStrength)
+# class BusinessStrengthAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'title', 'image', 'icon', 'link']
     
+@admin.register(IGL_WEB)
+class IGLWEBAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+   
+
+@admin.register(IGL_HOST)
+class IGLHOSTAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
     
+
+@admin.register(STUDENT_VISA)
+class STUDENTVISAAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+    
+
+@admin.register(FELNA_TECH)
+class FELNATECHAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'description', 'image']
+   
 #----------Our Team---
-from .models import BOD, Staff
+from .models import BOD, Staff,OurTeamBanner
+
+@admin.register(OurTeamBanner)
+class OurTeamBannerAdmin(admin.ModelAdmin):
+    list_display = ('id','title','background_image')
 
 @admin.register(BOD)
 class BODAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role')
+    list_display = ('name', 'role', 'portfolio_link', 'pdf')  # Add the fields to display
     search_fields = ('name', 'role')
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ('name', 'position')
+    list_display = ('name', 'position', 'portfolio_link', 'pdf')
     search_fields = ('name',)
+
+
+# class CustomAdminSite(AdminSite):
+#     site_title = "My Custom Admin"
+#     site_header = "Admin Panel"
+#     index_title = "Dashboard"
+
+#     def sidebar_menu(self, request):
+#         return [
+#             {
+#                 "name": _("Dashboard"),
+#                 "icon": "fas fa-home",
+#                 "url": reverse("admin:index"),
+#                 "permissions": ["auth.view_user"],
+#             },
+#             {
+#                 "name": _("Users"),
+#                 "icon": "fas fa-users",
+#                 "url": get_admin_url("auth", "user"),
+#                 "permissions": ["auth.view_user"],
+#             },
+#             {
+#                 "name": _("Products"),
+#                 "icon": "fas fa-box-open",
+#                 "url": get_admin_url("shop", "product"),
+#                 "permissions": ["shop.view_product"],
+#             },
+#             {
+#                 "name": _("Orders"),
+#                 "icon": "fas fa-shopping-cart",
+#                 "url": get_admin_url("shop", "order"),
+#                 "permissions": ["shop.view_order"],
+#             },
+#             {
+#                 "name": _("Settings"),
+#                 "icon": "fas fa-cogs",
+#                 "url": "/admin/settings/",
+#             },
+#         ]
+
+# custom_admin_site = CustomAdminSite(name="custom_admin")

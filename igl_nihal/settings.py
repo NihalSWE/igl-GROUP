@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^9ol_fj&7%v1+lk&m99yz70m%es++7#(30xtl7$g+$_y^ut0qa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'igl',
     'ckeditor',
+    'igl.templatetags',
 ]
 
 MIDDLEWARE = [
@@ -119,14 +120,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = '/static/'
+if DEBUG: 
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
-STATIC_URL = '/static/'  # Already defined
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Your app's static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collectstatic output
-
-# Path to the media directory
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 
 # Default primary key field type
@@ -145,7 +151,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
-        {"app": "your_app_name"},
+        {"app": "igl"},
     ],
     "show_sidebar": True,
     "navigation_expanded": True,
@@ -154,5 +160,5 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
     },
-    "order_with_respect_to": ["auth", "your_app_name"],
+    "order_with_respect_to": ["auth", "igl"],
 }

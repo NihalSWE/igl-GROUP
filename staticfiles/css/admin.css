@@ -1,0 +1,56 @@
+/* Resize the admin panel logo */
+.navbar-brand-logo {
+    max-height: 50px; /* Adjust the height */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Resize the favicon (site_icon) */
+.favicon {
+    width: 32px;
+    height: 32px;
+}
+
+
+
+/* Custom Login Page Styling */
+.login {
+    background: url('/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Login box */
+.login .card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Login Button */
+.login .btn {
+    background-color: #0056b3;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.login .btn:hover {
+    background-color: #003d7a;
+}
+
+/* Center the Login Form */
+.login-form {
+    text-align: center;
+}
+
+/* Adjust Logo Size */
+.login .brand-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+}

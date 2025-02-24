@@ -1,0 +1,120 @@
+{% extends "backend/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <div class="mt-5 mb-4">
+        <h1>Add Home page banner</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if messages %}
+                    <div id="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <div class="d-flex">
+                        <div class="col-lg-3 col-md-3 col-12 mb-4">
+                            <label for="title" style="font-size: 18px;">Title</label>
+                            <span style="color: red; font-size: 20px;">*</span>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-12">
+                            <input class="form-control clearMe" name="title" id="title" type="text" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex">
+                        <div class="col-lg-3 col-md-3 col-12 mb-4">
+                            <label for="title" style="font-size: 18px;">Button Text</label>
+                            <span style="color: red; font-size: 20px;">*</span>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-12">
+                            <input class="form-control clearMe" name="button_text" id="button_text" type="text" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex">
+                        <div class="col-lg-3 col-md-3 col-12 mb-4">
+                            <label for="title" style="font-size: 18px;">Description</label>
+                            <span style="color: red; font-size: 20px;">*</span>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-12 mb-4">
+                            <textarea name="description" id="description" style="width: 100%; min-height: 100px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex">
+                        <div class="col-lg-3 col-md-3 col-12 mb-4">
+                            <label for="title" style="font-size: 18px;">Banner Image</label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-12 mb-4">
+                            <input class="form-control clearMe product-image" name="banner_image" id="feat_img" type="file" required>
+                            <span class="red" style="font-size: 14px; color: blue;">Banner Size: width: 1600px; height: 600px;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <!-- image preview goes here-->
+                    <div id="image-preview" style="display: flex; flex-wrap: wrap;">
+                        <div id="preview-feat_img" class="preview-box" style="padding-left: 5px; padding-right: 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary">Add Banner</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+    // Image preview section
+    $(document).ready(function () {
+        function updatePreview(input, previewBoxId) {
+            var previewBox = $("#" + previewBoxId);
+            previewBox.empty(); // Clear previous image
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = $('<img>').attr('src', e.target.result).css({
+                        'width': '180px',
+                        'height': '150px',
+                        'object-fit': 'cover',
+                        'border-radius': '5px',
+                        'border': '1px solid #ccc'
+                    });
+                    previewBox.append(img);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".product-image").on("change", function () {
+            var inputId = $(this).attr("id"); // Get the input field ID
+            var previewBoxId = "preview-" + inputId; // Map it to the corresponding preview div
+            updatePreview(this, previewBoxId);
+        });
+    });
+</script>
+
+{% endblock custom_js %}
