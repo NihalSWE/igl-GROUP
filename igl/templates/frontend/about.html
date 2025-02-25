@@ -90,7 +90,7 @@
     <!-- Description Column (50%) -->
     <div class="about-desc" style="flex: 1; padding-left: 30px; min-width: 300px;">
         <p style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
-            {{ about_section.description }}
+            {{ about_section.description | safe}}
         </p>
     </div>
 

@@ -10,9 +10,9 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Icon</th>
+                <th style="display: none;">Description</th>
+                <th style="display: none;">Description</th>
+                <th style="display: none;">Description</th>
                 <th>Link</th>
                 <th>Action</th>
             </tr>
@@ -21,11 +21,11 @@
             {% for concern in sister_concerns %}
             <tr id="row-{{ concern.id }}">
                 <td class="title">{{ concern.title }}</td>
-                <td class="description text-truncate" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 10px;">
+                <td class="description text-truncate" style="display: none; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 10px;">
                     {{ concern.description|remove_images }}
                 </td>
-                <td><img class="image" src="{{ concern.image.url }}" width="100"></td>
-                <td><img class="icon" src="{{ concern.icon.url }}" width="50"></td>
+                {% comment %} <td><img class="image" style="display: none;" src="{{ concern.image.url }}" width="100"></td>
+                <td><img class="icon" style="display: none;" src="{{ concern.icon.url }}" width="50"></td> {% endcomment %}
                 <td class="link"><a href="{{ concern.link }}" target="_blank">{{ concern.link }}</a></td>
                 <td>
                     <button class="btn btn-primary btn-sm edit-btn" data-id="{{ concern.id }}">Edit</button>
@@ -63,17 +63,17 @@
                         </textarea>
                     </div>
 
-                    <div class="form-group">
+                    {% comment %} <div class="form-group">
                         <label>Image</label>
                         <input type="file" class="form-control" id="edit_image">
                         <img id="current_image" src="" width="100">
-                    </div>
+                    </div> {% endcomment %}
 
-                    <div class="form-group">
+                    {% comment %} <div class="form-group">
                         <label>Icon</label>
                         <input type="file" class="form-control" id="edit_icon">
                         <img id="current_icon" src="" width="50">
-                    </div>
+                    </div> {% endcomment %}
 
                     <div class="form-group">
                         <label>Link</label>
@@ -150,8 +150,8 @@
             $("#edit_title").val(row.find(".title").text());
             //$("#edit_description").val(row.find(".description").text());
             $("#edit_link").val(row.find(".link a").attr("href"));
-            $("#current_image").attr("src", row.find(".image").attr("src"));
-            $("#current_icon").attr("src", row.find(".icon").attr("src"));
+           // $("#current_image").attr("src", row.find(".image").attr("src"));
+           // $("#current_icon").attr("src", row.find(".icon").attr("src"));
 
 
             let descriptionContent = row.find(".description").html(); // Get HTML contentType
@@ -191,12 +191,12 @@
             formData.append("link", $("#edit_link").val());
             formData.append("csrfmiddlewaretoken", $("input[name=csrfmiddlewaretoken]").val());
     
-            if ($("#edit_image")[0].files.length > 0) {
-                formData.append("image", $("#edit_image")[0].files[0]);
-            }
-            if ($("#edit_icon")[0].files.length > 0) {
-                formData.append("icon", $("#edit_icon")[0].files[0]);
-            }
+            //if ($("#edit_image")[0].files.length > 0) {
+            //    formData.append("image", $("#edit_image")[0].files[0]);
+           // }
+           // if ($("#edit_icon")[0].files.length > 0) {
+           //     formData.append("icon", $("#edit_icon")[0].files[0]);
+           // }
     
             $.ajax({
                 url: `/sister-concern/edit/${concernId}/`,

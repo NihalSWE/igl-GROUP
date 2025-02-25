@@ -3,138 +3,136 @@
 
 {% block body %}
 <style>
-    :root {
-        --container-width: 1280px;
-        --gradient-1: linear-gradient(135deg, #2A2A72 0%, #009FFF 74%);
-        --gradient-2: linear-gradient(45deg, #FF6B3D 0%, #FF8E53 100%);
-    }
+/* Modern CSS for Sister Concern Page with specific class names */
 
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Inter', sans-serif;
-        background: #FAFAFA;
-    }
+/* Global styles */
+:root {
+  --sc-primary-color: #3a86ff;
+  --sc-secondary-color: #8338ec;
+  --sc-text-color: #2b2d42;
+  --sc-light-gray: #f8f9fa;
+  --sc-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --sc-transition: all 0.3s ease;
+}
 
-    .container {
-        width: var(--container-width);
-        margin: 0 auto;
-        padding: 0;
-        box-sizing: border-box;
-    }
+/* Content card styling - more specific selectors */
+.sc-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
 
-    .content-card {
-        width: 100%;
-        margin-bottom: 80px;
-        padding: 40px 0;
-    }
+.sc-content-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sc-card-shadow);
+  transform: translateY(-80px);
+  margin-bottom: -40px;
+}
 
-    .card-content {
-        width: 100%;
-    }
+.sc-card-content {
+  padding: 3rem;
+}
 
-    h1 {
-        font-size: 44px;
-        margin-bottom: 24px;
-        line-height: 1.2;
-        background: var(--gradient-1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        position: relative;
-    }
+.sc-card-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, var(--sc-primary-color), var(--sc-secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-    h1::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 80px;
-        height: 4px;
-        background: var(--gradient-2);
-        border-radius: 2px;
-    }
+.sc-card-content p {
+  font-size: 1.125rem;
+  color: #4a4a4a;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
 
-    p {
-        font-size: 18px;
-        line-height: 1.8;
-        color: #444;
-        margin-bottom: 30px;
-    }
+/* Modern button style */
+.sc-explore-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(45deg, var(--sc-primary-color), var(--sc-secondary-color));
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 1.75rem;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: var(--sc-transition);
+  box-shadow: 0 4px 15px rgba(59, 134, 255, 0.3);
+}
 
-    .explore-button {
-        display: inline-flex;
-        align-items: center;
-        background: var(--gradient-1);
-        color: white;
-        padding: 16px 32px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
+.sc-explore-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(59, 134, 255, 0.4);
+}
 
-    .explore-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--gradient-2);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
+.sc-explore-button svg {
+  transition: var(--sc-transition);
+}
 
-    .explore-button:hover::before {
-        opacity: 1;
-    }
+.sc-explore-button:hover svg {
+  transform: translateX(5px);
+}
 
-    .explore-button span {
-        position: relative;
-        z-index: 1;
-    }
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .sc-container {
+    padding: 3rem 1.5rem;
+  }
+  
+  .sc-card-content {
+    padding: 2.5rem;
+  }
+  
+  .sc-card-content h1 {
+    font-size: 2rem;
+  }
+}
 
-    .explore-button svg {
-        margin-left: 8px;
-        transition: transform 0.3s ease;
-    }
+@media (max-width: 768px) {
+  .sc-content-card {
+    transform: translateY(-40px);
+  }
+  
+  .sc-card-content {
+    padding: 2rem;
+  }
+}
 
-    .explore-button:hover svg {
-        transform: translateX(5px);
-    }
-
-    @media (max-width: 1320px) {
-        .container {
-            width: 100%;
-            padding: 0 30px;
-        }
-    }
-
-    @media (max-width: 992px) {
-        .content-card {
-            padding: 30px 0;
-        }
-        
-        h1 {
-            font-size: 36px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .content-card {
-            padding: 25px 0;
-        }
-        
-        h1 {
-            font-size: 32px;
-        }
-        
-        p {
-            font-size: 16px;
-        }
-    }
+@media (max-width: 576px) {
+  .sc-container {
+    padding: 2rem 1rem;
+  }
+  
+  .sc-content-card {
+    border-radius: 12px;
+  }
+  
+  .sc-card-content {
+    padding: 1.5rem;
+  }
+  
+  .sc-card-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .sc-card-content p {
+    font-size: 1rem;
+  }
+  
+  .sc-explore-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+  }
+}
 </style>
 
 <!-- Original title section remains unchanged -->
@@ -152,19 +150,20 @@ style="background-image: url('{{ banner.background_image.url }}');">
     <div class="container">
         <div class="row align-items-center justify-content-center h-500px sm-h-300px">
             <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <h1 class="mb-20px text-white fw-600 ls-minus-1px">IGL WEB</h1>
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ title }}</h1>
             </div> 
         </div>
     </div>
 </section>
 
-<!-- Redesigned content section -->
-<div class="container">
-    <div class="content-card">
-        <div class="card-content">
+<!-- Redesigned content section with specific class names -->
+<div class="sc-container">
+    <div class="sc-content-card">
+        <div class="sc-card-content">
             <h1>{{ sister_concern.title }}</h1>
             <p>{{ sister_concern.description | safe }}</p>
-            <a href="{{ sister_concern.link }}" class="explore-button" target="_blank">
+  
+            <a href="{{ sister_concern.link }}" class="sc-explore-button" target="_blank">
                 <span>Visit Site For More Info</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>

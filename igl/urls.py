@@ -31,7 +31,7 @@ urlpatterns = [
     # path('iglhost/', views.igl_host, name='igl_host'),
     # path('studentvisa/', views.stdnt_visa, name='stdnt_visa'),
     # path('felnatech/', views.felnatech, name='felnatech'),
-    path('sister-concern/<int:id>/', views.sister_concern_single, name='sister_concern_single'),
+    path('sister-concern/<slug:slug>/', views.sister_concern_single, name='sister_concern_single'),
     
     
     path('career/', views.career, name='career'),
@@ -113,9 +113,12 @@ urlpatterns = [
     path('career-banner/', admin_views.career_banner_form, name='career_banner_form'),
 
     path('job-postings/', admin_views.job_posting_list, name='job_posting_list'),
-    path('job-postings/add/', admin_views.add_job_posting, name='add_job_posting'),
-    path('job-postings/edit/<int:id>/', admin_views.edit_job_posting, name='edit_job_posting'),
-    path('job-posting/delete/<int:job_id>/', admin_views.delete_job_posting, name='delete_job_posting'),
+     path('job_posting/', admin_views.add_job_posting, name='add_job_posting'),
+    path('job_posting/<int:id>/edit/', admin_views.edit_job_posting, name='edit_job_posting'),
+    path('job_posting/<int:id>/delete/',admin_views.delete_job_posting, name='delete_job_posting'),
+    
+    
+    
 
     path('job-applications/', admin_views.job_application_list, name='job_application_list'),
     path('job-application/add/', admin_views.add_job_application, name='add_job_application'),
@@ -148,17 +151,18 @@ urlpatterns = [
 
     path('contacts/delete/<int:id>/', admin_views.delete_contact, name='delete_contact'),
 
-   path('sister_concern_banner_form/', admin_views.sister_concern_banner_form, name='sister_concern_banner_form'),
+    path('sister_concern_banner_form/', admin_views.sister_concern_banner_form, name='sister_concern_banner_form'),
     path('sister_concern_add/', admin_views.sister_concern_add, name='sister_concern_add'),
     path("sister-concerns/", admin_views.sister_concern_list, name="sister_concern_list"),
-    path("sister-concern/edit/<int:id>/", admin_views.edit_sister_concern, name="edit_sister_concern"),
-    path("sister-concern/delete/<int:id>/", admin_views.delete_sister_concern, name="delete_sister_concern"),
+    path("sister-concern/edit/<slug:slug>/", admin_views.edit_sister_concern, name="edit_sister_concern"),
+    path("sister-concern/delete/<slug:slug>/", admin_views.delete_sister_concern, name="delete_sister_concern"),
+
     path('upload/', admin_views.upload_image, name='ckeditor_upload'),  # Image upload URL
     
     
     
     
-    path('admin-login/', admin_views.admin_login, name='admin_login'),
-    path('admin-logout/', admin_views.admin_logout, name='admin_logout'),
-    path('admin-dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),  # Redirect after login
+    path('login', admin_views.login_view, name='login'),  # Updated from 'admin_login'
+    path('logout', admin_views.logout_view, name='logout'),  # Updated from 'admin_logout'
+    path('dashboard/', admin_views.dashboard, name='dashboard'),  # Updated from 'admin_dashboard'
 ]

@@ -83,7 +83,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownSisterConcern">
                             {% for sister in sister_concerns %}
                                 <li>
-                                    <a href="{% url 'sister_concern_single' sister.id %}" class="dropdown-item btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
+                                    <a href="{% url 'sister_concern_single' sister.slug %}" class="dropdown-item btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
                                        style="padding: 6px 18px;">
                                         {{ sister.title }}
                                     </a>
@@ -276,29 +276,29 @@
             </div>
             <!-- end footer column -->
 
-            <!-- start footer column -->
-            <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-3">
-                <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
-                <ul>
-                    <li><a href="https://iglgroup.org/" target="_blank">IGL WEB</a></li>
-                    <li><a href="https://iglweb.com/web/" target="_blank">IGL HOST</a></li>
-                    <li><a href="https://studentvisabd.com/" target="_blank">STUDENT VISA</a></li>
-                    <li><a href="#" target="_blank">IGL NETWORK</a></li>
-                </ul>
-            </div>
-            <!-- end footer column -->
+ <!-- Sister Concern 1st Column -->
+ <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-3">
+    <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
+    <ul>
+        {% for concern in column1 %}
+            <li><a href="{{ concern.link }}" target="_blank">{{ concern.title }}</a></li>
+        {% empty %}
+            <li>No sister concerns available</li>
+        {% endfor %}
+    </ul>
+</div>
 
-            <!-- start footer column (new Sister Concern) -->
-            <div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-4">
-                <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
-                <ul>
-                    <li><a href="https://iglgroup.org/" target="_blank">IGL WEB</a></li>
-                    <li><a href="https://iglweb.com/web/" target="_blank">IGL HOST</a></li>
-                    <li><a href="https://studentvisabd.com/" target="_blank">STUDENT VISA</a></li>
-                    <li><a href="#" target="_blank">IGL NETWORK</a></li>
-                </ul>
-            </div>
-            <!-- end footer column -->
+<!-- Sister Concern 2nd Column -->
+<div class="col-6 col-xl-2 col-lg-3 col-md-5 col-sm-4 xs-mb-30px order-sm-4 order-lg-4">
+    <span class="fw-600 d-block text-dark-gray mb-5px">Sister Concerns</span>
+    <ul>
+        {% for concern in column2 %}
+            <li><a href="{{ concern.link }}" target="_blank">{{ concern.title }}</a></li>
+        {% empty %}
+            <li>No sister concerns available</li>
+        {% endfor %}
+    </ul>
+</div>
 
             <!-- start footer column -->
             <div class="col-6 col-xl-2 col-lg-3 col-md-3 col-sm-4 xs-mb-30px order-sm-5 order-lg-5">
@@ -327,7 +327,19 @@
                         <a href="https://iglgroup.org/" target="_blank" class="text-dark-gray fw-600 text-decoration-line-bottom" style="color: #2CACD2;">IGL Group</a>
                     </p>
                     
-    
+                    <p class="responsive-footer-line" style="margin-left: 38px; font-family: arial; display: inline-block; text-align: left; white-space: nowrap;">
+                        <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/domains-services-dotBD.php" style="color: #2CACD2;">Domain Registered</a> 
+                        By
+                        <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Web Ltd | </a>
+                        <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/hosting-regular-shared.php" style="color: #2CACD2;">Hosting Service Provided</a> 
+                        by
+                        <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Host Llc.com | </a>
+                        <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/web-desing.php" style="color: #2CACD2;">Web Design &amp; Development</a> 
+                        by
+                        <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Web Ltd</a>
+                    </p>
+                    
+                    
                 </div>
                 
 
@@ -347,7 +359,7 @@
             <!-- end copyright -->
 
             <!-- start footer menu -->
-            <div class="col-lg-7 pt-20px pb-20px md-pt-25px md-pb-5px order-1 order-lg-2 text-center text-lg-end fs-14">
+            <div class="col-lg-7 pt-20px pb-0px md-pt-25px md-pb-5px order-1 order-lg-2 text-center text-lg-end fs-14">
                 <ul class="footer-navbar sm-lh-normal"  style="margin-right: 37px;"> 
                     <li><a href="{% url 'policy' %}" class="nav-link">Privacy policy</a></li>
                     <li><a href="{% url 'terms' %}" class="nav-link">Terms and conditions</a></li>
@@ -356,18 +368,7 @@
             
             <!-- end footer menu -->
         </div>
-         <!-- Add a line break for the second paragraph -->
-         <p style="margin-left: 38px; font-family: arial; display: inline-block; text-align: left;">
-            <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/domains-services-dotBD.php" style="color: #2CACD2;">Domain Registerd</a> 
-            By
-            <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Web Ltd | </a>
-            <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/hosting-regular-shared.php" style="color: #2CACD2;">Hosting Service Provided</a> 
-            by
-            <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Host LLC.com | </a>
-            <a class="footer-underline" target="_blank" rel="noopener noreferrer" href="https://iglweb.com/web/web-desing.php" style="color: #2CACD2;">Web Design &amp; Development</a> 
-            by
-            <a href="https://iglweb.com/web/home.php" style="font-family: 'arial black';">IGL Web Ltd</a>
-        </p>
+         
     </div> 
     
 </footer>
@@ -501,7 +502,23 @@ footer ul li a {
             color: white !important; /* Make sure the color stays white for some links */
         }
 }
-
+@media (max-width: 600px) {
+    /* Override styles for the responsive footer line */
+    .responsive-footer-line {
+      display: block !important;
+      margin-left: 10px !important;
+      text-align: center !important;
+      white-space: normal !important;
+      font-size: 14px; /* Adjust font-size as needed */
+    }
+    
+    .responsive-footer-line a {
+      display: inline-block;
+      margin: 2px 5px;
+      white-space: normal; /* Ensure links can wrap */
+    }
+  }
+  
 
 /* Tablet-specific styles (767px to 991px) */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -522,6 +539,7 @@ footer ul li a {
     .footer-light .footer-navbar {
         gap: 15px !important; /* Space out navbar items */
     }
+    
 }
 
 /* Adjust for very small mobile screens (max-width: 375px) */

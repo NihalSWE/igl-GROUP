@@ -612,6 +612,7 @@ class Staff(models.Model):
 #websites
 class SisterConcern(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)  # Slug field for SEO-friendly URLs
     description = models.TextField(max_length=200)
     image = models.ImageField(upload_to='business_strength/')
     icon = models.ImageField(upload_to='business_strength/icons/')
@@ -621,21 +622,30 @@ class SisterConcern(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the original image first
+        if not self.slug:
+            base_slug = slugify(self.title)
+            unique_slug = base_slug
+            counter = 1
 
-        # Set the standard size for the business/company image
-        standard_size = (800, 600)  # Fixed width x height
+            while SisterConcern.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{base_slug}-{counter}"
+                counter += 1
 
-        # Resize the main image
+            self.slug = unique_slug
+
+        super().save(*args, **kwargs)
+
+
+        # Resize the main image if exists
         if self.image:
             img = Image.open(self.image.path)
-            img = img.resize(standard_size)  # Resize image to fixed size
+            standard_size = (800, 600)  # Fixed width x height
+            img = img.resize(standard_size)
             img.save(self.image.path)  # Save the resized image
 
-        # Resize the icon image to a smaller fixed size (optional)
+        # Resize the icon if exists
         if self.icon:
-            icon_size = (100, 100)  # Example: Fixed size for icons
             icon = Image.open(self.icon.path)
-            icon = icon.resize(icon_size)  # Resize icon to fixed size
+            icon_size = (100, 100)  # Fixed size for icons
+            icon = icon.resize(icon_size)
             icon.save(self.icon.path)  # Save the resized icon
-            

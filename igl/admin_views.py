@@ -17,10 +17,10 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-# Admin Login View
-def admin_login(request):
+# Login View
+def login_view(request):
     if request.user.is_authenticated:
-        return redirect('admin_dashboard')  # Redirect if already logged in
+        return redirect('dashboard')  # Redirect if already logged in
 
     if request.method == "POST":
         username = request.POST.get('username')
@@ -31,25 +31,24 @@ def admin_login(request):
         if user is not None and user.is_superuser:  # Only allow superusers
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('admin_dashboard')  # Redirect to dashboard
+            return redirect('dashboard')  # Redirect to dashboard
         else:
             messages.error(request, "Invalid credentials or not an admin user.")
 
     return render(request, 'backend/admin_login.html')
 
-# Admin Logout View
-# Admin Logout View
+# Logout View
 @login_required
-def admin_logout(request):
+def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
-    return redirect('admin_login')  # Replace with your actual admin login URL
+    return redirect('login')  # Redirect to login page
 
-
-# Admin Dashboard View (Only accessible if logged in)
+# Dashboard View (Only accessible if logged in)
 @login_required
-def admin_dashboard(request):
+def dashboard(request):
     return render(request, 'backend/admin_dashboard.html')
+
 
 
 
@@ -138,23 +137,24 @@ def delete_home_banner(request, banner_id):
 
 
 def home_intro_form(request):
-    home_intro = None
+# Fetch the first HomeIntro object if it exists
+    home_intro = HomeIntro.objects.first()  
+
     if request.method == 'POST':
         title = request.POST.get('title', '').strip()
         description = request.POST.get('description', '').strip()
-        image1 = request.FILES.get('image1')
+        image1 = request.FILES.get('image1')  # New image
         progress1_title = request.POST.get('progress1_title', '').strip()
         progress1_value = request.POST.get('progress1_value', '').strip()
         progress2_title = request.POST.get('progress2_title', '').strip()
         progress2_value = request.POST.get('progress2_value', '').strip()
 
-        # Basic validation for required fields
-        if not title or not description or not image1 or not progress1_title or not progress1_value or not progress2_title or not progress2_value:
+        # Validate required fields
+        if not title or not description or not progress1_title or not progress1_value or not progress2_title or not progress2_value:
             messages.error(request, "Please fill in all required fields.")
-            return redirect('home_intro_form')  # Update with your URL name
+            return redirect('home_intro_form')
 
         try:
-            # Convert progress values to integers
             progress1_value = int(progress1_value)
             progress2_value = int(progress2_value)
         except ValueError:
@@ -162,39 +162,35 @@ def home_intro_form(request):
             return redirect('home_intro_form')
 
         try:
-            if home_intro:  # If we're editing, update the existing entry
+            if home_intro:
+                # Update existing record
                 home_intro.title = title
                 home_intro.description = description
-                home_intro.image1 = image1 if image1 else home_intro.image1  # If no new image, keep existing
+                if image1:
+                    home_intro.image1 = image1  # Only update if new image is uploaded
                 home_intro.progress1_title = progress1_title
                 home_intro.progress1_value = progress1_value
                 home_intro.progress2_title = progress2_title
                 home_intro.progress2_value = progress2_value
                 home_intro.save()
+                messages.success(request, "Home Intro updated successfully!")
             else:
-                # Create a new HomeIntro record
-                home_intro = HomeIntro(
+                # Create a new record
+                HomeIntro.objects.create(
                     title=title,
                     description=description,
                     image1=image1,
                     progress1_title=progress1_title,
                     progress1_value=progress1_value,
                     progress2_title=progress2_title,
-                    progress2_value=progress2_value,
+                    progress2_value=progress2_value
                 )
-                home_intro.save()
+                messages.success(request, "Home Intro saved successfully!")
 
-            messages.success(request, "Home Intro saved successfully!")
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
 
-        return redirect('home_intro_form')  # Redirect to the form after saving
-
-    # For GET requests, check if there's an existing HomeIntro record to edit
-    try:
-        home_intro = HomeIntro.objects.first()  # Assuming only one HomeIntro object
-    except HomeIntro.DoesNotExist:
-        home_intro = None
+        return redirect('home_intro_form')
 
     context = {
         'home_intro': home_intro,
@@ -658,34 +654,7 @@ def career_banner_form(request):
     # Pass the banner object to the template if it exists
     return render(request, 'backend/career_banner_form.html', {'banner': banner})
 
-
 @csrf_exempt
-def career_images(request):
-    if request.method == "POST":
-        main_image = request.FILES.get("main_image")
-        group_image = request.FILES.get("group_image")
-        activity_image1 = request.FILES.get("activity_image1")
-        activity_image2 = request.FILES.get("activity_image2")
-        is_active = request.POST.get("is_active") == "on"
-
-        CareerImages.objects.create(
-            main_image=main_image,
-            group_image=group_image,
-            activity_image1=activity_image1,
-            activity_image2=activity_image2,
-            is_active=is_active,
-        )
-        return redirect("career_images")  # Redirect after upload
-
-    # Fetch images for display
-    career_images = CareerImages.objects.all()
-    return render(request, "backend/career_images.html", {"career_images": career_images})
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
-from .models import CareerImages
-
 def career_images(request):
     if request.method == "POST":
         main_image = request.FILES.get("main_image")
@@ -758,7 +727,6 @@ def add_job_posting(request):
         job_type = request.POST.get('job_type')
         salary = request.POST.get('salary')
         deadline = request.POST.get('deadline')
-        is_active = request.POST.get('is_active') == 'on'
 
         # Create the new job posting
         job = JobPosting.objects.create(
@@ -770,15 +738,16 @@ def add_job_posting(request):
             job_type=job_type,
             salary=salary,
             deadline=deadline,
-            is_active=is_active
+            is_active=True  # Defaulting to True or as needed
         )
 
         return JsonResponse({"status": "success", "message": "Job posting added successfully!"})
 
     return JsonResponse({"status": "error", "message": "Invalid request method!"})
 
+
 # View to edit an existing job posting
-@csrf_exempt
+
 @csrf_exempt
 def edit_job_posting(request, id):
     job = get_object_or_404(JobPosting, id=id)
@@ -1278,53 +1247,75 @@ def sister_concern_banner_form(request):
 
 
 
+from django.utils.text import slugify
+
 def sister_concern_add(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        image = request.FILES.get("image")
-        icon = request.FILES.get("icon")
-        link = request.POST.get("link")
+        link = request.POST.get("link", "")  # Default empty string if link is not provided
 
+        # Generate unique slug
+        base_slug = slugify(title)
+        unique_slug = base_slug
+        counter = 1
+        while SisterConcern.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{base_slug}-{counter}"
+            counter += 1
+
+        # Creating the SisterConcern object
         sister_concern = SisterConcern(
             title=title, 
             description=description, 
-            image=image, 
-            icon=icon, 
-            link=link
+            link=link,
+            slug=unique_slug  # Add slug here
         )
-        sister_concern.save()
-        messages.success(request, "Sister Concern created successfully.")
-        return redirect("sister_concern_list")  # Change as per your URL pattern
+
+        try:
+            sister_concern.save()  # Save the instance to the database
+            messages.success(request, "Sister Concern created successfully.")
+            return redirect("sister_concern_list")  # Make sure this matches your URL pattern
+        except Exception as e:
+            messages.error(request, f"Error creating Sister Concern: {e}")
+            return redirect("sister_concern_add")  # Stay on the same page if there's an error
 
     return render(request, "backend/sister_concern_add.html")
+
 
 
 def sister_concern_list(request):
     sister_concerns = SisterConcern.objects.all()
     return render(request, "backend/sister_concern_list.html", {"sister_concerns": sister_concerns})
 
-def edit_sister_concern(request, id):
-    concern = get_object_or_404(SisterConcern, id=id)
+def edit_sister_concern(request, slug):
+    concern = get_object_or_404(SisterConcern, slug=slug)
 
     if request.method == "POST":
-        concern.title = request.POST.get("title")
+        new_title = request.POST.get("title")
+
+        # If title is changed, update slug
+        if concern.title != new_title:
+            base_slug = slugify(new_title)
+            unique_slug = base_slug
+            counter = 1
+            while SisterConcern.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{base_slug}-{counter}"
+                counter += 1
+            concern.slug = unique_slug  # Update slug
+
+        concern.title = new_title
         concern.description = request.POST.get("description")
         concern.link = request.POST.get("link")
-
-        if "image" in request.FILES:
-            concern.image = request.FILES["image"]
-        if "icon" in request.FILES:
-            concern.icon = request.FILES["icon"]
 
         concern.save()
         return JsonResponse({"success": True})
 
     return JsonResponse({"success": False})
 
-def delete_sister_concern(request, id):
+
+def delete_sister_concern(request, slug):
     if request.method == "POST":
-        concern = get_object_or_404(SisterConcern, id=id)
+        concern = get_object_or_404(SisterConcern, slug=slug)
         concern.delete()
         return JsonResponse({"success": True})
 

@@ -39,7 +39,7 @@
       <!-- Sidebar Start -->
       <div class="sidebar pe-4 pb-3">
         <nav class="navbar bg-light navbar-light">
-            <a href="{% url 'admin_dashboard' %}" class="navbar-brand mx-4 mb-3">
+            <a href="{% url 'dashboard' %}" class="navbar-brand mx-4 mb-3">
                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>IGL GROUP</h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
@@ -187,10 +187,10 @@
                                 <span class="d-none d-lg-inline-flex">{{ user.username }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="{% url 'admin_logout' %}" class="dropdown-item" style="padding: 8px 18px;">Log Out</a>
+                                <a href="{% url 'logout' %}" class="dropdown-item" style="padding: 8px 18px;">Log Out</a>
                             </div>
                         {% else %}
-                            <a href="{% url 'admin_login' %}" class="btn btn-primary" style="padding: 8px 18px;">Admin Login</a>
+                            <a href="{% url 'login' %}" class="btn btn-primary" style="padding: 8px 18px;">Admin Login</a>
                         {% endif %}
                     </div>
                     

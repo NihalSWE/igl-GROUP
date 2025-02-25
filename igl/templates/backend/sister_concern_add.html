@@ -45,6 +45,19 @@
                     </div>
                 </div>
 
+                <!-- Slug Field (Auto-generated from Title) -->
+                <div class="form-group">
+                    <div class="d-flex">
+                        <div class="col-lg-3 col-md-3 col-12 mb-4">
+                            <label for="slug" style="font-size: 18px;">Slug</label>
+                            <span style="color: red; font-size: 20px;">*</span>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-12 mb-4">
+                            <input type="text" class="form-control" name="slug" id="slug" readonly required>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Description Field -->
                 <div class="form-group mb-4">
                     <div class="d-flex">
@@ -65,7 +78,7 @@
                 </div>
 
                 <!-- Image Field -->
-                <div class="form-group">
+                {% comment %} <div class="form-group">
                     <div class="d-flex">
                         <div class="col-lg-3 col-md-3 col-12 mb-4">
                             <label for="image" style="font-size: 18px;">Image</label>
@@ -75,10 +88,10 @@
                             <small class="form-text text-muted">Image will be resized to 800x600 pixels.</small>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 <!-- Icon Field -->
-                <div class="form-group">
+                {% comment %} <div class="form-group">
                     <div class="d-flex">
                         <div class="col-lg-3 col-md-3 col-12 mb-4">
                             <label for="icon" style="font-size: 18px;">Icon</label>
@@ -88,7 +101,7 @@
                             <small class="form-text text-muted">Icon will be resized to 100x100 pixels.</small>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 <!-- Link Field (Optional) -->
                 <div class="form-group">
@@ -143,5 +156,13 @@
         .catch(error => {
             console.error('CKEditor initialization error:', error);
         });
+
+         // Auto-generate slug from title
+    document.getElementById('title').addEventListener('input', function () {
+        let title = this.value;
+        let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        document.getElementById('slug').value = slug;
+    });
+
 </script>
 {% endblock custom_js %}

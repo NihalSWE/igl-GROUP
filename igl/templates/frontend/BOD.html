@@ -1,5 +1,23 @@
 {% extends "frontend/base.html" %}
 {% load static %}
+<style>
+    @media (max-width: 768px) {
+        .cover-background {
+            background-size: cover !important;
+            background-position: center !important;
+        }
+        
+        .h-500px {
+            height: 300px !important; /* Adjust height for mobile */
+        }
+    
+        .page-title-extra-large h1 {
+            font-size: 24px !important; /* Adjust font size for better fit */
+            line-height: 1.2;
+        }
+    }
+    
+</style>
 
 {% block body %}
     <!-- Keeping existing title section unchanged -->

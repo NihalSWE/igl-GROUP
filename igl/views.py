@@ -9,8 +9,19 @@ from django.http import JsonResponse
 def base(request):
     return render(request, 'frontend/base.html')
 
+
+# def footer_view(request):
+#     # Get only the 'title' and 'link' fields from SisterConcern
+#     sister_concerns = SisterConcern.objects.values('title', 'link')
+
+#     # Split the concerns into two columns
+#     column1 = sister_concerns[::2]  # Get items for column 1 (odd index)
+#     column2 = sister_concerns[1::2]  # Get items for column 2 (even index)
+
+#     return render(request, 'your_template_name.html', {'column1': column1, 'column2': column2})
+
 def home(request):
-    intro = HomeIntro.objects.first()
+    intro = HomeIntro.objects.last()
     cover_section = HomeBanner.objects.first()
     
     industries = Industry.objects.all()
@@ -350,14 +361,20 @@ def check_application(request):
 #     return render(request, 'frontend/felnatech.html', context)
 
 
-def sister_concern_single(request, id):
-    sister_concern = SisterConcern.objects.filter(id=id).first()
+def sister_concern_single(request, slug):
+    sister_concern = SisterConcern.objects.filter(slug=slug).first()  # Use slug instead of id
+    if not sister_concern:
+        return redirect("sister_concern_list")  # Redirect if not found (optional)
+
     banner = BussinessBanner.objects.first()
-    context={
-        'sister_concern': sister_concern,
-        'banner': banner,
+
+    context = {
+        "sister_concern": sister_concern,
+        "banner": banner,
+        "title": sister_concern.title,  # Use the title directly
     }
-    return render (request,'frontend/sister_concern_single.html', context)
+    return render(request, "frontend/sister_concern_single.html", context)
+
 
 
 
