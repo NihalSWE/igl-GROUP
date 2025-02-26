@@ -123,22 +123,6 @@
         <a href="{% url 'contact_list' %}" class="dropdown-item">Contacts</a>
     </div>
 </div>
-
-{% comment %} <!-- Job Posting Section -->
-<div class="nav-item {% if request.path == '/job_posting_list/' %}active{% endif %}">
-    <a href="{% url 'job_posting_list' %}" class="nav-link">
-        <i class="fa fa-briefcase me-2"></i>Job Posting
-    </a>
-</div>
-
-<!-- Job Applications Section -->
-<div class="nav-item {% if request.path == '/job_application_list/' %}active{% endif %}">
-    <a href="{% url 'job_application_list' %}" class="nav-link">
-        <i class="fa fa-paper-plane me-2"></i>Job Applications
-    </a>
-</div> {% endcomment %}
-
-<!-- Career Dropdown -->
 <!-- Career Section -->
 <div class="nav-item dropdown {% if request.path == '/job_posting_list/' or request.path == '/job_application_list/' %}active{% endif %}">
     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -151,25 +135,6 @@
         <a href="{% url 'job_application_list' %}" class="dropdown-item">Job Applications</a>
     </div>
 </div>
-
-
-
-<!-- Board of Directors Section -->
-{% comment %} <div class="nav-item {% if request.path == '/manage_bod/' %}active{% endif %}">
-    <a href="{% url 'manage_bod' %}" class="nav-link">
-        <i class="fa fa-users me-2"></i>Board Of Directors
-    </a>
-</div>
-
-<!-- Board of Staff Section -->
-<div class="nav-item {% if request.path == '/manage_staff/' %}active{% endif %}">
-    <a href="{% url 'manage_staff' %}" class="nav-link">
-        <i class="fa fa-users-cog me-2"></i>Board Of Staff
-    </a>
-</div> {% endcomment %}
-
-
-
             </div>
         </nav>
     </div>

@@ -43,7 +43,7 @@
             <div class="card shadow-sm">
                 <iframe class="card-img-top" src="{{ video.embed_url }}" frameborder="0" allowfullscreen></iframe>
                 <div class="card-body">
-                    <h5 class="card-title">{{ video.title }}</h5>
+                    <h5 class="card-title">{{ video.title|slice:":50" }}{% if video.title|length > 50 %}...{% endif %}</h5>
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-warning btn-sm" onclick="editVideo({{ video.id }}, '{{ video.title }}', '{{ video.url }}')">
                             <i class="fa fa-edit me-2"></i>Edit
@@ -54,6 +54,7 @@
                         </a>
                     </div>
                 </div>
+                
             </div>
         </div>
         {% endfor %}

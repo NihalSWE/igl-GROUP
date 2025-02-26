@@ -1247,39 +1247,28 @@ def sister_concern_banner_form(request):
 
 
 
-from django.utils.text import slugify
 
 def sister_concern_add(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        link = request.POST.get("link", "")  # Default empty string if link is not provided
+        # image = request.FILES.get("image")
+        # icon = request.FILES.get("icon")
+        link = request.POST.get("link")
 
-        # Generate unique slug
-        base_slug = slugify(title)
-        unique_slug = base_slug
-        counter = 1
-        while SisterConcern.objects.filter(slug=unique_slug).exists():
-            unique_slug = f"{base_slug}-{counter}"
-            counter += 1
-
-        # Creating the SisterConcern object
         sister_concern = SisterConcern(
             title=title, 
             description=description, 
-            link=link,
-            slug=unique_slug  # Add slug here
+            # image=image, 
+            # icon=icon, 
+            link=link
         )
-
-        try:
-            sister_concern.save()  # Save the instance to the database
-            messages.success(request, "Sister Concern created successfully.")
-            return redirect("sister_concern_list")  # Make sure this matches your URL pattern
-        except Exception as e:
-            messages.error(request, f"Error creating Sister Concern: {e}")
-            return redirect("sister_concern_add")  # Stay on the same page if there's an error
+        sister_concern.save()
+        messages.success(request, "Sister Concern created successfully.")
+        return redirect("sister_concern_list")  # Change as per your URL pattern
 
     return render(request, "backend/sister_concern_add.html")
+
 
 
 
@@ -1287,25 +1276,20 @@ def sister_concern_list(request):
     sister_concerns = SisterConcern.objects.all()
     return render(request, "backend/sister_concern_list.html", {"sister_concerns": sister_concerns})
 
-def edit_sister_concern(request, slug):
-    concern = get_object_or_404(SisterConcern, slug=slug)
+
+
+def edit_sister_concern(request, id):
+    concern = get_object_or_404(SisterConcern, id=id)
 
     if request.method == "POST":
-        new_title = request.POST.get("title")
-
-        # If title is changed, update slug
-        if concern.title != new_title:
-            base_slug = slugify(new_title)
-            unique_slug = base_slug
-            counter = 1
-            while SisterConcern.objects.filter(slug=unique_slug).exists():
-                unique_slug = f"{base_slug}-{counter}"
-                counter += 1
-            concern.slug = unique_slug  # Update slug
-
-        concern.title = new_title
+        concern.title = request.POST.get("title")
         concern.description = request.POST.get("description")
         concern.link = request.POST.get("link")
+
+        # if "image" in request.FILES:
+        #     concern.image = request.FILES["image"]
+        # if "icon" in request.FILES:
+        #     concern.icon = request.FILES["icon"]
 
         concern.save()
         return JsonResponse({"success": True})
@@ -1313,9 +1297,11 @@ def edit_sister_concern(request, slug):
     return JsonResponse({"success": False})
 
 
-def delete_sister_concern(request, slug):
+
+
+def delete_sister_concern(request, id):
     if request.method == "POST":
-        concern = get_object_or_404(SisterConcern, slug=slug)
+        concern = get_object_or_404(SisterConcern, id=id)
         concern.delete()
         return JsonResponse({"success": True})
 

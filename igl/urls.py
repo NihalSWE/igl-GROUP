@@ -154,8 +154,8 @@ urlpatterns = [
     path('sister_concern_banner_form/', admin_views.sister_concern_banner_form, name='sister_concern_banner_form'),
     path('sister_concern_add/', admin_views.sister_concern_add, name='sister_concern_add'),
     path("sister-concerns/", admin_views.sister_concern_list, name="sister_concern_list"),
-    path("sister-concern/edit/<slug:slug>/", admin_views.edit_sister_concern, name="edit_sister_concern"),
-    path("sister-concern/delete/<slug:slug>/", admin_views.delete_sister_concern, name="delete_sister_concern"),
+    path("sister-concern/edit/<int:id>/", admin_views.edit_sister_concern, name="edit_sister_concern"),
+    path("sister-concern/delete/<int:id>/", admin_views.delete_sister_concern, name="delete_sister_concern"),
 
     path('upload/', admin_views.upload_image, name='ckeditor_upload'),  # Image upload URL
     

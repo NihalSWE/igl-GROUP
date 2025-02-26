@@ -45,10 +45,11 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">
                                 <a href="{{ video.url }}" target="_blank" class="text-decoration-none text-dark">
-                                    {{ video.title }}
+                                    {{ video.title|slice:":50" }}{% if video.title|length > 50 %}...{% endif %}
                                 </a>
                             </h5>
                         </div>
+                        
                     </div>
                 </div>
             {% empty %}

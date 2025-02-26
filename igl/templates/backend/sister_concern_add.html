@@ -45,19 +45,6 @@
                     </div>
                 </div>
 
-                <!-- Slug Field (Auto-generated from Title) -->
-                <div class="form-group">
-                    <div class="d-flex">
-                        <div class="col-lg-3 col-md-3 col-12 mb-4">
-                            <label for="slug" style="font-size: 18px;">Slug</label>
-                            <span style="color: red; font-size: 20px;">*</span>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-12 mb-4">
-                            <input type="text" class="form-control" name="slug" id="slug" readonly required>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Description Field -->
                 <div class="form-group mb-4">
                     <div class="d-flex">
@@ -78,30 +65,30 @@
                 </div>
 
                 <!-- Image Field -->
-                {% comment %} <div class="form-group">
-                    <div class="d-flex">
-                        <div class="col-lg-3 col-md-3 col-12 mb-4">
-                            <label for="image" style="font-size: 18px;">Image</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-12 mb-4">
-                            <input class="form-control" name="image" id="image" type="file">
-                            <small class="form-text text-muted">Image will be resized to 800x600 pixels.</small>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
+                <!--<div class="form-group">-->
+                <!--    <div class="d-flex">-->
+                <!--        <div class="col-lg-3 col-md-3 col-12 mb-4">-->
+                <!--            <label for="image" style="font-size: 18px;">Image</label>-->
+                <!--        </div>-->
+                <!--        <div class="col-lg-9 col-md-9 col-12 mb-4">-->
+                <!--            <input class="form-control" name="image" id="image" type="file">-->
+                <!--            <small class="form-text text-muted">Image will be resized to 800x600 pixels.</small>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
 
                 <!-- Icon Field -->
-                {% comment %} <div class="form-group">
-                    <div class="d-flex">
-                        <div class="col-lg-3 col-md-3 col-12 mb-4">
-                            <label for="icon" style="font-size: 18px;">Icon</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-12 mb-4">
-                            <input class="form-control" name="icon" id="icon" type="file">
-                            <small class="form-text text-muted">Icon will be resized to 100x100 pixels.</small>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
+                <!--<div class="form-group">-->
+                <!--    <div class="d-flex">-->
+                <!--        <div class="col-lg-3 col-md-3 col-12 mb-4">-->
+                <!--            <label for="icon" style="font-size: 18px;">Icon</label>-->
+                <!--        </div>-->
+                <!--        <div class="col-lg-9 col-md-9 col-12 mb-4">-->
+                <!--            <input class="form-control" name="icon" id="icon" type="file">-->
+                <!--            <small class="form-text text-muted">Icon will be resized to 100x100 pixels.</small>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
 
                 <!-- Link Field (Optional) -->
                 <div class="form-group">
@@ -156,13 +143,5 @@
         .catch(error => {
             console.error('CKEditor initialization error:', error);
         });
-
-         // Auto-generate slug from title
-    document.getElementById('title').addEventListener('input', function () {
-        let title = this.value;
-        let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-        document.getElementById('slug').value = slug;
-    });
-
 </script>
 {% endblock custom_js %}

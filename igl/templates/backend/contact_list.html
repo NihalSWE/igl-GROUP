@@ -16,6 +16,7 @@
 
 <!-- Include DataTables JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/datatables@1.11.5/media/js/jquery.dataTables.min.js"></script>
+<input type="hidden" id="csrf_token" value="{% csrf_token %}">
 
 <style>
     .modal {
@@ -175,35 +176,43 @@
         });
     }
 
-    function deleteContact() {
-        if (contactIdToDelete !== null) {
-            const csrfToken = document.getElementById('csrf_token').value; // Get CSRF token from the hidden input field
-            
-            fetch(`/contacts/delete/${contactIdToDelete}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                Swal.fire({
-                    icon: data.status === "success" ? 'success' : 'error',
-                    title: data.status === "success" ? 'Deleted!' : 'Error!',
-                    text: data.message,
-                }).then(() => {
-                    if (data.status === "success") {
-                        // Remove the deleted contact row
-                        document.getElementById(`contact-${contactIdToDelete}`).remove();
-                    }
-                });
-            })
-            .catch(error => {
-                Swal.fire('Error!', 'Something went wrong!', 'error');
-                console.error('Error:', error);
-            });
+function deleteContact() {
+    if (contactIdToDelete !== null) {
+        const csrfTokenElement = document.getElementById('csrf_token');
+        if (!csrfTokenElement) {
+            console.error("CSRF token element not found!");
+            return;
         }
+
+        const csrfToken = csrfTokenElement.value; // Get CSRF token from the hidden input
+
+        fetch(`/contacts/delete/${contactIdToDelete}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken, // Send CSRF token in the header
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({}) // Send an empty body (ensuring POST is correctly formed)
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: data.status === "success" ? 'success' : 'error',
+                title: data.status === "success" ? 'Deleted!' : 'Error!',
+                text: data.message,
+            }).then(() => {
+                if (data.status === "success") {
+                    document.getElementById(`contact-${contactIdToDelete}`).remove();
+                }
+            });
+        })
+        .catch(error => {
+            Swal.fire('Error!', 'Something went wrong!', 'error');
+            console.error('Error:', error);
+        });
     }
+}
+
 
     function viewContact(contactId) {
         fetch(`/contacts/view/${contactId}/`)

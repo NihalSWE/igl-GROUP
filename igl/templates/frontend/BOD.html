@@ -23,7 +23,7 @@
     <!-- Keeping existing title section unchanged -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
     style="background-image:url('{{ banner.background_image.url }}');">
-        <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
+        {% comment %} <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
                 <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
                     <animate attributeName="d" dur="5s" repeatCount="indefinite"
@@ -33,7 +33,7 @@
                     </animate>
                 </path>
             </svg>
-        </div>
+        </div> {% endcomment %}
         
         <div class="container">
             <div class="row align-items-center justify-content-center h-500px sm-h-300px">
@@ -46,11 +46,11 @@
     </section>
 
     <!-- Board of Directors List -->
-    <section class="board-section py-6">
+    <section class="board-section ">
         <div class="container">
             <!-- Section Header -->
-            <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3">Leadership Excellence</h2>
+            <div class="text-center">
+                <h2 class="display-4 fw-bold ">Leadership Excellence</h2>
                 <div class="d-flex justify-content-center">
                     <div class="col-lg-8">
                         <p class="lead text-muted">Meet the visionary leaders who guide our strategic direction and ensure 
