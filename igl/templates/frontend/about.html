@@ -84,7 +84,12 @@
 
     <!-- Image Column (50%) -->
     <div class="about-image" style="flex: 1; max-width: 640px; min-width: 300px;">
-        <img src="{{ about_section.image.url }}" alt="About Image" style="width: 100%; height: auto; border-radius: 8px;">
+        {% if about_section.image %}
+            <img src="{{ about_section.image.url }}" alt="About Image" style="width: 100%; height: auto; border-radius: 8px;">
+        {% else %}
+            <!-- Optionally, leave it empty or display a message like "Image not available" -->
+            <p>No image available</p>
+        {% endif %}
     </div>
 
     <!-- Description Column (50%) -->
