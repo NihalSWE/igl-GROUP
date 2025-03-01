@@ -72,6 +72,12 @@ urlpatterns = [
     path('reason_to_choose/', admin_views.reason_to_choose_list, name='reason_to_choose_list'),
     path('edit_reason_to_choose/<int:reason_id>/', admin_views.edit_reason_to_choose, name='edit_reason_to_choose'),
     path('delete_reason_to_choose/<int:reason_id>/', admin_views.delete_reason_to_choose, name='delete_reason_to_choose'),
+    
+    
+    path('manage_we_serves/', admin_views.manage_we_serves, name='manage_we_serves'),
+    path('add_we_serve/', admin_views.add_we_serve, name='add_we_serve'),
+    path('edit_we_serve/<int:id>/', admin_views.edit_we_serve, name='edit_we_serve'),
+    path('delete_we_serve/<int:id>/', admin_views.delete_we_serve, name='delete_we_serve'),
 
 
 
@@ -127,13 +133,14 @@ urlpatterns = [
 
     path('our-team-banner/', admin_views.our_team_banner_form, name='our_team_banner_form'),
     # Manage Board of Directors (BOD)
-    path('manage_bod/', admin_views.manage_bod, name='manage_bod'),
-    path('edit_bod/<slug:slug>/', admin_views.edit_bod, name='edit_bod'),
+    path('manage-directors/', admin_views.manage_bod, name='manage_bod'),
     path('delete_bod/<slug:slug>/', admin_views.delete_bod, name='delete_bod'),
     # Manage Board of Staff
     path('manage_staff/', admin_views.manage_staff, name='manage_staff'),
-    path('edit_staff/<slug:slug>/', admin_views.edit_staff, name='edit_staff'),
     path('delete_staff/<slug:slug>/', admin_views.delete_staff, name='delete_staff'),
+    # path('manage_staff/', admin_views.manage_staff, name='manage_staff'),
+    # path('edit_staff/<slug:slug>/', admin_views.edit_staff, name='edit_staff'),
+    # path('delete_staff/<slug:slug>/', admin_views.delete_staff, name='delete_staff'),
 
 
 

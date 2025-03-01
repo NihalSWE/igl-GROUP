@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import NavMenu, Logo,HomeIntro,HomeBanner,HomeBannerImage,AboutBanner,ContactBanner,CareerBanner,BussinessBanner,Contact_Schedule, Contact_Location,Contact_fromdata,Gallery_AlbumDetails,Gallery_Album,GalleryBanner,IGL_WEB, IGL_HOST, STUDENT_VISA, FELNA_TECH,AboutSection,Industry,ReasonToChooseUs,CareerImages
+from .models import *
 # from jazmin.sites import AdminSite
 # from django.urls import reverse
 # from . models import get_admin_url
@@ -225,6 +225,13 @@ class StaffAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+
+@admin.register(WeServe)
+class WeServeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'icon')
+    search_fields = ('name',)
+
+
 # class CustomAdminSite(AdminSite):
 #     site_title = "My Custom Admin"
 #     site_header = "Admin Panel"
@@ -264,3 +271,4 @@ class StaffAdmin(admin.ModelAdmin):
 #         ]
 
 # custom_admin_site = CustomAdminSite(name="custom_admin")
+

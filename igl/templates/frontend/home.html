@@ -203,8 +203,115 @@
 </section>
     <!---->
 
+<!-- Industries We Serve Section -->
+<section class="industries-section ">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-4 text-white">Industries We Serve</h2>
+            </div>
+        </div>
+        
+        <div class="row text-center">
+            {% for weserve in weserves %}
+                {% if forloop.counter0|divisibleby:6 and not forloop.first %}
+                    </div>
+                    <div class="row text-center"> <!-- Reduced margin-top to 4 -->
+                {% endif %}
+                
+                <div class="col-6 col-md-4 col-lg-2 ">
+                    <div class="industry-item">
+                        <div class="icon-container mb-3">
+                            <img src="{{ weserve.icon.url }}" alt="{{ weserve.name }}" class="industry-icon">
+                        </div>
+                        <h3 class="industry-name">{{ weserve.name }}</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
+<style>
+    /* Industries We Serve Section Styles */
+    .industries-section {
+        background-color: #0c1e44; /* Dark navy blue background as shown in image */
+        padding: 60px 0;
+    }
+    
+    .industries-section h2 {
+        font-weight: 600;
+        font-size: 3rem;
+        margin-bottom: 40px;
+    }
+    
+    .industry-item {
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .industry-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        height: 60px;
+    }
+    
+    .industry-icon {
+        width: 60px;
+        height: auto;
+        filter: brightness(0) invert(1); /* Makes the icon white */
+    }
+    
+    .industry-name {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .industries-section h2 {
+            font-size: 2.5rem;
+        }
+        
+        .industry-icon {
+            width: 50px;
+        }
+        
+        .industry-name {
+            font-size: 1rem;
+        }
+    }
 
-
+    /* Maintain ratio and reduce row gap */
+    @media (min-width: 1280px) {
+        .industries-section .container {
+            padding-left: 15px;
+            padding-right: 15px; /* Ensure padding is balanced */
+        }
+        
+        .industries-section .row {
+            margin-left: -10px;
+            margin-right: -10px; /* Reduce space between columns */
+        }
+        
+        .industries-section .col-6, .industries-section .col-md-4, .industries-section .col-lg-2 {
+            padding-left: 10px;
+            padding-right: 10px; /* Control column gap */
+        }
+        
+        /* Reduce gap between rows */
+        .industries-section .row.text-center {
+            margin-bottom: 10px; /* Reduced bottom margin between rows */
+        }
+    }
+</style>
 
 {% endblock %}

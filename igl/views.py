@@ -29,10 +29,12 @@ def home(request):
     reasons = ReasonToChooseUs.objects.all()
    
     contact_image = ContactBanner.objects.first()
+    weserves = WeServe.objects.all()
 
     context = {
         'intro': intro,
         'cover_section': cover_section,
+        'weserves':weserves,
         
        
         'contact_image': contact_image,

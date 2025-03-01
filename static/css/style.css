@@ -214,7 +214,7 @@
 
 /* Footer Background */
 .footer-light {
-    background-color: #131516;
+    background-color: #343a40;
     color: #fff;
     padding: 8px 0; /* Further reduced vertical padding */
 }
@@ -403,9 +403,8 @@
 .navbar-nav .nav-item:hover .dropdown-menu {
     display: block;
     animation: fadeInDown 0.3s ease-out;
-    background: #343a40;  /* Slightly stronger glass effect */
+    background: rgba(255, 255, 255, 0.15);  /* Slightly stronger glass effect */
     backdrop-filter: blur(8px);  /* Keep the blur when open */
-    border-radius: 20px!important;
 }
 
 /* Optional: Add animation for dropdown */

@@ -275,3 +275,29 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+
+/* Ensure container-xxl stays as a row (do not force column here) */
+.container-xxl {
+    min-height: 100vh;
+}
+
+/* Target only the content area */
+.content {
+    flex: 1; /* take up remaining space next to the sidebar */
+    display: flex;
+    flex-direction: column;
+    /* Set a full-height container for the content area */
+    height: 100vh;
+}
+
+/* If possible, wrap your main content (nav and block content) in a wrapper */
+/* For example, wrap these inside a div with class "main-content" in your HTML */
+.main-content {
+    flex: 1; /* this will expand to fill the space between nav and footer */
+}
+
+/* Push footer to the bottom */
+.container-fluid.pt-4.px-4 {
+    margin-top: auto;
+}

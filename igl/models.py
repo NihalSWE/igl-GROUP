@@ -649,3 +649,12 @@ class SisterConcern(models.Model):
             icon_size = (100, 100)  # Fixed size for icons
             icon = icon.resize(icon_size)
             icon.save(self.icon.path)  # Save the resized icon
+            
+            
+            
+class WeServe(models.Model):
+    name = models.CharField(max_length=100)
+    icon = models.ImageField(upload_to='weserve_icons/')
+    
+    def __str__(self):
+        return self.name

@@ -377,6 +377,54 @@ def add_reason_to_choose(request):
 
     return render(request, 'backend/add_reason_to_choose.html', context)
 
+# View to manage WeServe objects (Display)
+# View to display the manage WeServe page
+def manage_we_serves(request):
+    we_serves = WeServe.objects.all()  # Get all WeServe records
+    return render(request, 'backend/manage_weserve.html', {'we_serves': we_serves})
+
+# View to add a new WeServe
+def add_we_serve(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        icon = request.FILES.get('icon')
+
+        # Create a new WeServe instance and save it
+        new_we_serve = WeServe(name=name, icon=icon)
+        new_we_serve.save()
+
+        return JsonResponse({"success": True, "message": "WeServe added successfully."})
+    
+    return JsonResponse({"success": False, "message": "Invalid request method."})
+
+# View to edit an existing WeServe
+def edit_we_serve(request, id):
+    try:
+        we_serve = WeServe.objects.get(id=id)
+        if request.method == 'POST':
+            we_serve.name = request.POST.get('name')
+            if 'icon' in request.FILES:
+                we_serve.icon = request.FILES.get('icon')
+            we_serve.save()
+
+            return JsonResponse({"success": True, "message": "WeServe updated successfully."})
+        else:
+            return JsonResponse({"success": False, "message": "Invalid request method."})
+    except WeServe.DoesNotExist:
+        return JsonResponse({"success": False, "message": "WeServe not found."})
+
+# View to delete a WeServe
+def delete_we_serve(request, id):
+    try:
+        we_serve = WeServe.objects.get(id=id)
+        we_serve.delete()
+        return JsonResponse({"success": True, "message": "WeServe deleted successfully."})
+    except WeServe.DoesNotExist:
+        return JsonResponse({"success": False, "message": "WeServe not found."})
+
+
+
+
 
 def about_banner_form(request):
     # Check if there is an existing banner or if it's a new form
@@ -937,87 +985,190 @@ def our_team_banner_form(request):
 
 # Updated manage_bod view for passing director data when editing
 def manage_bod(request):
-    directors = BOD.objects.all()  # Fetch all directors
-    director = None  # Default to None, for creating a new director
-    form = BODForm()
+    directors = BOD.objects.all().order_by('-id')
+    
     if request.method == 'POST':
-        form = BODForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Board of Director added successfully.')
-            return redirect('manage_bod')  # Redirect after successful addition
-    elif request.GET.get('edit'):
-        # Fetch the director's data when the edit button is clicked
-        slug = request.GET.get('edit')
-        director = get_object_or_404(BOD, slug=slug)
-        form = BODForm(instance=director)
+        action = request.POST.get('action')
+        
+        # Handle edit action
+        if action == 'edit':
+            director_id = request.POST.get('director_id')
+            director = get_object_or_404(BOD, id=director_id)
+            
+            # Update director fields
+            director.name = request.POST.get('name')
+            director.role = request.POST.get('role')
+            director.bio = request.POST.get('bio')
+            director.portfolio_link = request.POST.get('portfolio_link')
+            director.pdf = request.POST.get('pdf')
+            
+            # Handle image upload only if a new image is provided
+            if 'image' in request.FILES:
+                director.image = request.FILES['image']
+                
+            director.save()
+            messages.success(request, 'Director updated successfully!')
+            
+        # Handle add action
+        else:
+            name = request.POST.get('name')
+            role = request.POST.get('role')
+            bio = request.POST.get('bio')
+            portfolio_link = request.POST.get('portfolio_link')
+            pdf = request.POST.get('pdf')
+            
+            # Create slug from name
+            slug = slugify(name)
+            
+            # Check for existing director with same slug
+            existing_slug_count = BOD.objects.filter(slug__startswith=slug).count()
+            if existing_slug_count > 0:
+                slug = f"{slug}-{existing_slug_count + 1}"
+                
+            # Create new director
+            director = BOD(
+                name=name,
+                role=role,
+                bio=bio,
+                portfolio_link=portfolio_link,
+                pdf=pdf,
+                slug=slug
+            )
+            
+            # Handle image upload
+            if 'image' in request.FILES:
+                director.image = request.FILES['image']
+                
+            director.save()
+            messages.success(request, 'Director added successfully!')
+        
+        return redirect('manage_bod')
+            
     context = {
         'directors': directors,
-        'form': form,
-        'director': director,  # Pass the director's data to the template
     }
     return render(request, 'backend/manage_bod.html', context)
-# View to edit Board of Director
-def edit_bod(request, slug):
-    director = get_object_or_404(BOD, slug=slug)  # Get director by slug
-    if request.method == 'POST':
-        form = BODForm(request.POST, request.FILES, instance=director)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Board of Director updated successfully.')
-            return redirect('manage_bod')  # Redirect after successful edit
-    else:
-        form = BODForm(instance=director)  # Pre-fill form with existing data
-    context = {
-        'form': form,
-        'director': director,
-    }
-    return render(request, 'backend/manage_bod.html', context)
-# View to delete Board of Director
+
 def delete_bod(request, slug):
-    director = get_object_or_404(BOD, slug=slug)  # Get the director by slug
-    director.delete()  # Delete the director
-    messages.success(request, 'Board of Director deleted successfully.')
-    return redirect('manage_bod')  # Redirect after deletion
+    director = get_object_or_404(BOD, slug=slug)
+    director_name = director.name
+    director.delete()
+    
+    messages.success(request, f'Director {director_name} deleted successfully!')
+    return redirect('manage_bod')
 # --------- Manage Staff ---------
-# View to manage Staff
+# Updated manage_bod view for passing director data when editing
 def manage_staff(request):
-    staff_members = Staff.objects.all()  # Fetch all staff members
+    staffs = Staff.objects.all().order_by('-id')
+    
     if request.method == 'POST':
-        form = StaffForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Staff member added successfully.')
-            return redirect('manage_staff')  # Redirect after successful addition
-    else:
-        form = StaffForm()
+        action = request.POST.get('action')
+        
+        # Handle edit action
+        if action == 'edit':
+            staff_id = request.POST.get('staff_id')
+            staff = get_object_or_404(Staff, id=staff_id)
+            
+            # Update staff fields
+            staff.name = request.POST.get('name')
+            staff.position = request.POST.get('position')
+            staff.bio = request.POST.get('bio')
+            staff.portfolio_link = request.POST.get('portfolio_link')
+            staff.pdf = request.POST.get('pdf')
+            
+            # Handle image upload only if a new image is provided
+            if 'image' in request.FILES:
+                staff.image = request.FILES['image']
+                
+            staff.save()
+            messages.success(request, 'Staff updated successfully!')
+            
+        # Handle add action
+        else:
+            name = request.POST.get('name')
+            position = request.POST.get('position')
+            bio = request.POST.get('bio')
+            portfolio_link = request.POST.get('portfolio_link')
+            pdf = request.POST.get('pdf')
+            
+            # Create slug from name
+            slug = slugify(name)
+            
+            # Check for existing director with same slug
+            existing_slug_count = Staff.objects.filter(slug__startswith=slug).count()
+            if existing_slug_count > 0:
+                slug = f"{slug}-{existing_slug_count + 1}"
+                
+            # Create new director
+            staff = Staff(
+                name=name,
+                position=position,
+                bio=bio,
+                portfolio_link=portfolio_link,
+                pdf=pdf,
+                slug=slug
+            )
+            
+            # Handle image upload
+            if 'image' in request.FILES:
+                staff.image = request.FILES['image']
+                
+            staff.save()
+            messages.success(request, 'Staff added successfully!')
+        
+        return redirect('manage_staff')
+            
     context = {
-        'staff_members': staff_members,
-        'form': form,
+        'staffs': staffs,
     }
     return render(request, 'backend/manage_staff.html', context)
-# View to edit Staff
-def edit_staff(request, slug):
-    staff = get_object_or_404(Staff, slug=slug)
-    if request.method == 'POST':
-        form = StaffForm(request.POST, request.FILES, instance=staff)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Staff member updated successfully.')
-            return redirect('manage_staff')  # Redirect after successful edit
-    else:
-        form = StaffForm(instance=staff)
-    context = {
-        'form': form,
-        'staff': staff,
-    }
-    return render(request, 'backend/manage_staff.html', context)
-# View to delete Staff
+
 def delete_staff(request, slug):
-    staff = get_object_or_404(Staff, slug=slug)  # Get staff member by slug
-    staff.delete()  # Delete the staff member
-    messages.success(request, 'Staff member deleted successfully.')
-    return redirect('manage_staff')  # Redirect after deletion
+    staff = get_object_or_404(Staff, slug=slug)
+    staff_name = staff.name
+    staff.delete()
+    
+    messages.success(request, f'Staff {staff_name} deleted successfully!')
+    return redirect('manage_staff')
+
+# View to manage Staff
+# def manage_staff(request):
+#     staff_members = Staff.objects.all()  # Fetch all staff members
+#     if request.method == 'POST':
+#         form = StaffForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Staff member added successfully.')
+#             return redirect('manage_staff')  # Redirect after successful addition
+#     else:
+#         form = StaffForm()
+#     context = {
+#         'staff_members': staff_members,
+#         'form': form,
+#     }
+#     return render(request, 'backend/manage_staff.html', context)
+# # View to edit Staff
+# def edit_staff(request, slug):
+#     staff = get_object_or_404(Staff, slug=slug)
+#     if request.method == 'POST':
+#         form = StaffForm(request.POST, request.FILES, instance=staff)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Staff member updated successfully.')
+#             return redirect('manage_staff')  # Redirect after successful edit
+#     else:
+#         form = StaffForm(instance=staff)
+#     context = {
+#         'form': form,
+#         'staff': staff,
+#     }
+#     return render(request, 'backend/manage_staff.html', context)
+# # View to delete Staff
+# def delete_staff(request, slug):
+#     staff = get_object_or_404(Staff, slug=slug)  # Get staff member by slug
+#     staff.delete()  # Delete the staff member
+#     messages.success(request, 'Staff member deleted successfully.')
+#     return redirect('manage_staff')  # Redirect after deletion
 
 
 
