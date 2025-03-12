@@ -39,7 +39,12 @@
       <div class="director-card-inner">
         <div class="card-front">
           <div class="director-image">
+            {% if staff.image %}
             <img src="{{ staff.image.url }}" alt="{{ staff.name }}">
+        {% else %}
+            <img src="/static/images/d.png" alt="Image not Uploaded">
+        {% endif %}
+        
           </div>
           <div class="director-info">
             <h3>{{ staff.name }}</h3>
@@ -52,7 +57,7 @@
             <a href="{{ staff.portfolio_link }}" target="_blank" class="btn-portfolio">
               <i class="fas fa-external-link-alt"></i>
             </a>
-            <button class="btn-edit" onclick="editStaff(this)" data-staff-id="{{ staff.id }}" data-staff-slug="{{ staff.slug }}" data-staff-image="{{ staff.image.url }}" data-bs-toggle="modal" data-bs-target="#staffModal">
+            <button class="btn-edit" onclick="editStaff(this)" data-staff-id="{{ staff.id }}" data-staff-slug="{{ staff.slug }}" data-staff-image="{% if staff.image %}{{ staff.image.url }}{% else %}/static/images/d.png{% endif %}" data-bs-toggle="modal" data-bs-target="#staffModal">
               <i class="fas fa-edit"></i>
             </button>
             <button class="btn-delete" onclick="confirmDelete('{{ staff.name }}', '{{ staff.slug }}')">

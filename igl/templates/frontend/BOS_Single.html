@@ -35,10 +35,11 @@
                 <div class="col-lg-5 mb-4 mb-lg-0">
                     <div class="position-relative director-image-wrapper" 
                          style="background: #f8f9fa; padding: 20px;">
-                        <img src="{{ member.image.url }}" 
-                             alt="{{ member.name }}" 
-                             class="img-fluid w-100 director-image"
-                             style="object-fit: cover; height: 500px;">
+                         <img src="{% if member.image %}{{ member.image.url }}{% else %}/static/images/d.png{% endif %}" 
+                         alt="{{ member.name }}" 
+                         class="img-fluid w-100 director-image"
+                         style="object-fit: cover; height: 500px;">
+                    
                     </div>
                 </div>
 
