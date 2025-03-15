@@ -143,7 +143,7 @@ urlpatterns = [
     # path('delete_staff/<slug:slug>/', admin_views.delete_staff, name='delete_staff'),
 
 
-
+     path("manage_contact_schedule/", admin_views.manage_contact_schedule, name="manage_contact_schedule"),
     path('locations/', admin_views.location_list, name='location_list'),
     path('locations/add/', admin_views.add_location, name='add_location'),
     path('locations/edit/<int:id>/', admin_views.edit_location, name='edit_location'),

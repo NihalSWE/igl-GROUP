@@ -72,13 +72,13 @@ class ContactBannerAdmin(admin.ModelAdmin):
 
 @admin.register(Contact_Schedule)
 class ContactScheduleAdmin(admin.ModelAdmin):
-    list_display = ("title", "button_text", "button_link")
+    list_display = ("title", "button_text", "phone_number")
     search_fields = ("title", "description")
 
 
 @admin.register(Contact_Location)
 class ContactLocationAdmin(admin.ModelAdmin):
-    list_display = ("city", "address", "phone_number")
+    list_display = ("city", "address", "phone_number","TNT_number")
     search_fields = ("city", "address", "phone_number")
 
 

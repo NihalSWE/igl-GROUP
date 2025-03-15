@@ -1183,6 +1183,7 @@ def add_location(request):
         address = request.POST.get('address')
         map_url = request.POST.get('map_url')
         phone_number = request.POST.get('phone_number')
+        TNT_number=request.POST.get('TNT_number')
         image = request.FILES.get('image')  # Handling image upload
 
         # Create the location
@@ -1191,6 +1192,7 @@ def add_location(request):
             address=address,
             map_url=map_url,
             phone_number=phone_number,
+            TNT_number=TNT_number,
             image=image
         )
 
@@ -1201,7 +1203,8 @@ def add_location(request):
                 'id': new_location.id,
                 'city': new_location.city,
                 'address': new_location.address,
-                'phone_number': new_location.phone_number
+                'phone_number': new_location.phone_number,
+                'TNT_number': new_location.TNT_number,
             }
         })
 
@@ -1229,6 +1232,7 @@ def edit_location(request, id):
                 'city': location.city,
                 'address': location.address,
                 'phone_number': location.phone_number,
+                'TNT_number': location.TNT_number,
                 'map_url': location.map_url,
                 'image': location.image.url if location.image else None
             }
@@ -1240,6 +1244,7 @@ def edit_location(request, id):
         location.address = request.POST.get('address', location.address)
         location.map_url = request.POST.get('map_url', location.map_url)
         location.phone_number = request.POST.get('phone_number', location.phone_number)
+        location.TNT_number = request.POST.get('TNT_number', location.TNT_number)
 
         # Handle file upload if new image is provided
         new_image = request.FILES.get('image')
@@ -1255,7 +1260,8 @@ def edit_location(request, id):
                 'id': location.id,
                 'city': location.city,
                 'address': location.address,
-                'phone_number': location.phone_number
+                'phone_number': location.phone_number,
+                'TNT_number': location.TNT_number,
             }
         })
 
@@ -1508,3 +1514,34 @@ def delete_video(request, video_id):
     video.delete()
     messages.success(request, "Video deleted successfully!")
     return redirect("manage_videos")
+
+
+
+def manage_contact_schedule(request):
+    contact_schedule = Contact_Schedule.objects.first()  # Fetch the first entry
+
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        button_text = request.POST.get("button_text")
+        phone_number = request.POST.get("phone_number")  # Get phone number from form
+
+        if contact_schedule:
+            contact_schedule.title = title
+            contact_schedule.description = description
+            contact_schedule.button_text = button_text
+            contact_schedule.phone_number = request.POST.get("phone_number")  # Save phone number
+            contact_schedule.save()
+            messages.success(request, "Contact Schedule updated successfully!")
+        else:
+            Contact_Schedule.objects.create(
+                title=title,
+                description=description,
+                button_text=button_text,
+                phone_number=phone_number
+            )
+            messages.success(request, "Contact Schedule created successfully!")
+
+        return redirect("manage_contact_schedule")
+
+    return render(request, "backend/manage_contact_schedule.html", {"contact_schedule": contact_schedule})

@@ -102,7 +102,8 @@
                     </span>
                     <h3 class="text-dark-gray ls-minus-2px fw-700">{{ contact_schedule.title }}</h3>
                     <p class="mb-35px w-90 lg-w-100 sm-mb-25px">{{ contact_schedule.description }}</p>
-                    <a href="#" class="btn btn-extra-large btn-switch-text btn-gradient-purple-pink left-icon btn-rounded me-10px ls-0px">
+                    <a href="tel:{{ contact_schedule.phone_number }}" class="btn btn-extra-large btn-switch-text btn-gradient-purple-pink left-icon btn-rounded me-10px ls-0px">
+
                         <span>
                             <span><i class="bi bi-telephone-outbound"></i></span>
                             <span class="btn-double-text" data-text="Schedule a call">{{ contact_schedule.button_text }}</span>
@@ -128,6 +129,10 @@
                                     <div class="text-dark-gray fw-600">
                                         <i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i>
                                         <a href="tel:{{ location.phone_number }}">{{ location.phone_number }}</a>
+                                    </div>
+                                    <div class="text-dark-gray fw-600">
+                                        <i class="feather icon-feather-phone-call icon-small me-10px text-dark-gray"></i>
+                                        <a href="tel:{{ location.TNT_number }}">{{ location.TNT_number }}</a>
                                     </div>
                                 </div>
                             </div>

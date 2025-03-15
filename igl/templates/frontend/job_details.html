@@ -36,9 +36,9 @@
 
 
 
-                    <h5>Location: {{ job.location }}</h5>
-                    <h5>Job Type: {{ job.job_type }}</h5>
-                    <h5>Department: {{ job.department }}</h5>
+                    <h5>Location: {{ job.location|capfirst }}</h5>
+                    <h5>Job Type: {{ job.job_type|capfirst }}</h5>
+                    <h5>Department: {{ job.department|capfirst }}</h5>
                     <h5>Salary: {{ job.salary }}</h5>
                     <h5>Last Date For Application: {{ job.deadline }}</h5>
                     <!-- Other job details here -->

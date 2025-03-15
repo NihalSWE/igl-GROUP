@@ -180,7 +180,7 @@ class Contact_Schedule(models.Model):
     title = models.CharField(max_length=255, help_text="Main heading text for the contact section.")
     description = models.TextField(max_length=255,help_text="Short description or introduction.")
     button_text = models.CharField(max_length=100, help_text="Text for the call-to-action button.")
-    button_link = models.URLField(help_text="URL the button redirects to.", blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True, help_text="Contact phone number.")  # New Field
 
     def __str__(self):
         return self.title
@@ -198,6 +198,8 @@ class Contact_Location(models.Model):
         null=True
     )
     phone_number = models.CharField(max_length=20, help_text="Phone number for the location.")
+    TNT_number=models.CharField(max_length=20,null=True,blank=True, help_text="TNT number for the location.")
+    
     image = models.ImageField(upload_to="locations/", help_text="Image or background for the location.")
 
     def resize_image(self):
