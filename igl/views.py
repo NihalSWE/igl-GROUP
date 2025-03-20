@@ -111,7 +111,7 @@ def location_map(request):
 
 # In views.py
 def gallery(request):
-    banner = GalleryBanner.objects.first()  # Fetch the banner
+    banner = GalleryBanner.objects.last()  # Fetch the banner
     albums = Gallery_Album.objects.all().order_by('-created_at')  # Fetch all albums, ordered by creation date
     context = {
         'banner': banner,
