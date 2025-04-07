@@ -1,62 +1,87 @@
 {% extends "frontend/base.html" %}
 {% load static %}
-<style>
-    @media (max-width: 768px) {
-        .cover-background {
-            background-size: cover !important;
-            background-position: center !important;
-        }
-        
-        .h-500px {
-            height: 300px !important; /* Adjust height for mobile */
-        }
-    
-        .page-title-extra-large h1 {
-            font-size: 24px !important; /* Adjust font size for better fit */
-            line-height: 1.2;
-        }
-    }
-    
-</style>
 
 {% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+/* Glass Morphism Effect */
+.glass-morphism {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background (darker for better contrast) */
+    backdrop-filter: blur(15px); /* Adds a stronger blur effect */
+    border-radius: 12px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for depth */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    padding: 20px; /* Adds some spacing inside the div */
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Optional: Adds a slight upward movement */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-in-out; /* Applies the fadeIn animation */
+}
+
+/* Ensure Title Text is Clear */
+.title-text {
+    color: white; /* Ensures the text is white */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow to the text for better readability */
+}
+</style>
     <!-- Keeping existing title section unchanged -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-    style="background-image:url('{{ banner.background_image.url }}');">
-        {% comment %} <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
-            <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
-                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                    <animate attributeName="d" dur="5s" repeatCount="indefinite"
-                        values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                    </animate>
-                </path>
-            </svg>
-        </div> {% endcomment %}
-        
-        <div class="container">
-            <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-                <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
-                    flex-column align-items-center justify-content-center">
-                    <h1 class="mb-20px text-white fw-600 ls-minus-1px">Board of Directors</h1>
-                </div> 
-            </div>
-        </div>
+    style="background-image:url('{{ banner.background_image.url }}'); height: 300px;">
+        <!--<div class="shape-image-animation p-0 w-100 d-none d-md-block"> -->
+        <!--    <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> -->
+        <!--        <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">-->
+        <!--            <animate attributeName="d" dur="5s" repeatCount="indefinite"-->
+        <!--                values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;-->
+        <!--                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;-->
+        <!--                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">-->
+        <!--            </animate>-->
+        <!--        </path>-->
+        <!--    </svg>-->
+        <!--</div>-->
+<div class="container">
+    <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+        <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
+            flex-column align-items-center justify-content-center glass-morphism animate-fade-in">
+            <h1 class="mb-20px text-white fw-600 ls-minus-1px title-text">Board of Directors</h1>
+        </div> 
+    </div>
+</div>
     </section>
 
     <!-- Board of Directors List -->
-    <section class="board-section ">
+    <section class="board-section" style=" padding-top: 23px;">
         <div class="container">
             <!-- Section Header -->
-            <div class="text-center">
-                <h2 class="display-4 fw-bold ">Leadership Excellence</h2>
-                <div class="d-flex justify-content-center">
-                    <div class="col-lg-8">
-                        <p class="lead text-muted">Meet the visionary leaders who guide our strategic direction and ensure 
-                        our commitment to innovation and excellence.</p>
-                    </div>
-                </div>
+            <div class="text-start">
+             
+           
+               <div class="col-lg-12 text-center mb-5">
+    <div class="lead-container px-4 py-3 rounded" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+        <p class="display-5 fw-light text-dark mb-3" style="position: relative;">
+            <span style="position: absolute; left: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❝</span>
+            Meet the visionary leaders
+            <span style="position: absolute; right: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❞</span>
+        </p>
+        <p class="h5 text-muted mb-0" style="letter-spacing: 1px;">
+            Who guide our strategic direction and<br>
+            <span class="d-inline-block mt-2" style="border-bottom: 2px solid #20c997; padding-bottom: 3px;">
+                ensure our commitment to innovation and excellence
+            </span>
+        </p>
+    </div>
+</div>
             </div>
 
             <!-- Board Members Grid -->
@@ -67,9 +92,9 @@
                             <div class="staff-card shadow-lg rounded-3">
                                 <div class="staff-image-wrapper">
                                     <img src="{% if member.image %}{{ member.image.url }}{% else %}/static/images/d.png{% endif %}" 
-                                    alt="{{ member.name }}" 
-                                    class="staff-image rounded-top">
-                               
+     alt="{{ member.name }}" 
+     class="staff-image rounded-top">
+
                                 </div>
                                 <div class="staff-info text-center">
                                     <h3 class="staff-name text-dark">{{ member.name }}</h3>
