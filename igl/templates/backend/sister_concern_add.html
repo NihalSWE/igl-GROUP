@@ -118,15 +118,6 @@
 <script>
     let editorInstance;
 
-    {% comment %} ClassicEditor
-        .create(document.querySelector('#description'))
-        .then(editor => {
-            editorInstance = editor; // Store the editor instance
-        })
-        .catch(error => {
-            console.error('CKEditor initialization error:', error);
-        }); {% endcomment %}
-
         ClassicEditor
         .create(document.querySelector('#description'), {
             toolbar: [

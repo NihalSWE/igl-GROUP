@@ -34,8 +34,6 @@
                     <h3>{{ job.title }}</h3>
                     <p>{{ job.full_description|safe }}</p>
 
-
-
                     <h5>Location: {{ job.location|capfirst }}</h5>
                     <h5>Job Type: {{ job.job_type|capfirst }}</h5>
                     <h5>Department: {{ job.department|capfirst }}</h5>
@@ -48,6 +46,7 @@
         </div>
     </section>
 
+<!-- Application Form Modal -->
 <!-- Application Form Modal -->
 <div class="modal fade" id="applyModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -66,74 +65,118 @@
                     <input type="hidden" name="department" id="department">
                 
                     <!-- Phone -->
-                    <div class="form-group">
-                        <label for="phone">Phone Number <span style="color: red;">*</span></label>
-                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="phone" style="flex: 0 0 120px;">Phone Number <span style="color: red;">*</span></label>
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required style="flex: 1;">
                     </div>
                 
                     <!-- Email -->
-                    <div class="form-group">
-                        <label for="email">Email Address <span style="color: red;">*</span></label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="email" style="flex: 0 0 120px;">Email Address <span style="color: red;">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required style="flex: 1;">
                     </div>
                 
                     <!-- Name -->
-                    <div class="form-group">
-                        <label for="name">Full Name <span style="color: red;">*</span></label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="name" style="flex: 0 0 120px;">Full Name <span style="color: red;">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required style="flex: 1;">
                     </div>
                 
                     <!-- Gender -->
-                    <div class="form-group">
-                        <label for="gender">Gender <span style="color: red;">*</span></label>
-                        <div style="display: flex; gap: 20px; align-items: center; white-space: nowrap;">
-                            <label for="male" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                                <input type="radio" id="male" name="gender" value="male" required>
-                                <span>Male</span>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="gender" style="flex: 0 0 120px;">Gender <span style="color: red;">*</span></label>
+                        <div style="flex: 1; display: flex; gap: 10px; align-items: center;">
+                            <!-- Male -->
+                            <label for="male" style="flex: 1; text-align: center;">
+                                <input type="radio" id="male" name="gender" value="male" required style="display: none;">
+                                <div class="gender-button" data-value="male" style="padding: 0.75rem; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; background: #f9f9f9;">
+                                    <span style="font-weight: 500; color: #666;">Male</span>
+                                </div>
                             </label>
-                            <label for="female" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                                <input type="radio" id="female" name="gender" value="female" required>
-                                <span>Female</span>
+
+                            <!-- Female -->
+                            <label for="female" style="flex: 1; text-align: center;">
+                                <input type="radio" id="female" name="gender" value="female" required style="display: none;">
+                                <div class="gender-button" data-value="female" style="padding: 0.75rem; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; background: #f9f9f9;">
+                                    <span style="font-weight: 500; color: #666;">Female</span>
+                                </div>
                             </label>
-                            <label for="others" style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                                <input type="radio" id="others" name="gender" value="others" required>
-                                <span>Others</span>
+
+                            <!-- Others -->
+                            <label for="others" style="flex: 1; text-align: center;">
+                                <input type="radio" id="others" name="gender" value="others" required style="display: none;">
+                                <div class="gender-button" data-value="others" style="padding: 0.75rem; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; background: #f9f9f9;">
+                                    <span style="font-weight: 500; color: #666;">Others</span>
+                                </div>
                             </label>
                         </div>
                     </div>
                 
                     <!-- CV Upload -->
-                    <div class="form-group">
-                        <label for="cv">Upload CV <span style="color: red;">*</span></label>
-                        <input type="file" id="cv" name="cv" class="form-control" required>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="cv" style="flex: 0 0 120px;">Upload CV <span style="color: red;">*</span></label>
+                        <input type="file" id="cv" name="cv" class="form-control" required style="flex: 1;">
                     </div>
                 
                     <!-- Image Upload -->
-                    <div class="form-group">
-                        <label for="image">Upload Image</label>
-                        <input type="file" id="image" name="image" class="form-control">
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="image" style="flex: 0 0 120px;">Upload Image</label>
+                        <input type="file" id="image" name="image" class="form-control" style="flex: 1;">
                     </div>
                 
                     <!-- LinkedIn -->
-                    <div class="form-group">
-                        <label for="linkedin">LinkedIn Profile</label>
-                        <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="Enter your LinkedIn URL">
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="linkedin" style="flex: 0 0 120px;">LinkedIn Profile</label>
+                        <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="Enter your LinkedIn URL" style="flex: 1;">
+                    </div>
+                
+                    <!-- Twitter -->
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="twitter" style="flex: 0 0 120px;">Twitter Profile</label>
+                        <input type="url" id="twitter" name="twitter" class="form-control" placeholder="Enter your Twitter URL" style="flex: 1;">
                     </div>
                 
                     <!-- Portfolio -->
-                    <div class="form-group">
-                        <label for="portfolio">Portfolio URL</label>
-                        <input type="url" id="portfolio" name="portfolio" class="form-control" placeholder="Enter your portfolio URL">
+                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="portfolio" style="flex: 0 0 120px;">Portfolio URL</label>
+                        <input type="url" id="portfolio" name="portfolio" class="form-control" placeholder="Enter your portfolio URL" style="flex: 1;">
                     </div>
                 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                    <div class="form-group" style="display: flex; justify-content: center; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
                 </form>
-                
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle gender button clicks
+        const genderButtons = document.querySelectorAll(".gender-button");
+        genderButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Remove active styles from all buttons
+                genderButtons.forEach(btn => {
+                    btn.style.background = "#f9f9f9";
+                    btn.style.borderColor = "#ddd";
+                    btn.querySelector("span").style.color = "#666";
+                });
+
+                // Add active styles to the clicked button
+                this.style.background = "linear-gradient(135deg, #6a11cb, #2575fc)";
+                this.style.borderColor = "#6a11cb";
+                this.querySelector("span").style.color = "white";
+
+                // Set the corresponding radio button as checked
+                const radioButton = document.getElementById(this.getAttribute("data-value"));
+                radioButton.checked = true;
+            });
+        });
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Handle "Apply Now" button clicks to open the modal

@@ -189,9 +189,19 @@ def bos(request):
 def bos_single(request, slug):
     banner = OurTeamBanner.objects.first()
     member = get_object_or_404(Staff, slug=slug)  # Using name to get the member
+     # Get all staff except the active one
+    all_staff = list(Staff.objects.exclude(slug=slug))
+    
+    # Calculate middle index
+    mid_index = len(all_staff) // 2
+
+    # Insert the active member in the middle
+    reordered_staff = all_staff[:mid_index] + [member] + all_staff[mid_index:]
+
     context = {
         'banner': banner,
         'member': member,
+        'all_staff': reordered_staff,  # This list now has the active member in the middle
     }
     return render(request, 'frontend/BOS_Single.html', context)
 
@@ -238,6 +248,7 @@ def submit_application(request, job_id):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender', 'male')  # Default to 'male'
         linkedin_url = request.POST.get('linkedin', '')
+        twitter_url = request.POST.get('twitter', '')  # New field for Twitter
         portfolio_url = request.POST.get('portfolio', '')
         cv = request.FILES.get('cv')
         image = request.FILES.get('image', None)  # Image upload support
@@ -265,6 +276,7 @@ def submit_application(request, job_id):
             cv=cv,
             image=image,  # Save uploaded image
             linkedin_url=linkedin_url,
+            twitter_url=twitter_url,  # Save Twitter URL
             portfolio_url=portfolio_url
         )
         application.save()
@@ -290,6 +302,7 @@ def check_application(request):
                 'email': application.email,
                 'gender': application.gender,
                 'linkedin_url': application.linkedin_url,
+                'twitter_url=twitter_url':application.twitter_url,
                 'portfolio_url': application.portfolio_url
             }
         else:

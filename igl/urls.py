@@ -121,6 +121,7 @@ urlpatterns = [
     path('job-postings/', admin_views.job_posting_list, name='job_posting_list'),
     path('job-postings/add/', admin_views.add_job_posting, name='add_job_posting'),
     path('job-postings/edit/<int:id>/', admin_views.edit_job_posting, name='edit_job_posting'),
+    path('job-postings/update/<int:id>/', admin_views.edit_job_posting, name='update_job_posting'),
     path('job-posting/delete/<int:job_id>/', admin_views.delete_job_posting, name='delete_job_posting'),
     
     

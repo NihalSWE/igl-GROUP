@@ -51,8 +51,8 @@
                     <div class="staff-image-wrapper">
                         <a href="{% url 'bos_single' staff.slug %}"> 
                             <img src="{% if staff.image %}{{ staff.image.url }}{% else %}/static/images/d.png{% endif %}" 
-     alt="{{ staff.name }}" 
-     class="staff-image">
+                        alt="{{ staff.name }}" 
+                        class="staff-image">
 
                         </a>
                     </div>

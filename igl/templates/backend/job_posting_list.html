@@ -52,6 +52,7 @@
             </div>
             <div class="modal-body">
                 <form id="addJobForm">
+                    {% csrf_token %}
                     <div class="mb-2">
                         <label for="title">Title</label>
                         <input type="text" name="title" id="title" class="form-control" required>
@@ -90,11 +91,11 @@
                     </div>
                     <div class="mb-2">
                         <label for="short_description">Short Description</label>
-                        <textarea name="short_description" id="short_description" class="ckeditor form-control" required></textarea>
+                        <textarea name="short_description" id="short_description" class="form-control"></textarea>
                     </div>
                     <div class="mb-2">
                         <label for="full_description">Full Description</label>
-                        <textarea name="full_description" id="full_description" class="ckeditor form-control" required></textarea>
+                        <textarea name="full_description" id="full_description" class="form-control"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Job</button>
                 </form>
@@ -121,11 +122,11 @@
                     </div>
                     <div class="mb-2">
                         <label for="editShortDescription">Short Description</label>
-                        <textarea name="short_description" id="editShortDescription" class="form-control" required></textarea>
+                        <textarea name="short_description" id="editShortDescription" class="form-control"></textarea>
                     </div>
                     <div class="mb-2">
                         <label for="editFullDescription">Full Description</label>
-                        <textarea name="full_description" id="editFullDescription" class="form-control" required></textarea>
+                        <textarea name="full_description" id="editFullDescription" class="form-control"></textarea>
                     </div>
                     <div class="mb-2">
                         <label for="editLocation">Location</label>
@@ -187,21 +188,112 @@
     </div>
 </div>
 
-<!-- JavaScript for AJAX -->
-<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+<!-- JavaScript for AJAX and CKEditor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
 <script>
+    // Initialize CKEditor for Add Modal
+    let addShortDescriptionEditor;
+    let addFullDescriptionEditor;
+
+    ClassicEditor
+        .create(document.querySelector('#short_description'), {
+            toolbar: [
+                'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload'
+            ],
+            ckfinder: {
+                uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+            }
+        })
+        .then(editor => {
+            addShortDescriptionEditor = editor;
+        })
+        .catch(error => {
+            console.error('CKEditor initialization error for short description:', error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#full_description'), {
+            toolbar: [
+                'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload'
+            ],
+            ckfinder: {
+                uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+            }
+        })
+        .then(editor => {
+            addFullDescriptionEditor = editor;
+        })
+        .catch(error => {
+            console.error('CKEditor initialization error for full description:', error);
+        });
+
+    // Initialize CKEditor for Edit Modal
+    let editShortDescriptionEditor;
+    let editFullDescriptionEditor;
+
+    function initializeEditModalCKEditor() {
+        ClassicEditor
+            .create(document.querySelector('#editShortDescription'), {
+                toolbar: [
+                    'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                    '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload'
+                ],
+                ckfinder: {
+                    uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+                }
+            })
+            .then(editor => {
+                editShortDescriptionEditor = editor;
+            })
+            .catch(error => {
+                console.error('CKEditor initialization error for edit short description:', error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#editFullDescription'), {
+                toolbar: [
+                    'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                    '|', 'insertTable', 'mediaEmbed', 'undo', 'redo', '|', 'imageUpload'
+                ],
+                ckfinder: {
+                    uploadUrl: '/upload/'  // Ensure this matches your Django upload view
+                }
+            })
+            .then(editor => {
+                editFullDescriptionEditor = editor;
+            })
+            .catch(error => {
+                console.error('CKEditor initialization error for edit full description:', error);
+            });
+    }
+
+    // Add Job Form Submission
     document.getElementById('addJobForm').onsubmit = function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
+        const formData = new FormData(this);
+        formData.set('short_description', addShortDescriptionEditor.getData());
+        formData.set('full_description', addFullDescriptionEditor.getData());
+
+        // Debugging: Log form data
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
         fetch('/job-postings/add/', {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('#addJobForm input[name="csrfmiddlewaretoken"]').value
+            }
         }).then(response => response.json()).then(data => {
             alert(data.message);
             location.reload();
         }).catch(error => console.error('Error:', error));
     };
 
+    // Edit Job Function
     function editJob(jobId) {
         fetch(`/job-postings/edit/${jobId}/`)
             .then(response => response.json())
@@ -210,29 +302,65 @@
                     const job = data.job;
                     document.getElementById('editJobId').value = job.id;
                     document.getElementById('editTitle').value = job.title;
-                    document.getElementById('editShortDescription').value = job.short_description;
-                    document.getElementById('editFullDescription').value = job.full_description;
                     document.getElementById('editLocation').value = job.location;
                     document.getElementById('editDepartment').value = job.department;
                     document.getElementById('editJobType').value = job.job_type;
                     document.getElementById('editSalary').value = job.salary;
                     document.getElementById('editDeadline').value = job.deadline;
                     document.getElementById('editIsActive').checked = job.is_active;
+
+                    // Initialize CKEditor for Edit Modal
+                    initializeEditModalCKEditor();
+
+                    // Set CKEditor data after initialization
+                    setTimeout(() => {
+                        editShortDescriptionEditor.setData(job.short_description);
+                        editFullDescriptionEditor.setData(job.full_description);
+                    }, 500);
+
                     new bootstrap.Modal(document.getElementById('editJobModal')).show();
                 }
             })
             .catch(error => console.error('Error:', error));
     }
 
+    // Update Job Form Submission
+    document.getElementById('editJobForm').onsubmit = function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.set('short_description', editShortDescriptionEditor.getData());
+        formData.set('full_description', editFullDescriptionEditor.getData());
+
+        // Debugging: Log form data
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+        fetch(`/job-postings/update/${document.getElementById('editJobId').value}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('#editJobForm input[name="csrfmiddlewaretoken"]').value
+            }
+        }).then(response => response.json()).then(data => {
+            alert(data.message);
+            location.reload();
+        }).catch(error => console.error('Error:', error));
+    };
+
+    // Delete Job Function
     function deleteJob(jobId) {
         document.getElementById('deleteJobId').value = jobId;
         new bootstrap.Modal(document.getElementById('deleteJobModal')).show();
     }
 
     document.getElementById('confirmDeleteJobBtn').onclick = function() {
-        var jobId = document.getElementById('deleteJobId').value;
+        const jobId = document.getElementById('deleteJobId').value;
         fetch(`/job-posting/delete/${jobId}/`, {
             method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included
+            }
         }).then(response => response.json()).then(data => {
             alert(data.message);
             location.reload();

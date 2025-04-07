@@ -38,7 +38,10 @@
       <div class="director-card-inner">
         <div class="card-front">
           <div class="director-image">
-            <img src="{{ director.image.url }}" alt="{{ director.name }}">
+            <img src="{% if director.image %}{{ director.image.url }}{% else %}/static/images/d.png{% endif %}" 
+            alt="{{ director.name }}" 
+            class="img-fluid w-100 director-image"
+            style="object-fit: cover; height: 500px;">
           </div>
           <div class="director-info">
             <h3>{{ director.name }}</h3>
@@ -51,7 +54,7 @@
             <a href="{{ director.portfolio_link }}" target="_blank" class="btn-portfolio">
               <i class="fas fa-external-link-alt"></i>
             </a>
-            <button class="btn-edit" onclick="editDirector(this)" data-director-id="{{ director.id }}" data-director-slug="{{ director.slug }}" data-director-image="{{ director.image.url }}" data-bs-toggle="modal" data-bs-target="#directorModal">
+            <button class="btn-edit" onclick="editDirector(this)" data-director-id="{{ director.id }}" data-director-slug="{{ director.slug }}" data-director-image="{% if director.image %}{{ director.image.url }}{% else %}/static/images/d.png{% endif %}"data-bs-toggle="modal" data-bs-target="#directorModal">
               <i class="fas fa-edit"></i>
             </button>
             <button class="btn-delete" onclick="confirmDelete('{{ director.name }}', '{{ director.slug }}')">

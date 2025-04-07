@@ -1,117 +1,274 @@
 ﻿{% extends "frontend/base.html" %}
 {% load static %}
 
-
 {% block body %}
 <style>
     header {
-        margin-top:-29px;
+        margin-top: -29px;
+    }
 
-
-
-        @media (max-width: 768px) {
-            .about-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px 20px;
-            }
-        
-            .about-text, .about-desc {
-                display: flex; 
-                justify-content: center; /* Center horizontally */
-                align-items: center;     /* Center vertically */
-                padding: 20px 0;
-                border: none;
-            }
-        
-            .about-text h2, .about-desc h1 {
-                text-align: center;
-                margin: 0; /* Reset any default margins */
-                font-family: 'Poppins', sans-serif;
-            }
-        
-            .about-text h2 {
-                font-size: 2rem; /* Adjust the size as needed */
-            }
-        
-            .about-desc h1 {
-                font-size: 1.2rem;
-                color: rgb(84, 79, 79);
-                line-height: 1.8;
-            }
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+        .about-section {
+            flex-direction: column;
+            text-align: center;
+            padding: 40px 20px;
         }
-        
-        
+
+        .about-text, .about-desc {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            border: none;
+        }
+
+        .about-text h2, .about-desc h1 {
+            text-align: center;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+        }
+
+        .about-desc h1 {
+            font-size: 1.2rem;
+            color: rgb(84, 79, 79);
+            line-height: 1.8;
+        }
+    }
+
+    .branch__container {
+        background-color: #CFEFFC;
+        border-radius: 37px;
+        padding: 16px 0;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .row {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(-1 * var(--bs-gutter-y));
+        margin-right: calc(-.5 * var(--bs-gutter-x));
+        margin-left: calc(-.5 * var(--bs-gutter-x));
+    }
+
+    /* Improved grid layout for benefits list */
+    .benefits__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        list-style: none;
+        padding: 3rem;
+        margin: 0;
+    }
+
+    /* Benefits box with hover effect */
+    .benefit__box-wrap {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .benefit__box-wrap:hover {
+        background-color: #f0f8ff; /* Light blue background on hover */
+        transform: scale(1.05); /* Slightly scale up the item */
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Larger shadow effect */
+    }
+
+    .benefit__box-wrap:hover .benefit-text h3 {
+        color: #007bff; /* Change text color on hover */
+    }
+
+    .icon-wrap img {
+        width: 35px;
+        height: 35px;
+        margin-right: 15px;
+    }
+
+    .benefit-text h3 {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* About section with image */
+    .about-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 60px 20px;
+        max-width: 1280px;
+        margin: 0 auto;
+        background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+    }
+
+    .about-image {
+        flex: 1;
+        max-width: 640px;
+        min-width: 300px;
+    }
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .about-desc {
+        flex: 1;
+        padding-left: 30px;
+        min-width: 300px;
+    }
+
+    .about-desc p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.2rem;
+        color: rgb(84, 79, 79);
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .value-section {
+        padding: 0px 0;
+    }
+
+    .extra-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 60vh;
+        padding: 0;
+        margin: 0;
+        background-image: url('{% static 'images/demo-it-business-about-bg2.jpg' %}');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .extra-section h1 {
+        margin: 0;
+    }
+
+    .extra-section p {
+        margin: 5px 0;
+    }
+
+    .extra-section img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 5px;
+    }
+
+    /* Button Style */
+    .cta-btn {
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .cta-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
     }
 </style>
+
 <!-- start page title -->
 <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-         style="background-image:url('{{ banner.background_image.url }}'); height: 400px;">
-
-    <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
-        {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
-            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                <animate attributeName="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                            M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                            M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatCount="indefinite">
-                </animate>
-            </path>
-        </svg> {% endcomment %}
-    </div>
-
+         style="background-image:url('{{ banner.background_image.url }}'); height: 300px;">
     <div class="container">
-        <div class="row align-items-center justify-content-center" style="height: 400px;">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
             <div class="col-12 col-lg-6 col-md-10 position-relative text-center page-title-extra-large 
                         d-flex flex-wrap flex-column align-items-center justify-content-center" 
                  data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-
                 <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ banner.title }}</h1>
-
             </div> 
         </div>
     </div>
 </section>
-
 <!-- end page title -->
 
-
-        
 <!-- About Section -->
 <section class="about-section"
-         style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+         style="display: grid; grid-template-columns: auto 1fr;
                 padding: 60px 20px; max-width: 1280px; margin: 0 auto; 
-                background-image: url('{% static "images/demo-it-business-about-bg.jpg" %}');
-                background-size: cover; background-position: center; border-radius: 8px;">
-
-    <!-- Image Column (50%) -->
-    <div class="about-image" style="flex: 1; max-width: 640px; min-width: 300px;">
+                background-size: cover; background-position: center; border-radius: 8px; align-items: start;">
+    <!-- Image Column -->
+    <div class="about-imageppppp" style="max-width: 100%; min-width: 300px; float: right;">
         {% if about_section.image %}
-            <img src="{{ about_section.image.url }}" alt="About Image" style="width: 100%; height: auto; border-radius: 8px;">
+            <img src="{{ about_section.image.url }}" alt="IGL Group About Image" style="max-width: 640px; min-width: 300px; height: auto; border-radius: 8px; float: left; margin-right: 20px; margin-bottom: 20px;">
         {% else %}
-            <!-- Optionally, leave it empty or display a message like "Image not available" -->
             <p>No image available</p>
         {% endif %}
+        <div class="description" style="font-family: 'Poppins', sans-serif; font-size: 1rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px; text-align: justify !important;">
+            {{ about_section.description |safe }}
+        </div>
     </div>
-
-    <!-- Description Column (50%) -->
-    <div class="about-desc" style="flex: 1; padding-left: 30px; min-width: 300px;">
-        <p style="font-family: 'Poppins', sans-serif; font-size: 1.2rem; color:rgb(84, 79, 79); line-height: 1.8; margin-bottom: 20px;">
-            {{ about_section.description | safe}}
-        </p>
-    </div>
-
 </section>
 
+<!-- Value Section -->
+<section class="value-section">
+    <div class="container">
+        <div class="branch__container" style="background-color: #EBF0FA;">
+            <div class="row">
+                <div class="col-lg-12 text-center p-0">
+                    <h2 class="aboutus__title">OUR VALUES</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="benefits__list">
+                        {% for value in values %}
+                            <li>
+                                <div class="benefit__box-wrap paste-color">
+                                    <div class="icon-wrap">
+                                        <img alt="icon" src="{% static 'images/17122686.gif' %}" class="lazyautosizes">
+                                    </div>
+                                    <div class="benefit-text">
+                                        <h3 style="line-height: 1.125rem;">{{ value.name }}</h3>
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li>
+                                <div class="benefit__box-wrap paste-color">
+                                    <div class="benefit-text">
+                                        <h3>No values found.</h3>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-
-<!--Extra code-->
+<!-- How We Work Section -->
 <section style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 60vh; padding: 0; margin: 0; background-image: url('{% static 'images/demo-it-business-about-bg2.jpg' %}')">
     <h1 style="margin: 0;">How We Work</h1>
     <p style="margin: 5px 0;">There are different ways to collaborate with us, but this is our path to bring you success for your software project.</p>
     <img src="{% static 'images/HWW.png' %}" alt="How We Work Image" style="max-width: 100%; height: auto; margin-top: 5px;">
 </section>
-
-<!---->
-
 
 {% endblock %}

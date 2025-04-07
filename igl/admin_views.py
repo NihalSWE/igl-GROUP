@@ -84,7 +84,7 @@ def admin_home_banner(request):
             messages.success(request, "Banner added successfully!")
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
-        return redirect('admin_home_banner')
+        return redirect('home_banner_list')
     
     return render(request, 'backend/admin_home_banner.html')
 

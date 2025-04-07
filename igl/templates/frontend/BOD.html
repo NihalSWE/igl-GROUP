@@ -66,7 +66,10 @@
                         <a href="{% url 'bod_single' member.slug %}" class="staff-card-link">
                             <div class="staff-card shadow-lg rounded-3">
                                 <div class="staff-image-wrapper">
-                                    <img src="{{ member.image.url }}" alt="{{ member.name }}" class="staff-image rounded-top">
+                                    <img src="{% if member.image %}{{ member.image.url }}{% else %}/static/images/d.png{% endif %}" 
+                                    alt="{{ member.name }}" 
+                                    class="staff-image rounded-top">
+                               
                                 </div>
                                 <div class="staff-info text-center">
                                     <h3 class="staff-name text-dark">{{ member.name }}</h3>

@@ -2,27 +2,248 @@
 {% load static %}
 
 {% block body %}
+<style>
+    /* Staff carousel styles */
+    .staff-carousel {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding: 20px 0;
+        scroll-behavior: smooth;
+        margin-bottom: 20px;
+        justify-content: center; /* Center the carousel items */
+    }
+    
+    .staff-carousel .staff-card {
+        min-width: 160px; /* Adjusted for mobile */
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .staff-carousel .staff-card.active {
+        border: 2px solid #e74c3c;
+        transform: translateY(-5px);
+    }
+    
+    .staff-carousel .staff-image-wrapper {
+        width: 100%;
+        height: 120px; /* Adjusted for mobile */
+        overflow: hidden;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    
+    .staff-carousel .staff-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .staff-carousel .staff-info {
+        padding: 10px; /* Adjusted for mobile */
+    }
+    
+    .staff-carousel .staff-name {
+        font-size: 14px; /* Adjusted for mobile */
+        font-weight: 600;
+        margin: 0 0 5px 0;
+    }
+    
+    .staff-carousel .staff-position {
+        font-size: 12px; /* Adjusted for mobile */
+        color: #777;
+        margin: 0;
+    }
+    
+    .staff-carousel .active-indicator {
+        color: #e74c3c;
+        font-size: 12px; /* Adjusted for mobile */
+        font-weight: 600;
+    }
+    
+    /* Container modification to ensure proper centering */
+    .staff-carousel-section .container {
+        display: flex;
+        justify-content: center;
+    }
+    
+    /* Hide scrollbar but keep functionality */
+    .staff-carousel::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .staff-carousel::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 6px;
+    }
+
+    /* Director profile section */
+    .director-profile .director-image-wrapper {
+        background: #f8f9fa;
+        padding: 20px;
+    }
+
+    .director-profile .director-image {
+        object-fit: cover;
+        height: 400px; /* Adjusted for mobile */
+    }
+
+    .director-profile .director-info {
+        padding-left: 0; /* Adjusted for mobile */
+    }
+
+    .director-profile .director-info h3 {
+        font-size: 24px; /* Adjusted for mobile */
+    }
+
+    .director-profile .director-info .lead {
+        font-size: 16px; /* Adjusted for mobile */
+    }
+
+    @media (max-width: 991.98px) {
+        .staff-carousel .staff-card {
+            min-width: 140px; /* Further adjusted for smaller screens */
+        }
+
+        .staff-carousel .staff-image-wrapper {
+            height: 100px; /* Further adjusted for smaller screens */
+        }
+
+        .staff-carousel .staff-name {
+            font-size: 12px; /* Further adjusted for smaller screens */
+        }
+
+        .staff-carousel .staff-position {
+            font-size: 10px; /* Further adjusted for smaller screens */
+        }
+
+        .director-profile .director-image {
+            height: 300px; /* Further adjusted for smaller screens */
+        }
+
+        .director-profile .director-info h3 {
+            font-size: 20px; /* Further adjusted for smaller screens */
+        }
+
+        .director-profile .director-info .lead {
+            font-size: 14px; /* Further adjusted for smaller screens */
+        }
+
+        .custom-margin-top {
+            margin-top: 0; /* Reset margin for mobile */
+        }
+    }
+
+    @media (min-width: 992px) {
+        .custom-margin-top {
+            margin-top: -200px;
+        }
+    }
+    
+    .staff-carousel {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.staff-carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+
+/* === Ultra-Modern Active Card Indicator === */
+    .staff-card {
+        position: relative;
+        margin-bottom: 50px;
+        transition: all 0.4s ease-out;
+    }
+
+    .staff-card.active {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px -12px rgba(231, 76, 60, 0.25);
+    }
+
+    /* Modern Animated Arrow Indicator */
+    .staff-card.active::after {
+        content: '';
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid #e74c3c;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        animation: fadeInDown 0.6s both, float 3s ease-in-out infinite;
+    }
+
+    /* Sophisticated Animation */
+    @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Glow Effect for Active Card */
+    .staff-card.active .staff-image-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 8px;
+        box-shadow: inset 0 0 0 2px #e74c3c;
+        pointer-events: none;
+    }
+
+
+</style>
     <!-- Keeping existing title section unchanged -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-        style="background-image:url('{{ banner.background_image.url }}');">
-        <div class="shape-image-animation p-0 w-100 d-none d-md-block"> 
-            <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> 
-                <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                    <animate attributeName="d" dur="5s" repeatCount="indefinite"
-                        values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                                M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                    </animate>
-                </path>
-            </svg>
+    style="background-image:url('{{ banner.background_image.url }}'); height: 300px;">
+    <div class="container">
+        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+            <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
+                flex-column align-items-center justify-content-center">
+                <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ member.name }}</h1>
+            </div> 
         </div>
-        
+    </div>
+</section>
+
+    <!-- Staff Carousel Section -->
+    <section class="staff-carousel-section py-3" style="background-color: #f8f9fa;">
         <div class="container">
-            <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-                <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
-                    flex-column align-items-center justify-content-center">
-                    <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ member.name }}</h1>
-                </div> 
+            <div class="staff-carousel ">
+                {% for staff in all_staff %}
+    <div class="staff-card {% if staff.slug == member.slug %}active{% endif %}">
+        <div class="staff-image-wrapper">
+            <a href="{% url 'bos_single' staff.slug %}">
+                <img src="{% if staff.image %}{{ staff.image.url }}{% else %}/static/images/d.png{% endif %}" 
+                     alt="{{ staff.name }}" 
+                     class="staff-image">
+            </a>
+        </div>
+        <div class="staff-info text-center">
+            <h3 class="staff-name" style="color:black">{{ staff.name }}</h3>
+            <p class="staff-position">{{ staff.position }}</p>
+        </div>
+    </div>
+{% endfor %}
+
             </div>
         </div>
     </section>
@@ -38,13 +259,13 @@
                          <img src="{% if member.image %}{{ member.image.url }}{% else %}/static/images/d.png{% endif %}" 
                          alt="{{ member.name }}" 
                          class="img-fluid w-100 director-image"
-                         style="object-fit: cover; height: 500px;">
+                         style="object-fit: cover; width: 400px; height: 400px;">
                     
                     </div>
                 </div>
 
                 <!-- Content Column -->
-                <div class="col-lg-7">
+                <div class="col-lg-7 custom-margin-top">
                     <div class="director-info ps-lg-5">
                         <h3 class="display-6 fw-bold mb-2">{{ member.name }}</h3>
                         <div class="d-flex align-items-center mb-4">
@@ -60,13 +281,12 @@
                         {% endif %}
 
                         <!-- PDF Download -->
-                        {% if member.pdf %}
-                            <p><strong> PDF File:</strong> <a href="{{ member.pdf.url }}" target="_blank">See & Download</a></p>
+                        {% if member.pdf and member.pdf.url %}
+                            <p><strong>PDF File:</strong> <a href="{{ member.pdf.url }}" target="_blank">See & Download</a></p>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}
