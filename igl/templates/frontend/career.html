@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block body %}
+
+
+
+
+
         <!-- start page title -->
         <section 
     class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
@@ -109,32 +114,89 @@
 <!--end-->
 
 <!-- Career Opportunities -->
-<section class="career-page pt-5">
-    <div class="container">
-        <h1 class="text-center mb-4">Career Opportunities</h1>
-
-        <div class="row">
+<!-- Career Opportunities -->
+<section class="career-page pt-5" style="background-color: #fafbff; padding: 80px 0; position: relative; overflow: hidden;">
+    <!-- Modern background shape -->
+    <div style="position: absolute; width: 500px; height: 500px; background: linear-gradient(135deg, rgba(58, 123, 213, 0.1), rgba(0, 210, 255, 0.05)); border-radius: 50%; top: -250px; right: -100px; z-index: 0;"></div>
+    <div style="position: absolute; width: 300px; height: 300px; background: linear-gradient(135deg, rgba(111, 66, 193, 0.08), rgba(92, 42, 177, 0.04)); border-radius: 50%; bottom: -150px; left: -80px; z-index: 0;"></div>
+    
+    <div class="container" style="position: relative; z-index: 1;">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <h6 style="font-size: 14px; font-weight: 600; text-transform: uppercase; color: #3a7bd5; letter-spacing: 2px; margin-bottom: 15px; display: inline-block; background: linear-gradient(90deg, rgba(58, 123, 213, 0.15), rgba(0, 210, 255, 0.15)); padding: 8px 16px; border-radius: 30px;">Join Our Team</h6>
+            <h1 class="text-center" style="font-weight: 800; font-size: 38px; letter-spacing: -0.5px; color: #1a1c29; margin-bottom: 20px;">Career Opportunities</h1>
+            <p style="color: #667085; max-width: 600px; margin: 0 auto; font-size: 16px; line-height: 1.6;">Discover your next career move and join our innovative team of talented professionals making a difference.</p>
+        </div>
+        
+        <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -12px;">
             {% for job in jobs %}
-            <div class="col-md-4 mb-4">
-                <div class="card job-card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ job.title }}</h5>
-                        <p class="card-text short-description">
-                            {% if job.short_description|length > 150 %}
-                                {{ job.short_description|slice:":200"|safe  }}...
+            <div class="col-md-4 mb-4" style="padding: 0 12px; margin-bottom: 24px;">
+                <div class="job-card" style="border: none; border-radius: 18px; overflow: hidden; background: white; box-shadow: 0 5px 30px rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); height: 100%; position: relative; transform: translateY(0);" onmouseover="this.style.transform='translateY(-10px)';this.style.boxShadow='0 20px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 5px 30px rgba(0,0,0,0.05)';">
+                    <!-- Card shine effect - REMOVED to fix cursor issues -->
+                    
+                    <!-- Image container with gradient overlay -->
+                    <div style="position: relative; background-color: #f0f4f8;">
+                        <div style="display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; overflow: hidden;">
+                            {% if job.image and job.image.url %}
+                                <img src="{{ job.image.url }}" alt="{{ job.title }}" style="max-width: 100%; height: auto; max-height: 180px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.5s ease; cursor: default;" onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.08)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)';">
                             {% else %}
-                                {{ job.short_description | safe }}
+                                <img src="/static/images/d.png" alt="{{ job.title }}" style="max-width: 100%; height: auto; max-height: 180px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.5s ease; cursor: default;" onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.08)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)';">
                             {% endif %}
-                        </p>
-
-                        <a href="{% url 'job_detail' pk=job.id %}" class="btn btn-primary">View Details</a>
+                        </div>
+                        
+                        <!-- Job status badge -->
+                        <div style="position: absolute; top: 20px; left: 20px; background-color: rgba(255,255,255,0.9); color: #3a7bd5; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); backdrop-filter: blur(5px); cursor: default; pointer-events: none;">
+                            <span style="display: flex; align-items: center;">
+                                <span style="display: inline-block; width: 8px; height: 8px; background-color: #4CAF50; border-radius: 50%; margin-right: 6px;"></span>
+                                Active
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Content area -->
+                    <div style="padding: 25px;">
+                        <h5 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #1a1c29; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: default;">{{ job.title }}</h5>
+                        
+                        <!-- Hover info area -->
+                        <div style="display: flex; align-items: center; margin-top: 20px; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+                            <a href="{% url 'job_detail' pk=job.id %}" class="details-button" style="background: linear-gradient(45deg, #3a7bd5, #00d2ff); color: white; padding: 12px 24px; border-radius: 50px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(58, 123, 213, 0.25); transition: all 0.3s ease; text-decoration: none; display: inline-block; cursor: pointer; z-index: 10; position: relative;">View Details</a>
+                            
+                            <!-- Arrow button (changed to a link pointing to same URL to fix cursor issue) -->
+                            <a href="{% url 'job_detail' pk=job.id %}" style="width: 42px; height: 42px; border-radius: 50%; background: #f8f9fa; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.06); cursor: pointer; transition: all 0.3s ease; text-decoration: none; position: relative; z-index: 10;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #3a7bd5;"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        
+        <!-- Bottom wave decoration -->
+        <div style="margin-top: 60px; text-align: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="50" viewBox="0 0 1440 100" fill="none" preserveAspectRatio="none">
+                <path d="M0,50 C240,110 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z" fill="#ffffff"></path>
+            </svg>
+        </div>
     </div>
 </section>
+
+<script>
+    // Add simple hover effects without causing cursor flicker
+    document.addEventListener('DOMContentLoaded', function() {
+        // View Details button hover effect
+        const detailsButtons = document.querySelectorAll('.details-button');
+        detailsButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 8px 25px rgba(58, 123, 213, 0.4)';
+                this.style.transform = 'translateY(-2px)';
+            });
+            button.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 4px 15px rgba(58, 123, 213, 0.25)';
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

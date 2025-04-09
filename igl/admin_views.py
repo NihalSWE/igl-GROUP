@@ -775,7 +775,7 @@ def add_job_posting(request):
         job_type = request.POST.get('job_type')
         salary = request.POST.get('salary')
         deadline = request.POST.get('deadline')
-
+        
         # Create the new job posting
         job = JobPosting.objects.create(
             title=title,
@@ -788,6 +788,11 @@ def add_job_posting(request):
             deadline=deadline,
             is_active=True  # Defaulting to True or as needed
         )
+        
+        # Handle image upload if present
+        if 'job_image' in request.FILES:
+            job.image = request.FILES['job_image']
+            job.save()
 
         return JsonResponse({"status": "success", "message": "Job posting added successfully!"})
 
@@ -795,12 +800,14 @@ def add_job_posting(request):
 
 
 # View to edit an existing job posting
-
 @csrf_exempt
 def edit_job_posting(request, id):
     job = get_object_or_404(JobPosting, id=id)
 
     if request.method == "GET":  # Ensure it's handling GET requests for fetching data
+        # Prepare image URL if image exists
+        image_url = job.image.url if job.image else None
+        
         # Return the job details as JSON
         return JsonResponse({
             "status": "success",
@@ -815,6 +822,7 @@ def edit_job_posting(request, id):
                 "salary": job.salary,
                 "deadline": job.deadline,
                 "is_active": job.is_active,
+                "image_url": image_url,
             }
         })
 
@@ -828,7 +836,11 @@ def edit_job_posting(request, id):
         job.salary = request.POST.get('salary')
         job.deadline = request.POST.get('deadline')
         job.is_active = request.POST.get('is_active') == 'on'
-
+        
+        # Handle image upload if present
+        if 'job_image' in request.FILES:
+            job.image = request.FILES['job_image']
+            
         job.save()
 
         return JsonResponse({"status": "success", "message": "Job posting updated successfully!"})
@@ -837,16 +849,6 @@ def edit_job_posting(request, id):
 
 
 # View to delete an existing job posting
-@csrf_exempt
-def delete_job_posting(request, id):
-    job = get_object_or_404(JobPosting, id=id)
-    
-    if request.method == "POST":
-        job.delete()
-        return JsonResponse({"status": "success", "message": "Job posting deleted successfully!"})
-
-    return JsonResponse({"status": "error", "message": "Invalid request method!"})
-
 @csrf_exempt
 def delete_job_posting(request, job_id):
     job = get_object_or_404(JobPosting, id=job_id)

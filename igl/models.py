@@ -413,6 +413,7 @@ class JobPosting(models.Model):
         ('TELESALES', 'Telesales'),
         ('HR', 'HR'),
         ('ACCOUNTS', 'Accounts'),
+        ('CORPORATE SALES', 'Corporate Sales'),
     ]
 
     title = models.CharField(max_length=200)
@@ -420,6 +421,7 @@ class JobPosting(models.Model):
     full_description = RichTextField(max_length=5000)
     location = models.CharField(max_length=100, choices=LOCATION_CHOICES, default="dhaka")  
     department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES, default="IT")  # Department field
+    image = models.ImageField(upload_to='job_images/', blank=True, null=True)
     job_type = models.CharField(
         max_length=50,
         choices=[

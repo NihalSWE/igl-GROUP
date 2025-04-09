@@ -4,57 +4,213 @@
 {% block body %} 
 
 <style>
+    /* Original styles remain unchanged */
     header {
-        margin-top:-29px;
+        margin-top: -29px;
+    }
+    
+    .glass-morphism {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(15px);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .title-text {
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Mobile Responsive Styles (max-width: 768px) */
+   @media (max-width: 768px) {
+    /* Stack Contact Schedule and Contact Locations in column layout */
+    section .row.justify-content-center {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    section .col-xl-5, section .col-xl-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    section .offset-xl-1 {
+        margin-left: 0 !important;
+    }
+    
+    section .services-box-style-02 {
+        width: 100%;
+    }
+    
+    section .services-box-style-02 .row {
+        flex-direction: column;
+        height: auto !important;
+        gap: 10px;
+    }
+    
+    section .services-box-style-02 .col-lg-6 {
+        width: 100%;
+        height: auto !important;
+    }
+    
+    section .services-box-style-02 .cover-background {
+        background-size: cover !important;
+        background-position: center !important;
+        width: 100%;
+        height: 250px !important;
+        display: block !important;
+    }
+    
+    section .services-box-style-02 .col-sm-6 {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    section .services-box-content {
+        width: 100%;
+    }
+    
+    section .services-box-style-02 {
+        margin-bottom: 20px;
+    }
+    
+    /* Fix for the red gap on mobile */
+    body, html {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+        max-width: 100vw; /* Ensure nothing extends beyond viewport */
+    }
+    
+    .container {
+        max-width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        overflow: hidden;
+        width: 100% !important; /* Force container width */
+    }
+    
+    /* Fix specific issue with margin causing overflow */
+    .row[style*="margin-right: -34px"] {
+        margin-right: 0 !important; /* Override inline style */
+    }
+    
+    /* Fix any potential overflow in rows */
+    .row {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Footer specific overrides to prevent page styles from affecting footer */
+    footer .row.justify-content-center {
+        flex-direction: row !important;
+        align-items: flex-start !important;
+    }
+    
+    footer .col-xl-5, footer .col-xl-6 {
+        flex: 0 0 auto !important;
+        max-width: none !important;
+        width: auto !important;
+    }
+    
+    footer .offset-xl-1 {
+        margin-left: initial !important;
+    }
+    
+    footer .container {
+        overflow: visible !important;
+    }
+    
+    footer .services-box-style-02 .row {
+        flex-direction: row !important;
+    }
+}
+    /* Tablet Responsive (769px - 992px) */
+    @media (min-width: 769px) and (max-width: 992px) {
+        .col-xl-5 {
+            flex: 0 0 45% !important;
+            max-width: 45% !important;
+        }
+        
+        .col-lg-6 {
+            flex: 0 0 55% !important;
+            max-width: 55% !important;
+        }
     }
 </style>
 
 <!-- start page title -->
 <section 
     class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-    style="background-image: url('{{ banner.background_image.url }}');">
-    <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
-        <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
-            <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-                <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                        M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                        M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
-            </path>
-        </svg>
+    style="background-image: url('{{ banner.background_image.url }}'); height: 300px;">
+    <!--<div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> -->
+    <!--    <svg xmlns="http://www.w3.org/2000/svg" widht="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> -->
+    <!--        <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">-->
+    <!--            <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;-->
+    <!--                    M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;-->
+    <!--                    M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>-->
+    <!--        </path>-->
+    <!--    </svg>-->
+    <!--</div>-->
+<div class="container">
+    <div class="row align-items-center justify-content-center h-500px sm-h-300px">
+        <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
+            flex-column align-items-center justify-content-center glass-morphism animate-fade-in">
+            <h1 class="mb-20px text-white fw-600 ls-minus-1px title-text">Address</h1>
+        </div> 
     </div>
-    <div class="container">
-        <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-            <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <h1 class="mb-20px text-white fw-600 ls-minus-1px">Address</h1>
-            </div> 
-        </div>
-    </div>
+</div>
 </section>
 <!-- end page title -->
 
 <!-- start section --> 
 <section class="bg-very-light-gray position-relative">     
     <div class="container">
-        <div class="row mb-8">
+        <div class="row mb-8" style="margin-right: -34px;">
             <div class="col-xl-5 col-lg-6 md-mb-50px">
                 <div class="bg-white border-radius-6px box-shadow-quadruple-large p-10 ps-12 pe-12 lg-ps-8 lg-pe-8 h-100 d-flex flex-wrap flex-column justify-content-center">
                     <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-12 lh-40 fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-flex align-self-start">
                         <i class="bi bi-chat-square-dots fs-16 me-5px"></i>Let's work together
                     </span>
-                    <h4 class="text-dark-gray ls-minus-1px fw-700 mb-15px">Ready to help you!</h4>
+                    <h4 class="text-dark-gray ls-minus-1px fw-700 mb-15px" style="letter-spacing: 0px !important;">Ready to help you!</h4>
                     <p class="w-85 sm-w-100">We're here to help and answer any question you might have.</p>
-                    <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="row row-cols-1 row-cols-sm-2" style="margin-right: -34px;">
                         <div class="col last-paragraph-no-margin mb-25px">
                             <p>Call us directly?</p>
-                            <a href="tel:12345678910" class="text-dark-gray fw-600">+1 234 567 8910</a>
+                            <a href="tel:01958666999" class="text-dark-gray fw-600">+880-1958-666999</a>
                         </div>
                         <div class="col last-paragraph-no-margin mb-25px">
                             <p>Need live support?</p>
-                            <a href="mailto:support@example.com" class="text-dark-gray fw-600">support@example.com</a>
+                            <a href="mailto:services@iglgroup.org" class="text-dark-gray fw-600">services@iglgroup.org</a>
                         </div>
                         <div class="col last-paragraph-no-margin sm-mb-25px">
                             <p>Join growing team?</p>
-                            <a href="mailto:careers@example.com" class="text-dark-gray fw-600">careers@example.com</a>    
+                            <a href="mailto:careers@iglgroup.org" class="text-dark-gray fw-600">careers@iglgroup.org</a>    
                         </div>
                         <div class="col last-paragraph-no-margin">
                             <p>Visit headquarters?</p>
@@ -65,7 +221,7 @@
             </div>
 
             <div class="col-lg-6 offset-xl-1 md-mb-50px sm-mb-0">
-                <h3 class="text-dark-gray ls-minus-2px fw-700">Looking for any help?</h3>
+                <h3 class="text-dark-gray ls-minus-2px fw-700" style="letter-spacing: 0px !important;">Looking for any help?</h3>
 
                 <!-- Success message will be shown here after the form is submitted -->
                 <div id="success-message" class="alert alert-success text-center mb-4" style="display: none;"></div>
@@ -107,7 +263,7 @@
 
                     <!-- Google reCAPTCHA v3 -->
                     <div class="form-group mb-3">
-                        <div class="g-recaptcha" data-sitekey="6LdIwtkqAAAAAL3GPva2AIXyPjsIDHP1E-1OUjwJ"></div>
+                        <div class="g-recaptcha" data-sitekey="6Lc-8eIqAAAAAI_V40sxFrE9JD7ZB-Au5XqFbLEJ"></div>
                     </div>
 
                     <!-- Submit Button -->

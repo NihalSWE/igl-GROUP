@@ -51,7 +51,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addJobForm">
+                <form id="addJobForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-2">
                         <label for="title">Title</label>
@@ -77,8 +77,11 @@
                         <select name="department" id="department" class="form-control" required>
                             <option value="IT">IT</option>
                             <option value="SEO">SEO</option>
-                            <option value="Software">Software</option>
+                            <option value="SOFTWARE">Software</option>
                             <option value="HR">HR</option>
+                            <option value="TELESALES">Telesales</option>
+                            <option value="ACCOUNTS">Accounts</option>
+                            <option value="CORPORATE SALES">Corporate Sales</option>
                         </select>
                     </div>
                     <div class="mb-2">
@@ -88,6 +91,10 @@
                     <div class="mb-2">
                         <label for="deadline">Deadline</label>
                         <input type="date" name="deadline" id="deadline" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="job_image">Job Image</label>
+                        <input type="file" name="job_image" id="job_image" class="form-control" accept="image/*">
                     </div>
                     <div class="mb-2">
                         <label for="short_description">Short Description</label>
@@ -113,7 +120,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editJobForm" method="POST">
+                <form id="editJobForm" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="job_id" id="editJobId">
                     <div class="mb-2">
@@ -140,8 +147,12 @@
                         <select name="department" id="editDepartment" class="form-control" required>
                             <option value="IT">IT</option>
                             <option value="SEO">SEO</option>
-                            <option value="Software">Software</option>
+                            <option value="SOFTWARE">Software</option>
                             <option value="HR">HR</option>
+                            <option value="TELESALES">Telesales</option>
+                            <option value="ACCOUNTS">Accounts</option>
+                            <option value="CORPORATE SALES">Corporate Sales</option>
+
                         </select>
                     </div>
                     <div class="mb-2">
@@ -159,6 +170,14 @@
                     <div class="mb-2">
                         <label for="editDeadline">Deadline</label>
                         <input type="date" name="deadline" id="editDeadline" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editJobImage">Job Image</label>
+                        <input type="file" name="job_image" id="editJobImage" class="form-control" accept="image/*">
+                        <div id="currentImageContainer" class="mt-2" style="display: none;">
+                            <p>Current Image:</p>
+                            <img id="currentJobImage" src="" alt="Current job image" style="max-width: 200px; max-height: 150px;">
+                        </div>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="is_active" id="editIsActive">
@@ -284,6 +303,7 @@
         fetch('/job-postings/add/', {
             method: 'POST',
             body: formData,
+            // Remove headers for file upload
             headers: {
                 'X-CSRFToken': document.querySelector('#addJobForm input[name="csrfmiddlewaretoken"]').value
             }
@@ -308,6 +328,14 @@
                     document.getElementById('editSalary').value = job.salary;
                     document.getElementById('editDeadline').value = job.deadline;
                     document.getElementById('editIsActive').checked = job.is_active;
+
+                    // Handle job image if exists
+                    if (job.image_url) {
+                        document.getElementById('currentImageContainer').style.display = 'block';
+                        document.getElementById('currentJobImage').src = job.image_url;
+                    } else {
+                        document.getElementById('currentImageContainer').style.display = 'none';
+                    }
 
                     // Initialize CKEditor for Edit Modal
                     initializeEditModalCKEditor();
@@ -339,6 +367,7 @@
         fetch(`/job-postings/update/${document.getElementById('editJobId').value}/`, {
             method: 'POST',
             body: formData,
+            // Remove headers for file upload
             headers: {
                 'X-CSRFToken': document.querySelector('#editJobForm input[name="csrfmiddlewaretoken"]').value
             }

@@ -9,18 +9,20 @@
     
     @media (max-width: 768px) {
         /* Stack Contact Schedule and Contact Locations in column layout */
-        .row.justify-content-center {
+        /* Limit these styles to elements within this specific section only */
+        section .row.justify-content-center {
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
     
-        .col-xl-5, .col-xl-6 {
+        section .col-xl-5, 
+        section .col-xl-6 {
             flex: 0 0 100%;
             max-width: 100%;
         }
 
-        .offset-xl-1 {
+        section .offset-xl-1 {
             margin-left: 0 !important;
         }
 
@@ -63,6 +65,29 @@
         .services-box-style-02 {
             margin-bottom: 20px;
         }
+        
+        /* Fix for the red gap on mobile - modified to not affect footer */
+        body, html {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        section .container {
+            max-width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        /* Remove overflow hidden that was causing the footer layout issue */
+        
+        /* Fix for SVG animation overflow */
+        .shape-image-animation {
+            width: 100% !important;
+            overflow: hidden;
+        }
     }
 </style>
 
@@ -91,7 +116,7 @@
         <!-- end page title -->
 
 <!-- Start Contact Schedule and Locations Section -->
-<section class="pt-3 sm-pt-50px">
+<section class="pt-3 sm-pt-50px contact-section">
     <div class="container">
         <div class="row justify-content-center">
             <!-- Contact Schedule Section -->

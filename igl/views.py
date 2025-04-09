@@ -215,7 +215,13 @@ def career(request):
     banner=CareerBanner.objects.first()
     images = CareerImages.objects.filter(is_active=True).last()
    # Get all jobs
-    all_jobs = JobPosting.objects.filter(is_active=True).order_by('-posted_date')
+   # Get all active jobs that haven't passed their deadline
+    from django.utils import timezone
+    current_date = timezone.now()
+    all_jobs = JobPosting.objects.filter(
+        is_active=True,
+        deadline__gte=current_date  # Only show jobs where deadline is greater than or equal to current date
+    ).order_by('-posted_date')
     
 
     return render(request, 'frontend/career.html', {
