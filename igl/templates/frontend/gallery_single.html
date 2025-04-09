@@ -2,26 +2,69 @@
 {% load static %}
 
 {% block body %}
+
+<style>
+       .glass-morphism {
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background (darker for better contrast) */
+        backdrop-filter: blur(15px); /* Adds a stronger blur effect */
+        border-radius: 12px; /* Rounded corners */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for depth */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Soft shadow */
+        padding: 20px; /* Adds some spacing inside the div */
+    }
+    
+    /* Fade-In Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px); /* Optional: Adds a slight upward movement */
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 1s ease-in-out; /* Applies the fadeIn animation */
+    }
+    
+    /* Ensure Title Text is Clear */
+    .title-text {
+        color: white; /* Ensures the text is white */
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow to the text for better readability */
+    }
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+
+
+</style>
+
+
+
 <!-- Banner Section (Unchanged) -->
 <section 
-  class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
-  style="background-image: url('{{ banner.background_image.url }}');">
-  <div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> 
-    <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewbox="0 180 2500 200" fill="#ffffff"> 
-      <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">
-        <animate attributename="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;
-                M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;
-                M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatcount="indefinite"></animate>
-      </path>
-    </svg>
-  </div>
-  <div class="container">
+class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
+style="background-image: url('{{ banner.background_image.url }}'); height: 300px;">
+<!--<div class="shape-image-animation bottom-0 p-0 w-100 d-none d-md-block"> -->
+<!--    <svg xmlns="http://www.w3.org/2000/svg" width="3000" height="400" viewBox="0 180 2500 200" fill="#ffffff"> -->
+<!--        <path class="st1" d="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250">-->
+<!--        <animate attributeName="d" dur="5s" values="M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250;-->
+<!--                    M 0 250 C 400 50 400 400 3000 250 L 3000 550 L 0 550 L 0 250;-->
+<!--                    M 0 250 C 1200 400 1200 50 3000 250 L 3000 550 L 0 550 L 0 250" repeatCount="indefinite"></animate>-->
+<!--        </path>-->
+<!--        </svg>-->
+<!--</div>-->
+<div class="container">
     <div class="row align-items-center justify-content-center h-500px sm-h-300px">
-      <div class="col-12 col-md-6 position-relative text-center page-title-extra-large d-flex flex-wrap flex-column align-items-center justify-content-center">
-        <h1 class="mb-20px text-white fw-600 ls-minus-1px">{{ album.title }}</h1>
-      </div>
+        <div class="col-12 col-lg-6 col-md-10 text-center page-title-extra-large d-flex flex-wrap 
+            flex-column align-items-center justify-content-center glass-morphism animate-fade-in">
+            <h1 class="mb-20px text-white fw-600 ls-minus-1px title-text">{{ album.title }}</h1>
+        </div> 
     </div>
-  </div>
+</div>
 </section>
 
 <!-- Redesigned Album Gallery Section -->
@@ -104,9 +147,74 @@
         }
     }
 
-    @media (max-width: 768px) {
+ @media (max-width: 768px) {
+        /* 1. Prevent horizontal overflow */
+        html, body {
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* 2. Fix container padding */
+        .container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            max-width: 100% !important;
+        }
+        
+        /* 3. Adjust glass morphism element */
+        .glass-morphism {
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+            width: calc(100% - 30px) !important;
+        }
+        
+        /* 4. Gallery grid fixes */
         .gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            gap: 10px !important;
+        }
+        
+        /* 5. Gallery item fixes */
+        .g-item {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            border-radius: 0 !important;
+        }
+        
+        /* 6. Image fixes */
+        .g-item img {
+            border-radius: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* 7. Banner section fixes */
+        .cover-background {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* 8. Modal adjustments */
+        .modal-body {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* 9. Remove any potential horizontal scroll */
+        .modern-album-gallery {
+            overflow-x: hidden !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* 10. Title adjustments */
+        .gallery-title {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
         }
     }
 

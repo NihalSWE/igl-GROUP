@@ -35,6 +35,56 @@
     color: white; /* Ensures the text is white */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow to the text for better readability */
 }
+
+/* Mobile Gap Fix for Board of Directors Page */
+    @media (max-width: 768px) {
+        /* Prevent horizontal overflow */
+        html, body {
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Fix container padding */
+        .container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            max-width: 100% !important;
+        }
+        
+        /* Adjust glass morphism element */
+        .glass-morphism {
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+            width: calc(100% - 30px) !important;
+        }
+        
+        /* Fix the lead container */
+        .lead-container {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+        
+        /* Adjust board member cards */
+        .col-lg-4, .col-md-6 {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        .staff-card {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Fix the quote marks positioning */
+        .lead-container p span {
+            left: -15px !important;
+            right: -15px !important;
+        }
+    }
+
 </style>
     <!-- Keeping existing title section unchanged -->
     <section class="pt-0 cover-background ipad-top-space-margin sm-pb-0" 
@@ -70,9 +120,9 @@
                <div class="col-lg-12 text-center mb-5">
     <div class="lead-container px-4 py-3 rounded" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
         <p class="display-5 fw-light text-dark mb-3" style="position: relative;">
-            <span style="position: absolute; left: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❝</span>
+            <span style=" left: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❝</span>
             Meet the visionary leaders
-            <span style="position: absolute; right: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❞</span>
+            <span style=" right: -25px; top: 50%; transform: translateY(-50%); color: #6c757d;">❞</span>
         </p>
         <p class="h5 text-muted mb-0" style="letter-spacing: 1px;">
             Who guide our strategic direction and<br>

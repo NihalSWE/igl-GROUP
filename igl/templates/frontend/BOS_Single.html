@@ -208,7 +208,63 @@
         box-shadow: inset 0 0 0 2px #e74c3c;
         pointer-events: none;
     }
-
+    /* Mobile Gap Fix for Staff Profile Page */
+    @media (max-width: 768px) {
+        /* Prevent horizontal overflow */
+        html, body {
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Fix container padding */
+        .container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            max-width: 100% !important;
+        }
+        
+        /* Adjust staff carousel */
+        .staff-carousel {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            margin-left: -15px !important;
+            margin-right: -15px !important;
+            width: calc(100% + 30px) !important;
+        }
+        
+        /* Fix staff cards */
+        .staff-card {
+            min-width: 120px !important;
+            margin-right: 10px !important;
+        }
+        
+        /* Adjust director profile image */
+        .director-profile img {
+            float: none !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-bottom: 20px !important;
+        }
+        
+        /* Fix content alignment */
+        .director-bio {
+            clear: both !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Adjust banner section */
+        .cover-background {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Hide scrollbar completely */
+        .staff-carousel::-webkit-scrollbar {
+            display: none !important;
+        }
+    }
 
 </style>
     <!-- Keeping existing title section unchanged -->

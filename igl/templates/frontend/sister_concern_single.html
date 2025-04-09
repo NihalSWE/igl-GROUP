@@ -97,14 +97,55 @@
   }
 }
 
+/* Mobile Gap Fix for Sister Concern Page */
 @media (max-width: 768px) {
-  .sc-content-card {
-    transform: translateY(-40px);
-  }
-  
-  .sc-card-content {
-    padding: 2rem;
-  }
+    /* Prevent horizontal overflow */
+    html, body {
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Fix container padding and margins */
+    .sc-container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Adjust content card */
+    .sc-content-card {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Fix the custom card width */
+    .custom-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Ensure images don't overflow */
+    .custom-card img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Fix the hero section */
+    .cover-background {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Fix glass morphism element */
+    .glass-morphism {
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+        width: calc(100% - 30px) !important;
+    }
 }
 
 @media (max-width: 576px) {

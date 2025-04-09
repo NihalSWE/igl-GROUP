@@ -62,6 +62,65 @@
         background: rgba(255, 255, 255, 0.2);
         transform: translateY(-3px);
     }
+
+    /* Mobile Gap Fix for Board Member Profile Page */
+    @media (max-width: 768px) {
+        /* Prevent horizontal overflow */
+        html, body {
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Fix container padding */
+        .container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            max-width: 100% !important;
+        }
+        
+        /* Adjust glass card */
+        .glass-card {
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+            width: calc(100% - 30px) !important;
+            padding: 1.5rem !important;
+        }
+        
+        /* Fix profile image container */
+        .profile-image-wrapper {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Adjust image sizing */
+        .profile-image-wrapper img {
+            height: auto !important;
+            max-height: 400px !important;
+        }
+        
+        /* Fix content column padding */
+        .col-lg-7 {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Adjust bio text */
+        .director-bio p {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Fix hero section */
+        .hero-section {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        .ps-lg-5{
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+    }
 </style>
 
 <!-- Hero Section -->

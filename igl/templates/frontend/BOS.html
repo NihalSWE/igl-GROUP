@@ -110,6 +110,58 @@
         .staff-info h3, .staff-info p {
             color: #333;
         }
+        /* Mobile Gap Fix for Board of Officers/Staff Page */
+    @media (max-width: 768px) {
+        /* Prevent horizontal overflow */
+        html, body {
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        /* Fix container padding */
+        .container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            max-width: 100% !important;
+        }
+        
+        /* Adjust glass morphism element */
+        .glass-morphism {
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+            width: calc(100% - 30px) !important;
+        }
+        
+        /* Fix staff cards */
+        .col-lg-3, .col-md-6 {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        .staff-card {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Fix header section */
+        .header-section {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+        
+        /* Fix hero section */
+        .cover-background {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Adjust staff info padding */
+        .staff-info {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
     </style>
 
 {% endblock %}

@@ -142,7 +142,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownSisterConcern">
                             {% for sister in sister_concerns %}
                                 <li>
-                                    <a href="{% url 'sister_concern_single' sister.id %}" class="dropdown-item btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
+                                    <a href="{% url 'sister_concern_single' sister.slug %}" class="dropdown-item btn btn-large btn-transparent-white-light btn-rounded text-transform-none border-1" 
                                        style="padding: 6px 18px; color: black">
                                         {{ sister.title }}
                                     </a>

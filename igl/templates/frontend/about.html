@@ -8,37 +8,71 @@
     }
 
     /* Mobile adjustments */
-    @media (max-width: 768px) {
-        .about-section {
-            flex-direction: column;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .about-text, .about-desc {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-            border: none;
-        }
-
-        .about-text h2, .about-desc h1 {
-            text-align: center;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .about-text h2 {
-            font-size: 2rem;
-        }
-
-        .about-desc h1 {
-            font-size: 1.2rem;
-            color: rgb(84, 79, 79);
-            line-height: 1.8;
-        }
+    /* Mobile adjustments */
+@media (max-width: 768px) {
+    /* Prevent horizontal overflow */
+    html, body {
+        width: 100% !important;
+        overflow-x: hidden !important;
     }
+    
+    /* About section fixes */
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 15px !important; /* Changed from 20px to 15px for consistency */
+        display: flex !important;
+        grid-template-columns: 1fr !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .about-imageppppp {
+        width: 100%;
+        max-width: 100% !important;
+        float: none !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        padding: 0 5px !important; /* Added for better edge control */
+    }
+
+    .about-imageppppp img {
+        max-width: 100% !important;
+        min-width: unset !important;
+        float: none !important;
+        margin-right: 0 !important;
+        margin-bottom: 20px;
+        margin-left: 0 !important;
+    }
+
+    .description {
+        text-align: center !important;
+        padding: 0 5px !important; /* Reduced from 10px for tighter control */
+        width: 100% !important;
+    }
+    
+    /* Additional gap fixes for other sections */
+    .container, 
+    .value-section .container,
+    .branch__container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    .benefits__list {
+        padding: 1rem !important; /* Reduced from 3rem */
+    }
+    
+    /* Fix for the How We Work section */
+    section[style*="background-image"] {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
 
     .branch__container {
         background-color: #CFEFFC;
