@@ -596,16 +596,20 @@ def gallery_album_details(request):
     
     if request.method == "POST":
         album_id = request.POST.get("album", "").strip()
-        image = request.FILES.get("image")
-
+        images = request.FILES.getlist("images[]")  # Note the brackets in the name
+        
         try:
-            if album_id and image:
+            if album_id and images:
                 album = Gallery_Album.objects.get(id=album_id)  # Fetch the album
-                gallery_image = Gallery_AlbumDetails(album=album, image=image)
-                gallery_image.save()
-                messages.success(request, "Gallery album image saved successfully!")
+                
+                # Process each uploaded image
+                for image in images:
+                    gallery_image = Gallery_AlbumDetails(album=album, image=image)
+                    gallery_image.save()
+                
+                messages.success(request, f"{len(images)} image(s) saved successfully!")
             else:
-                messages.error(request, "Please select an album and upload an image.")
+                messages.error(request, "Please select an album and upload at least one image.")
         
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
